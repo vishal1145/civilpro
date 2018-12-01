@@ -162,7 +162,7 @@ $con = $obj->connect();
 																			</div> */
 																		</a>
 																	</div>
-																	<span class="chat-time">9:00 am</span>
+																	<span class="chat-time">{{msg.SendTime}}</span>
 																</div>
 																<div class="chat-action-btns" style = "display:none">
 																	<ul>
@@ -326,19 +326,19 @@ $con = $obj->connect();
 												<ul class="user-det-list">
 													<li>
 														<span>Username:</span>
-														<span class="pull-right text-muted">{{currentGroup.GroupInfo.username}}</span>
+														<span class="pull-right text-muted">{{currentGroup.GroupInfo.GroupName}}</span>
 													</li>
 													<li>
-														<span>DOB:</span>
-														<span class="pull-right text-muted">{{currentGroup.GroupInfo.dob}}</span>
+														<span>Hiredate:</span>
+														<span class="pull-right text-muted">{{currentGroup.GroupInfo.DOB}}</span>
 													</li>
 													<li>
 														<span>Email:</span>
-														<span class="pull-right text-muted">{{currentGroup.GroupInfo.email}}</span>
+														<span class="pull-right text-muted">{{currentGroup.GroupInfo.Email}}</span>
 													</li>
 													<li>
 														<span>Phone:</span>
-														<span class="pull-right text-muted">{{currentGroup.GroupInfo.phone}}</span>
+														<span class="pull-right text-muted">{{currentGroup.GroupInfo.Phone}}</span>
 													</li>
 												</ul>
 											</div>
@@ -350,15 +350,16 @@ $con = $obj->connect();
 												<div class="tab-content">
 													<div class="tab-pane active" id="all_files">
 														<ul class="files-list">
-															<li>
+															<li ng-repeat="msg in messages" ng-if="msg.GroupId === currentGroup._id && msg.isMedia" >
 																<div class="files-cont">
 																	<div class="file-type">
-																		<span class="files-icon"><i class="fa fa-file-pdf-o"></i></span>
+																		<span class="files-icon"><i class="fas fa-file"></i></span>
 																	</div>
 																	<div class="files-info">
-																		<span class="file-name text-ellipsis">AHA Selfcare Mobile Application Test-Cases.xls</span>
-																		<span class="file-author"><a href="#">Loren Gatlin</a></span> <span class="file-date">May 31st at 6:53 PM</span>
+																		<span class="file-name text-ellipsis">Uploaded file </span>
+																		<span class="file-author" style = "display:none"><a href="#">Loren Gatlin</a></span> <span class="file-date">{{msg.SendTime}}</span>
 																	</div>
+																	          
 																	<ul class="files-action">
 																		<li class="dropdown">
 																			<a href="" class="dropdown-toggle btn btn-default btn-xs" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></a>
@@ -370,11 +371,13 @@ $con = $obj->connect();
 																	</ul>
 																</div>
 															</li>
+
+															
 														</ul>
 													</div>
 													<div class="tab-pane" id="my_files">
 														<ul class="files-list">
-															<li>
+															<li  ng-repeat="msg in messages" ng-if="msg.GroupId === currentGroup._id && msg.isMedia && msg.SenderId === userId && msg.isMedia">
 																<div class="files-cont">
 																	<div class="file-type">
 																		<span class="files-icon"><i class="fa fa-file-pdf-o"></i></span>
