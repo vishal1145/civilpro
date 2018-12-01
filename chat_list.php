@@ -76,7 +76,7 @@ $con = $obj->connect();
 										</div>
 										<ul class="nav navbar-nav pull-right chat-menu">
 											<li class="dropdown">
-												<a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cog"></i></a>
+												<a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style ="display:none"><i class="fa fa-cog"></i></a>
 												<ul class="dropdown-menu">
 													<li><a href="javascript:void(0)">Delete Conversations</a></li>
 													<li><a href="javascript:void(0)">Settings</a></li>
@@ -112,7 +112,7 @@ $con = $obj->connect();
 																<div class="chat-action-btns" style = "display:none">
 																	<ul>
 																		<li><a href="#" class="share-msg" title="Share"><i class="fa fa-share-alt"></i></a></li>
-																		<li><a href="#" class="edit-msg" title="Edit"><i class="fa fa-pencil"></i></a></li>
+																		<li style= "display:none"><a href="#" class="edit-msg" title="Edit"><i class="fa fa-pencil"></i></a></li>
 																		<li><a href="#" class="del-msg" title="Delete"><i class="fa fa-trash-o"></i></a></li>
 																	</ul>
 																</div>
@@ -320,7 +320,7 @@ $con = $obj->connect();
 												</div>
 												<h3 class="user-name m-t-10 m-b-0">{{currentGroup.GroupInfo.username}}</h3>
 												<small class="text-muted">Web Designer</small>
-												<a href="edit-profile.html" class="btn btn-primary edit-btn"><i class="fa fa-pencil"></i></a>
+												<a href="edit-profile.html" class="btn btn-primary edit-btn" style="display:none"><i class="fa fa-pencil"></i></a>
 											</div>
 											<div class="chat-profile-info">
 												<ul class="user-det-list">
@@ -344,8 +344,9 @@ $con = $obj->connect();
 											</div>
 											<div class="tabbable">
 												<ul class="nav nav-tabs nav-tabs-solid nav-justified m-b-0">
-													<li class="active"><a href="#all_files" data-toggle="tab">All Files</a></li>
-													<li><a href="#my_files" data-toggle="tab">My Files</a></li>
+												
+													<li id="liall" class="active" ng-click="highlight(1)"><a data-toggle="tab" style="cursor: pointer;" >All Files</a></li>
+													<li id="limy" ng-click="highlight(2)" ><a data-toggle="tab" style="cursor: pointer;" >My Files</a></li>
 												</ul>
 												<div class="tab-content">
 													<div class="tab-pane active" id="all_files">
@@ -356,7 +357,7 @@ $con = $obj->connect();
 																		<span class="files-icon"><i class="fas fa-file"></i></span>
 																	</div>
 																	<div class="files-info">
-																		<span class="file-name text-ellipsis">Uploaded file </span>
+																		<span class="file-name text-ellipsis">Uploaded file and recive file </span>
 																		<span class="file-author" style = "display:none"><a href="#">Loren Gatlin</a></span> <span class="file-date">{{msg.SendTime}}</span>
 																	</div>
 																	          
@@ -377,14 +378,14 @@ $con = $obj->connect();
 													</div>
 													<div class="tab-pane" id="my_files">
 														<ul class="files-list">
-															<li  ng-repeat="msg in messages" ng-if="msg.GroupId === currentGroup._id && msg.isMedia && msg.SenderId === userId && msg.isMedia">
+															<li  ng-repeat="msg in messages" ng-if="msg.GroupId === currentGroup._id && msg.isMedia && msg.SenderId === userId && msg.isMedia"  >
 																<div class="files-cont">
 																	<div class="file-type">
-																		<span class="files-icon"><i class="fa fa-file-pdf-o"></i></span>
+																		<span class="files-icon"><i class="fas fa-file"></i></span>
 																	</div>
 																	<div class="files-info">
-																		<span class="file-name text-ellipsis">AHA Selfcare Mobile Application Test-Cases.xls</span>
-																		<span class="file-author"><a href="#">John Doe</a></span> <span class="file-date">May 31st at 6:53 PM</span>
+																		<span class="file-name text-ellipsis"> Uploaded file</span>
+																		<span class="file-author"><a href="#" style="display:none">John Doe</a></span> <span class="file-date">{{ msg.SendTime}}</span>
 																	</div>
 																	<ul class="files-action">
 																		<li class="dropdown">
