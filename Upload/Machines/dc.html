@@ -1,0 +1,203 @@
+<?php
+/*
+Plugin Name: First-plugin
+Plugin URI: http://www.example.com 
+Description: Blabla
+Author: Leo
+Version: 1.1
+Author URI: http://www.example.com
+
+*/
+
+
+global $jal_db_version;
+$jal_db_version = '1.0';
+?>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+<?php
+
+
+
+
+
+function jal_install() {
+    global $wpdb;
+    global $jal_db_version;
+
+    $table_name = $wpdb->prefix . 'liveshoutbox';
+    
+    $charset_collate = $wpdb->get_charset_collate();
+
+    $sql = "CREATE TABLE $table_name (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        username tinytext NOT NULL,
+        email text NOT NULL,
+        password varchar(55) DEFAULT '' NOT NULL,
+        PRIMARY KEY  (id)
+    ) $charset_collate;";   
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta( $sql );
+
+    add_option( 'jal_db_version', $jal_db_version );
+}
+register_activation_hook( __FILE__, 'jal_install' );
+
+add_action("admin_menu", "createMyMenus");
+
+function createMyMenus() {
+    add_menu_page("My Menu", "My Menu", 0, "my-menu-slug", "myMenuPageFunction");
+    add_submenu_page("my-menu-slug", "My Submenu", "My Submenu", 0, "my-submenu-slug", "mySubmenuPageFunction");
+}
+
+add_shortcode('test_data','createMyMenus');
+
+
+
+add_shortcode( 'hello_test', 'mySubmenuPageFunction');
+
+function myMenuPageFunction(){
+    global $wpdb;
+echo "<h2>Register users display</h2>";
+$contactus_table = $wpdb->prefix."liveshoutbox";
+$post_id = $wpdb->get_results("SELECT * FROM $contactus_table");;
+?>
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Username</th>
+    <th>Email</th>
+  </tr>
+  <?php
+foreach($post_id as $user_detail){
+    ?>
+<tr>
+    <td><?php echo $user_detail->id; ?></td>
+    <td><?php echo $user_detail->email; ?></td>
+    <td><?php echo $user_detail->password; ?></td>
+  </tr>
+
+<?php
+}
+
+    ?>
+</table>
+<?php
+
+}
+
+function mySubmenuPageFunction(){
+    ?>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+.input-container {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.icon {
+    padding: 10px;
+    background: dodgerblue;
+    colsor: white;
+    min-width: 50px;
+    text-align: center;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+}
+
+.input-field:focus {
+    border: 2px solid dodgerblue;
+}
+
+/* Set a style for the submit button */
+.btn {
+    background-color: dodgerblue;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9; 
+}
+
+.btn:hover {
+    opacity: 1;
+}
+</style>
+</head>
+<body>
+<?php
+
+global $wpdb;
+
+if(isset($_POST['submit'])){
+$username=$_POST['username'];
+$email=$_POST['email'];
+$password=$_POST['password'];
+$contactus_table = $wpdb->prefix."liveshoutbox";
+        //error with the query 
+        $sql = "INSERT INTO $contactus_table (username,email, password) VALUES ('$username', '$email', '$password')";
+
+               if($wpdb->query($sql)) 
+               {
+               $BlogName = get_bloginfo();
+              // echo $BlogName;
+               echo "<h2>Successfully Submit</h2>";
+               }else{
+                echo "Please Try Again";
+               }
+}
+
+
+
+?>
+
+ 
+<form action="" style="max-width:500px;margin:auto" method="post">
+  <h2> Form</h2>
+  <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="Username" name="username">
+  </div>
+  <div>
+  <div class="input-container">
+    <i class="fa fa-envelope icon"></i>
+    <input class="input-field" type="text" placeholder="Email" name="email">
+  </div>
+  
+  <div class="input-container">
+    <i class="fa fa-key icon"></i>
+    <input class="input-field" type="password" placeholder="Password" name="password">
+  </div>
+
+  <button type="submit" name="submit"class="btn">Submit Data</button>
+</form>
+<?php
+}
+
+?>
