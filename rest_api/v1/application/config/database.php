@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'Rock@7861',
-	'database' => 'civil_pro',
+	'hostname' => '45.114.79.179',
+	'username' => 'attodayi_civil',
+	'password' => 'civilpro@123',
+	'database' => 'attodayi_civilpro',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

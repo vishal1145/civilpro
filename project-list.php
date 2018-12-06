@@ -284,9 +284,9 @@ $role = $_POST['role'];
 
 $fullQuery = implode(" AND ",$Sel_query);
 
-$sel_query = "Select * from project WHERE $fullQuery";
+$sel_query = "Select * from Project WHERE $fullQuery";
 }else{
-$sel_query = "Select * from project";
+$sel_query = "Select * from Project";
 }
 $res_data = mysqli_query($con,$sel_query);	
 

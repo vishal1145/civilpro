@@ -76,8 +76,9 @@ if(isset($_POST['create_project'])){
 /* ========================================================================================= */
 /* =============================== materials save id ===================================== */
 
- 	$materials_name = implode(",",$_POST['materials']);
- 	$newMaterial = str_replace(",","','",$materials_name);
+ 	// $materials_name = implode(",",$_POST['materials']);
+	 // $newMaterial = str_replace(",","','",$materials_name);
+	 $newMaterial = '';
     $sql	= "SELECT * from material WHERE `materials_name` IN ('$newMaterial')";
     $res_data = mysqli_query($con,$sql);
 
@@ -125,7 +126,7 @@ for($i=0;$i < count($consumption);$i++){
 
 	}
 	echo $consmp_name;*/
-	 $log_user_qury = "INSERT INTO project (Project_name, Client_id,Start_date,end_date,Rate,billing_type,Total_hours,Priority,Project_leader,Team_member,Project_Address,machine,material,consumption,decription,images)
+	 $log_user_qury = "INSERT INTO Project (Project_name, Client_id,Start_date,end_date,Rate,billing_type,Total_hours,Priority,Project_leader,Team_member,Project_Address,machine,material,consumption,decription,images)
      VALUES ('$project_name', '$client_id', '$start_date','$end_date','$rate','$billing_type','$proTotalHour','$priority','$employee_id','$team_id','$project_address','$machine','$materials','$consmp_name','$description','$image')";
 	
 	/*  echo $log_user_qury; */
@@ -133,6 +134,29 @@ for($i=0;$i < count($consumption);$i++){
     $res_data = mysqli_query($con,$log_user_qury);	
 
     if($res_data){
+
+		$id_array = mysqli_query($con,"SELECT Project_id FROM Project order by Project_id desc limit 1");
+             $emp_id_obj = mysqli_fetch_object($id_array);
+             $emp_id = $emp_id_obj->Project_id;
+
+
+    $data = '{  "PRCID":"ChatGroup" }';
+     $options = array(
+        'http' => array(
+          'method'  => 'GET',
+          'content' =>  $data ,
+          'header'=>  "Content-Type: application/json\r\n" .
+                      "Accept: application/json\r\n"
+          )
+      );
+      
+      $url = "http://35.232.123.231:8100/api/project/".$emp_id;
+      $context  = stream_context_create( $options );
+      $result = file_get_contents( $url, false, $context );
+      $response = json_decode( $result );
+	$response2= $response;
+	
+
     	if($res_data){ echo "Records updated successfully";
 			header('Location: '. $base_url .'projects.php');
 		}
@@ -287,9 +311,9 @@ $role = $_POST['role'];
 
 $fullQuery = implode(" AND ",$Sel_query);
 
-$sel_query = "Select * from project WHERE $fullQuery";
+$sel_query = "Select * from Project WHERE $fullQuery";
 }else{
-$sel_query = "Select * from project";
+$sel_query = "Select * from Project";
 }
 $res_data = mysqli_query($con,$sel_query);	
 
@@ -1389,6 +1413,7 @@ $(document).ready(function(){
         dataType: 'json', // added data type
         success: function(res) {
 		 
+
 		    if(res.status= "sucess"){
 				$('#edit_Priority option[value='+res.data.Priority+']').attr('selected','selected');
 				$("#products_id").val(res.data.Project_id);

@@ -20,7 +20,7 @@ $project_id = $val;
 //echo 'hello';
 $obj = new  connection();
 $con = $obj->connect();
-$sel_query = "Select * from project where Project_id=$project_id";
+$sel_query = "Select * from Project where Project_id=$project_id";
 
 $res_data = mysqli_query($con,$sel_query);
 $row = mysqli_fetch_assoc($res_data);

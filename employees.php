@@ -45,61 +45,25 @@ $con = $obj->connect();
                 
            
              $id_array = mysqli_query($con,"SELECT empl_id FROM employee where `email` = '$employee_email' limit 1");
-
-
              $emp_id_obj = mysqli_fetch_object($id_array);
-
              $emp_id = $emp_id_obj->empl_id;
 
-     $data = '{
-        "PRCID":"ChatGroup",
-        "Method":"ADDCHATGROUP",
-        "Data":{
-          "GroupInfo": {
-            "GroupName": "testgroup1",
-            "OwnerId": "30",
-            "GroupType":"1"
-        },
-        "Admin": [{ "MemberId": "30" }],
-        "Members": [{
-            "MemberId": "'.$emp_id.'",
-            "MemberName": "'.$employee_fname.' '.$employee_lname.'",
-            "MemberEmail":"'.$employee_email.'",
-            "MemberPhone":"'.$employee_phone.'",
-            "MemberDOB":"25/12/1986",
-            "Role":"Employee"
-        },
-        {
-            "MemberId": "30",
-            "MemberName": "Admin",
-            "MemberEmail":"admin@civilpro.com",
-            "MemberPhone":"9953813100",
-            "MemberDOB":"25/12/1986",
-            "Role":"Admin"
-        }] 
-        }
-    }';
 
+    $data = '{  "PRCID":"ChatGroup" }';
      $options = array(
         'http' => array(
-          'method'  => 'POST',
+          'method'  => 'GET',
           'content' =>  $data ,
           'header'=>  "Content-Type: application/json\r\n" .
                       "Accept: application/json\r\n"
           )
       );
       
-
-      //echo $data;
-
-      $url = "http://35.232.123.231:8100/api/manager";
+      $url = "http://35.232.123.231:8100/api/employee/".$emp_id;
       $context  = stream_context_create( $options );
       $result = file_get_contents( $url, false, $context );
       $response = json_decode( $result );
     $response2= $response;
-
-    //echo $response;
-
 
     echo "<script>location.href='http://$_SERVER[HTTP_HOST]/civilpro/employees.php';</script>";
 
