@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class EmployeeList extends CI_Controller {
+class ProjectList extends CI_Controller {
 
 	public function __construct()
 	{
@@ -31,7 +31,16 @@ class EmployeeList extends CI_Controller {
 	public function index()
 	{
 		$emp_id = $this->input->get_post('emp_id', TRUE);
-		$query = $this->db->query("select * from employee where empl_id in (".$emp_id.",'50','82')");
+		$project_query = "select * from Project where Project_id = ".$emp_id;
+		$queryProject  = $this->db->query($project_query);
+		$arrProject = $queryProject->result_array();   
+		$leaders = $arrProject[0]['Project_leader'];
+		$members= $arrProject[0]['Team_member'];
+		$project_name = $arrProject[0]['Project_name'];
+		//$project_url = $arrProject[0]['Team_member'];
+		$queryText ="select '".$project_name."' as project_name, empl_id,first_name,last_name,img,joining_date,email,phone,'employee' as role from employee where empl_id in ( ".$leaders." ) union select '".$project_name."' as project_name,empl_id,first_name,last_name,img,joining_date,email,phone,'employee' as role from employee where empl_id in ( ".$members." ) union select '".$project_name."' as project_name,user_id as empl_id,first_name,last_name,img,birthday as joining_date,email,phone,'admin' as role from Users where user_id = 30";
+		// $queryText = "select empl_id,first_name,last_name,img,joining_date,email,phone,'employee' as role from employee where empl_id = ".$emp_id." union select user_id as empl_id,first_name,last_name,img,birthday as joining_date,email,phone,'admin' as role from Users where user_id = 30"; 
+		$query = $this->db->query($queryText);
 		$arr = $query->result_array();    
 		header('Content-Type: application/json');
 		echo json_encode( $arr );

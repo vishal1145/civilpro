@@ -31,7 +31,8 @@ class EmployeeList extends CI_Controller {
 	public function index()
 	{
 		$emp_id = $this->input->get_post('emp_id', TRUE);
-		$query = $this->db->query("select * from employee where empl_id in (".$emp_id.",'50')");
+		$queryText = "select empl_id,first_name,last_name,img,joining_date,email,phone,'employee' as role from employee where empl_id = ".$emp_id." union select user_id as empl_id,first_name,last_name,img,birthday as joining_date,email,phone,'admin' as role from Users where user_id = 30"; 
+		$query = $this->db->query($queryText);
 		$arr = $query->result_array();    
 		header('Content-Type: application/json');
 		echo json_encode( $arr );
