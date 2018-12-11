@@ -17,39 +17,48 @@ $con = $obj->connect();
     top: 0;
     margin-left: 250px;
 	margin-top: 63px;
+}
+.data-id:hover{
+  font-size: 20px;
+  background-color: #7460ee;
+}
+.nameactive{
+	font-size:120px;
+	background: #7460ee;
+}
 </style>
 <div ng-controller="chatController">
  <div class="sidebar" id="sidebar"  >
                 <div class="sidebar-inner slimscroll">
 					<div class="sidebar-menu">
-						<ul>
+					<ul>
 					
-							<li > 
-								<a href="dashbord.php"  ><i class="fa fa-home"></i> Back to Home</a>
-							</li>
-							<li class="menu-title">project Groups <a href="#" data-toggle="modal" data-target="#add_group"><i class="fa fa-plus"></i></a></li>
-						
-							<li ng-repeat="group in groups" ng-if="group.GroupInfo.GroupType == '2'"> 
-							 <a ng-click="openGroup(group)">{{group.GroupInfo.GroupName}}</a>
-							</li>
-							
+					<li > 
+						<a href="dashbord.php"  ><i class="fa fa-home"></i> Back to Home</a>
+					</li>
+					<li class="menu-title" style="text-transform: capitalize;">Project Groups <a href="#" data-toggle="modal" data-target="#add_group"><i class="fa fa-plus"></i></a></li>
+				
+					<li  id="{{group._id}}"     ng-repeat="group in groups"  ng-if="group.GroupInfo.GroupType == '2'" ng-class="{nameactive : group._id === currentGroup._id}"> 
+					 <a  class = "active" ng-click="openGroup(group)"  style="cursor: pointer; text-transform: capitalize;">{{group.GroupInfo.GroupName}}</a>
+					</li>
 
-							<li class="menu-title">Direct Chats <a href="#" data-toggle="modal" data-target="#add_chat_user"><i class="fa fa-plus"></i></a></li>
-							
-							<li ng-repeat="group in groups" ng-if="group.GroupInfo.GroupType == '1'"> 
-								<a ng-click="openGroup(group)">
-								<span class="status online"></span> 
-								<span>{{group.GroupInfo.GroupName}}</span>
-									<span class="badge bg-danger pull-right" ng-if="group.unreadCount > 0">{{group.unreadCount}}</span>
-								</a>
-							</li>
 
-							 <li ng-repeat="group in []"> 
-								<a href="chat.html"><span class="status offline"></span> Richard Miles <span class="badge bg-danger pull-right">18</span></a>
-							</li>
-							
+					<li class="menu-title">Direct Chats <a href="#" data-toggle="modal" data-target="#add_chat_user"><i class="fa fa-plus"></i></a></li>
+					
+					<li id="{{group._id}}" ng-repeat="group in groups" ng-if="group.GroupInfo.GroupType == '1'" ng-class="{nameactive : group._id === currentGroup._id}"> 
+						<a ng-click="openGroup(group)" >
+						<span class="status online"></span> 
+						<span style="cursor: pointer;text-transform: capitalize;">{{group.GroupInfo.GroupName}}</span>
+							<span class="badge bg-danger pull-right" ng-if="group.unreadCount > 0">{{group.unreadCount}}</span>
+						</a>
+					</li>
 
-						</ul>
+					 <li ng-repeat="group in []"> 
+						<a href="chat.html"><span class="status offline"></span> Richard Miles <span class="badge bg-danger pull-right">18</span></a>
+					</li>
+					
+
+				</ul>
 					</div>
                 </div>
             </div>
