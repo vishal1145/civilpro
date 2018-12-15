@@ -154,7 +154,7 @@ Class Project_new extends CI_Controller
 					$client_name = array('id' => $value1['Client_id']);
 
 							$this->db->select('*');
-							$this->db->from('client');
+							$this->db->from('Client');
 							$this->db->where($client_name);
 							$result   = $this->db->get();
 							$final_2  = $result->result_array();

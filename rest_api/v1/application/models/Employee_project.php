@@ -50,7 +50,7 @@ public function all_project_old($data)
 	{  
 		$emply = $data['employee_id'];
        $this->db->select('*');
-			$this->db->from('project');
+			$this->db->from('Project');
 			$search="FIND_IN_SET ('".$emply."',Team_member)";
 			$this->db->where($search);
 		
@@ -101,7 +101,7 @@ $eproject[$key]['check_type'] = 'Time_type';
 	public function assign()
 	{
 		$this->db->select('*');
-		$this->db->from('project');
+		$this->db->from('Project');
 		//$this->db->where($data);
 		$result = $this->db->get();
 		$final  = $result->result_array();

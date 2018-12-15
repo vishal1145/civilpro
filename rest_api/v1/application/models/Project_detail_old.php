@@ -7,7 +7,7 @@ Class Project_detail_old extends CI_Model{
 	public function project_result($data)
 	{
 		$this->db->select('*');
-		$this->db->from('project');
+		$this->db->from('Project');
 		$this->db->where($data);
 		$this->db->join('time_card', 'project.Project_id = time_card.project_name');
 		$this->db->join('employee', 'time_card.employee_id = employee.empl_id');
@@ -18,7 +18,7 @@ Class Project_detail_old extends CI_Model{
 			return $final;
 		}else{
 			$this->db->select('*');
-			$this->db->from('project');
+			$this->db->from('Project');
 			$this->db->where($data);
 			$detail = $this->db->get();
 			$final  = $detail->result_array();

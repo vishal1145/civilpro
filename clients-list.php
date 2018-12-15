@@ -180,7 +180,7 @@ else
 									<?php while($row = mysqli_fetch_array($result)){ ?>							
 										<tr>
 			<?php
-			 $time_set = "SELECT * FROM client ORDER BY 'client'. `time_set` DESC";
+			 $time_set = "SELECT * FROM client ORDER BY 'Client'. `time_set` DESC";
 				$time_setting = mysqli_query($con,$time_set);
 				$time_setting_value = mysqli_fetch_array($time_setting);
 			?>

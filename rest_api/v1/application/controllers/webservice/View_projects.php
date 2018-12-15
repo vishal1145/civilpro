@@ -18,7 +18,7 @@ Class View_projects extends CI_Controller{
 	{
 
 		$this->form_validation->set_rules('employee_id','employee_id','trim|required');
-		$this->form_validation->set_rules('employee_name','employee_name','trim');
+		//$this->form_validation->set_rules('employee_name','employee_name','trim');
 
 		if($this->form_validation->run() == FALSE)
 		{
@@ -33,7 +33,7 @@ Class View_projects extends CI_Controller{
 		}else{
 
 			$eid = $this->input->post('employee_id');
-			$ename = $this->input->post('employee_name');
+			//$ename = $this->input->post('employee_name');
 
 			$data = array('employee_id' => $eid);
 
@@ -50,7 +50,7 @@ Class View_projects extends CI_Controller{
 				 $client_name = array('id' => $value1['Client_id']);
 
 				           $this->db->select('*');
-							$this->db->from('client');
+							$this->db->from('Client');
 							$this->db->where($client_name);
 							$result   = $this->db->get();
 							$final_2  = $result->result_array();
@@ -133,7 +133,7 @@ die;*/
 					$client_name = array('id' => $query[$key]['client_id']);
 
 							$this->db->select('*');
-							$this->db->from('client');
+							$this->db->from('Client');
 							$this->db->where($client_name);
 							$result   = $this->db->get();
 							$final_2  = $result->result_array();

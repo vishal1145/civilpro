@@ -7,7 +7,7 @@ Class Project_detail extends CI_Model{
 	public function project_result($data)
 	{
 		$this->db->select('*');
-		$this->db->from('project');
+		$this->db->from('Project');
 		$this->db->where($data);
 		$detail = $this->db->get();
 		$final  = $detail->result_array();
@@ -16,7 +16,7 @@ Class Project_detail extends CI_Model{
 			return $final;
 		}else{
 			$this->db->select('*');
-			$this->db->from('project');
+			$this->db->from('Project');
 			$this->db->where($data);
 			$detail = $this->db->get();
 			$final  = $detail->result_array();
