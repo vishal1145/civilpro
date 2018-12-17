@@ -68,7 +68,7 @@ Class Field_report extends CI_Controller
 			//print_r($_FILES);die;
 			$img_name = '';
 			for($i=0; $i < $total_image; $i++){
-			 $image_name = $_FILES['filedreport_picture_list']['name'][$i];
+			 $image_name = $_FILES['filedreport_picture_list']['name'];
 				$img_name.= 'http://'.$_SERVER['HTTP_HOST'].'/civilpro/rest_api/v1/uploads/uploads/'.$image_name.'#';
 			  $img_name."<br>";
 			}
@@ -81,15 +81,15 @@ Class Field_report extends CI_Controller
 		 if(!empty($_FILES["filedreport_picture_list"]["name"]))
 						{
 
-				foreach($_FILES['filedreport_picture_list']['name'] as $key=>$tmp_name)
-           		 {
-               		 $file_name=$_FILES["filedreport_picture_list"]["name"][$key];
-               		 $file_tmp=$_FILES["filedreport_picture_list"]["tmp_name"][$key];
+				// foreach($_FILES['filedreport_picture_list'] as $key)
+           		//  {
+               		 $file_name=$_FILES["filedreport_picture_list"]["name"];
+               		 $file_tmp=$_FILES["filedreport_picture_list"]["tmp_name"];
 
                		
 
 				//generate unique file name
-						  $fileName = $_FILES["filedreport_picture_list"]["name"][$key];
+						  $fileName = $_FILES["filedreport_picture_list"]["name"];
 						    //file upload path
 
 						    $targetDir = "uploads/uploads/";
@@ -102,7 +102,7 @@ Class Field_report extends CI_Controller
 						    $allowTypes = array('jpg','png','jpeg','gif');
 						    if(in_array($fileType, $allowTypes)){
 						        //upload file to server
-						        if(move_uploaded_file($_FILES["filedreport_picture_list"]["tmp_name"][$key], $targetFilePath)){
+						        if(move_uploaded_file($_FILES["filedreport_picture_list"]["tmp_name"], $targetFilePath)){
 									
 									//return true;
 						  
@@ -111,7 +111,7 @@ Class Field_report extends CI_Controller
 							 }
 							}
 						}
-					}
+					//}
 		 // upload file
 	
 
