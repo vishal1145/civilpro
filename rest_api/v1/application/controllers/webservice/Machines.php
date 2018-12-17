@@ -16,7 +16,7 @@ Class Machines extends CI_Controller
 	{
 		
 
-			$query = $this->Machines_model->list();
+			$query = $this->Machines_model->machine_list_fonr_db();
 			
 			if(!empty($query)){
 

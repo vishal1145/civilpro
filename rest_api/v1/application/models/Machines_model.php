@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 Class Machines_model extends CI_Model{
 
 
-public function list()
+public function machine_list_fonr_db()
 	{
 
 		$this->db->select('*');
