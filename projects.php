@@ -150,7 +150,7 @@ for($i=0;$i < count($consumption);$i++){
           )
       );
       
-      $url = "http://35.232.123.231:8100/api/project/".$emp_id;
+      $url = "http://206.189.129.119:8100/api/project/".$emp_id;
       $context  = stream_context_create( $options );
       $result = file_get_contents( $url, false, $context );
       $response = json_decode( $result );
