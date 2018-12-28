@@ -66,8 +66,8 @@ $removeClass = "";
 								<!--<a href="excavator-daily-log.html">Excavator Daily Log</a>-->
 								<a href="excavator-log-list.php">Excavator Daily Log</a>
 							</li>
-							<li class="Chatt"> 
-								<a href="chat_list.php">Chat <span class="badge bg-primary pull-right">5</span></a>
+							<li class="Chatt"  > 
+								<a href="chat_list.php">Chat <span class="badge bg-primary pull-right">{{unreadCount}}</span></a>
 							</li>
 							<?php
 

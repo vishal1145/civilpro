@@ -49,7 +49,11 @@ $con = $obj->connect();
 						<a ng-click="openGroup(group)" >
 						<span class="status online"></span> 
 						<span style="cursor: pointer;text-transform: capitalize;">{{group.GroupInfo.GroupName}}</span>
-							<span class="badge bg-danger pull-right" ng-if="group.unreadCount > 0">{{group.unreadCount}}</span>
+							<span class="badge bg-danger pull-right"  ng-if="group.unreadCount > 0"> 
+							<!-- {{ getUnreadCount(group) }} -->
+							{{group.unreadCount}}
+							</span>
+							<!-- {{group.unreadCount}}</span> -->
 						</a>
 					</li>
 
