@@ -37,6 +37,7 @@ if(!isset($_SESSION['user_id'])){
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js">
 
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.3/jquery.timeago.min.js"></script>
 		 <script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
 		 <script type="text/javascript" src="lib/chat.js?id=1.0"></script>
 		<!--[if lt IE 9]>

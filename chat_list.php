@@ -120,7 +120,7 @@ $con = $obj->connect();
 															<div class="chat-bubble">
 																<div class="chat-content">
 																	<p>{{msg.TextMessage}}</p>
-																	<span class="chat-time">{{msg.SendTime | date:'dd-MMM-yyyy HH:mm'}}</span>
+																	<span class="chat-time">{{msg.displaysenttime | date:'dd-MMM-yyyy HH:mm'}}</span>
 																</div>
 																<div class="chat-action-btns" style = "display:none">
 																	<ul>
@@ -143,7 +143,7 @@ $con = $obj->connect();
 															<div class="chat-bubble">
 																<div class="chat-content">
 																	<p>{{msg.TextMessage}}</p>
-																	<span class="chat-time">{{msg.SendTime}}</span>
+																	<span class="chat-time">{{msg.displaysenttime}}</span>
 																</div>
 																<div class="chat-action-btns"  style = "display:none">
 																	<ul>
@@ -174,7 +174,7 @@ $con = $obj->connect();
 																				<div class="chat-file-desc" >842 KB</div>
 																			</div> 
 																	</div>
-																	<span class="chat-time">{{msg.SendTime}}</span>
+																	<span class="chat-time">{{msg.displaysenttime}}</span>
 																</div>
 																<div class="chat-action-btns" style = "display:none">
 																	<ul>
@@ -207,7 +207,7 @@ $con = $obj->connect();
 																			</div> 
 																		</a>
 																	</div>
-																	<span class="chat-time">{{msg.SendTime | date:'dd-MMM-yyyy HH:mm'}}</span>
+																	<span class="chat-time">{{msg.displaysenttime}}</span>
 																</div>
 																<div class="chat-action-btns"  style = "display:none">
 																	<ul>
@@ -370,7 +370,7 @@ $con = $obj->connect();
 																	</div>
 																	<div class="files-info">
 																		<span class="file-name text-ellipsis">Uploaded file and recive file </span>
-																		<span class="file-author" style = "display:none"><a href="#">Loren Gatlin</a></span> <span class="file-date">{{msg.SendTime}}</span>
+																		<span class="file-author" style = "display:none"><a href="#">Loren Gatlin</a></span> <span class="file-date">{{msg.displaysenttime}}</span>
 																	</div>
 																	          
 																	<ul class="files-action">
@@ -397,7 +397,7 @@ $con = $obj->connect();
 																	</div>
 																	<div class="files-info">
 																		<span class="file-name text-ellipsis"> Uploaded file</span>
-																		<span class="file-author"><a href="#" style="display:none">John Doe</a></span> <span class="file-date">{{ msg.SendTime | date:'dd-MMM-yyyy HH:mm'}}</span>
+																		<span class="file-author"><a href="#" style="display:none">John Doe</a></span> <span class="file-date">{{ msg.displaysenttime}}</span>
 																	</div>
 																	<ul class="files-action">
 																		<li class="dropdown">
