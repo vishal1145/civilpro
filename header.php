@@ -39,7 +39,7 @@ if(!isset($_SESSION['user_id'])){
 
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.3/jquery.timeago.min.js"></script>
 		 <script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
-		 <script type="text/javascript" src="lib/chat.js?id=1.0"></script>
+		 <script type="text/javascript" src="lib/chat.js?id=1.1"></script>
 		<!--[if lt IE 9]>
 			<script src="assets/js/html5shiv.min.js"></script>
 			<script src="assets/js/respond.min.js"></script>

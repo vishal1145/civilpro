@@ -67,7 +67,10 @@ $removeClass = "";
 								<a href="excavator-log-list.php">Excavator Daily Log</a>
 							</li>
 							<li class="Chatt"  > 
-								<a href="chat_list.php">Chat <span class="badge bg-primary pull-right">{{unreadCount}}</span></a>
+								<a href="chat_list.php">
+								Chat 
+								<span class="badge bg-primary pull-right" ng-if="unreadCount > 0">{{unreadCount}}</span></a>
+
 							</li>
 							<?php
 

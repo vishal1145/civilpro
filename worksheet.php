@@ -336,7 +336,7 @@ $SearchArray = array();
 				while($card_data = $Time_Cardd->fetch_assoc()) {
 					// echo "<pre>";print_r($card_data);echo"</pre>";
 				$card_projectid = $card_data['project_name']; 
-				$proj_name = mysqli_query($con,"Select * from  project where Project_id = '$card_projectid'");
+				$proj_name = mysqli_query($con,"Select * from  Project where Project_id = '$card_projectid'");
 				$res_proj_name = $proj_name->fetch_assoc();
 										
 
@@ -397,12 +397,12 @@ $SearchArray = array();
 										$hour = $card_data['machine_hours'];
 										$hoursss =  explode(',', $hour);
 											foreach($hoursss as $key1 => $hours){ 
-											if($key1 <=3 ){
+											if($key1 <= 3 && Sizeof($NewArrayname)){
 											?>
 										
 										<li>
 											<a href='' data-toggle='tooltip' title='<?php echo $NewArrayname[$key1] ." &nbsp;:&nbsp; ".$hours."&nbsp; Hours"; ?>'>
-												<img src='assets/img/user.jpg' class='avatar' alt='<?php echo $value_data."-".$hours; ?>' height='20' width='20'>
+												<img src='assets/img/user.jpg' class='avatar'  height='20' width='20'>
 										</a></li>
 										<?php } }
 										//} 
@@ -526,7 +526,7 @@ $SearchArray = array();
 
 						}
            
-			$log_user_qury = "SELECT * FROM project";
+			$log_user_qury = "SELECT * FROM Project";
 			$res_data = mysqli_query($con,$log_user_qury);
 
 					?>
@@ -550,7 +550,7 @@ $SearchArray = array();
 									//echo "<pre>"; print_r($card_data); echo "<pre>";
 										$card_projectid = $card_data['project_name']; 
 									
-										$proj_name = mysqli_query($con,"Select * from  project where Project_id = '$card_projectid'");
+										$proj_name = mysqli_query($con,"Select * from  Project where Project_id = '$card_projectid'");
 										$res_proj_name = $proj_name->fetch_assoc();
 
 									// for employe selected
@@ -656,7 +656,7 @@ $SearchArray = array();
 										
 										
 										// get all machine data here from machine
-										$log_user_qury = "SELECT * FROM project";
+										$log_user_qury = "SELECT * FROM Project";
 										$res_data = mysqli_query($con,$log_user_qury);
 										$machin_qury = "SELECT * FROM machine";
 										$machin = mysqli_query($con,$machin_qury);
@@ -986,7 +986,7 @@ $SearchArray = array();
 					<?php
 				
            
-			$log_user_qury = "SELECT * FROM project";
+			$log_user_qury = "SELECT * FROM Project";
 			$res_data = mysqli_query($con,$log_user_qury);
             $machin_qury = "SELECT * FROM machine";
 			$machin = mysqli_query($con,$machin_qury);
@@ -1021,7 +1021,7 @@ $SearchArray = array();
 									
 								</div>
 					<div class="form-group">
-					<?php $selectemp = mysqli_query($con, "SELECT Project_leader,Team_member from project");
+					<?php $selectemp = mysqli_query($con, "SELECT Project_leader,Team_member from Project");
 					?>
 					<label>Employee <span class="text-danger">*</span></label>
 					<select class="select_employee form-control" name="select_emp_nama" id="select_emp_nama_append">

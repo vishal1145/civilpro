@@ -39,7 +39,13 @@ $con = $obj->connect();
 					<li class="menu-title" style="text-transform: capitalize;">Project Groups <a href="#" data-toggle="modal" data-target="#add_group"><i class="fa fa-plus"></i></a></li>
 				
 					<li  id="{{group._id}}"     ng-repeat="group in groups"  ng-if="group.GroupInfo.GroupType == '2'" ng-class="{nameactive : group._id === currentGroup._id}"> 
-					 <a  class = "active" ng-click="openGroup(group)"  style="cursor: pointer; text-transform: capitalize;">{{group.GroupInfo.GroupName}}</a>
+					 <a  class = "active" ng-click="openGroup(group)">
+					 <span style="cursor: pointer;text-transform: capitalize;">{{group.GroupInfo.GroupName}}</span>
+							<span class="badge bg-danger pull-right"  ng-if="group.unreadCount > 0"> 
+							{{group.unreadCount}}
+							</span>
+							<!-- {{group.GroupInfo.GroupName}} -->
+					 </a>
 					</li>
 
 
@@ -50,10 +56,8 @@ $con = $obj->connect();
 						<span class="status online"></span> 
 						<span style="cursor: pointer;text-transform: capitalize;">{{group.GroupInfo.GroupName}}</span>
 							<span class="badge bg-danger pull-right"  ng-if="group.unreadCount > 0"> 
-							<!-- {{ getUnreadCount(group) }} -->
 							{{group.unreadCount}}
 							</span>
-							<!-- {{group.unreadCount}}</span> -->
 						</a>
 					</li>
 
