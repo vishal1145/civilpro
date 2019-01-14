@@ -1352,6 +1352,9 @@ $( "#add_project_name" ).change(function () {
 				$("#addTimeCtotalHours").val(data.totalHours);
 				$("input[name = remain_hour]").val(data.totalRemainHours);
 			}
+		},
+		error:function(err){
+console.log(err);
 		}
 	});
  });

@@ -6,7 +6,7 @@ $obj = new connection();
 $con = $obj->connect();
 
   $project_id = $_POST['project_dia'];
-  $selectemp = mysqli_query($con, "SELECT * FROM project WHERE Project_id = '$project_id'");
+  $selectemp = mysqli_query($con, "SELECT * FROM Project WHERE Project_id = '$project_id'");
   $rowcount=mysqli_num_rows($selectemp);
 
   if($rowcount > 0){

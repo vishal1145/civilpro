@@ -14,7 +14,7 @@ echo $Time_Cardd = mysqli_query($con,$Time_Card);
 if($_POST['time_carddd'] == "approve_project_act"){
  $status = $_POST['Approve'];
  $id = $_POST[id];
- $Time_Card = "UPDATE project SET status = '$status' WHERE Project_id = '$id'";
+ $Time_Card = "UPDATE Project SET status = '$status' WHERE Project_id = '$id'";
 echo $Time_Cardd = mysqli_query($con,$Time_Card);
 }
 
@@ -22,7 +22,7 @@ if($_POST['approve_Priority'] == "approve_Priority"){
   $status = $_POST['Approve'];
  
 $id = $_POST[id];
-$Time_Card = "UPDATE project SET Priority = '$status' WHERE Project_id = '$id'";
+$Time_Card = "UPDATE Project SET Priority = '$status' WHERE Project_id = '$id'";
 echo $Time_Cardd = mysqli_query($con,$Time_Card);
 }
 
@@ -31,7 +31,7 @@ if($_POST['project_member'] == "project_member"){
  $project_id = $_POST['project_id'];
  $id = $_POST[id];
 
-$Time_Card = "SELECT Team_member FROM project WHERE Project_id = '$project_id'";
+$Time_Card = "SELECT Team_member FROM Project WHERE Project_id = '$project_id'";
 $Time_Cardd = mysqli_query($con,$Time_Card);
 $row = $Time_Cardd->fetch_assoc();
 //print_r($row);
