@@ -247,7 +247,7 @@ if($res_dataaa){
 										$emp_name = $proj_name->fetch_assoc();
 										$employee_name = $emp_name['first_name'];
 								$card_projectid = $card_data['project'];
-										$proj_name = mysqli_query($con,"Select * from  project where Project_id = '$card_projectid'");
+										$proj_name = mysqli_query($con,"Select * from  Project where Project_id = '$card_projectid'");
 										$res_proj_name = $proj_name->fetch_assoc();
 
 				?>
@@ -410,7 +410,7 @@ if($res_dataaa){
             </div>
 			
 					<?php
-			$log_user_qury = "SELECT * FROM project";
+			$log_user_qury = "SELECT * FROM Project";
 			$res_data = mysqli_query($con,$log_user_qury);
             $machin_qury = "SELECT * FROM machine";
 			$machin = mysqli_query($con,$machin_qury);
@@ -442,7 +442,7 @@ if($res_dataaa){
 									
 								</div>
 					<div class="form-group">
-					<?php $selectemp = mysqli_query($con, "SELECT Project_leader,Team_member from project");
+					<?php $selectemp = mysqli_query($con, "SELECT Project_leader,Team_member from Project");
 					?>
 					<label>Employee <span class="text-danger">*</span></label>
 					<select class="select_employee form-control" name="select_emp_nama" id="select_emp_nama_append">

@@ -19,7 +19,7 @@ $phone 		= $_POST['phone'];
 $cname 		= $_POST['companyname'];
 $time_set 	= time(); 
 
-$sql="INSERT INTO client (img,first_name,last_name,user_name,email,password,client_id,phone_no,company,birthday,address,gender,state,country,pincode,time_set) VALUES ('','$firstname','$lastname','$username','$emailid','$password','$clientid','$phone','$cname','','','','','','',$time_set)";
+$sql="INSERT INTO Client (img,first_name,last_name,user_name,email,password,client_id,phone_no,company,birthday,address,gender,state,country,pincode,time_set) VALUES ('','$firstname','$lastname','$username','$emailid','$password','$clientid','$phone','$cname','','','','','','',$time_set)";
 
 $insert_result=mysqli_query($con,$sql);
 if($insert_result == true)
@@ -46,7 +46,7 @@ if (isset($_POST['updateform'])) {
     $clientph = (isset($_POST['clientph']) ? $_POST['clientph'] : ""); 	
     $company = (isset($_POST['company']) ? $_POST['company'] : "");	
 	
-	$sql ="UPDATE client SET first_name='$firstname', last_name='$lastname', user_name='$username', email='$clientemail', password='$clientpass', client_id='$clientid', phone_no='$clientph', company='$company' WHERE id=$editid";
+	$sql ="UPDATE Client SET first_name='$firstname', last_name='$lastname', user_name='$username', email='$clientemail', password='$clientpass', client_id='$clientid', phone_no='$clientph', company='$company' WHERE id=$editid";
 	
 	$update=mysqli_query($con,$sql);
 						if($update == true){
@@ -61,7 +61,7 @@ if (isset($_POST['updateform'])) {
 
 if (isset($_POST['delete_id_data'])) {
 $id= $_POST['delet_to_id'];				
-$del="delete from client where id= $id ";
+$del="delete from Client where id= $id ";
 $delete=mysqli_query($con,$del);
 if($delete==true){
 header('Location: clients.php');
@@ -89,11 +89,11 @@ if(isset($_REQUEST['searchclient'])){
 			$sql_serch[]=" company like '%$companyname%' ";		
 	}
   $makeQuery = implode("AND",$sql_serch);   
-  $result= mysqli_query($con,"SELECT * FROM client WHERE $makeQuery ORDER BY `client`.`time_set` DESC");
+  $result= mysqli_query($con,"SELECT * FROM Client WHERE $makeQuery ORDER BY `Client`.`time_set` DESC");
 
 }
     else{		
-               $result= mysqli_query($con,"SELECT * FROM client ORDER BY `client`.`time_set` DESC");						
+               $result= mysqli_query($con,"SELECT * FROM Client ORDER BY `Client`.`time_set` DESC");						
 }
 				
 ?>
@@ -137,7 +137,7 @@ if(isset($_REQUEST['searchclient'])){
 								<select name="searchcompany" class="select floating"> 
 								 <option value="" disabled selected>Select Company</option>
 								<?php 
-								$selectcompany="SELECT DISTINCT company FROM client";
+								$selectcompany="SELECT DISTINCT company FROM Client";
                                  $getcompany = mysqli_query($con,$selectcompany);								
 								while($rowcompany = mysqli_fetch_array($getcompany)){ ?>								
 									<option value="<?php echo $rowcompany['company']?>"><?php echo $rowcompany['company']?></option>
