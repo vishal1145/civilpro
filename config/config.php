@@ -13,7 +13,7 @@ class connection {
 		// $this->password = "civilpro@123";
 		// $this->dbname = "attodayi_civilpro";
 			
-		$this->servername = "localhost";
+		$this->servername = "127.0.0.1";
 		$this->username = "root";
 		$this->password = "Ithours_123";
 		$this->dbname = "attodayi_civilpro";
