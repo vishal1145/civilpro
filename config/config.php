@@ -8,11 +8,16 @@ class connection {
 	private $dbname;
 	
 	function connect(){		
-		$this->servername = "45.114.79.179";
-		$this->username = "attodayi_civil";
-		$this->password = "civilpro@123";
-		$this->dbname = "attodayi_civilpro";
+		// $this->servername = "45.114.79.179";
+		// $this->username = "attodayi_civil";
+		// $this->password = "civilpro@123";
+		// $this->dbname = "attodayi_civilpro";
 			
+		$this->servername = "localhost";
+		$this->username = "root";
+		$this->password = "Ithours_123";
+		$this->dbname = "attodayi_civilpro";
+
 		$con = mysqli_connect($this->servername,$this->username,$this->password,$this->dbname);	
 		if(mysqli_connect_error()){			
 			echo "Your connection failed .". mysqli_connect_error();
