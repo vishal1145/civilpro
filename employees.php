@@ -59,7 +59,7 @@ $con = $obj->connect();
           )
       );
       
-      $url = "http://206.189.129.119:8100/api/employee/".$emp_id;
+      $url = "http://157.230.57.197:9100/api/employee/".$emp_id;
       $context  = stream_context_create( $options );
       $result = file_get_contents( $url, false, $context );
       $response = json_decode( $result );

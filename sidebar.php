@@ -69,7 +69,7 @@ $removeClass = "";
 							<li class="Chatt"  > 
 								<a href="chat_list.php">
 								Chat 
-								<span class="badge bg-primary pull-right" ng-if="unreadCount > 0">{{unreadCount}}</span></a>
+								<span class="badge bg-primary pull-right " id="unreadcount" ></span></a>
 
 							</li>
 							<?php

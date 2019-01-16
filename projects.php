@@ -150,7 +150,7 @@ for($i=0;$i < count($consumption);$i++){
           )
       );
       
-      $url = "http://206.189.129.119:8100/api/project/".$emp_id;
+      $url = "http://157.230.57.197:9100/api/project/".$emp_id;
       $context  = stream_context_create( $options );
       $result = file_get_contents( $url, false, $context );
       $response = json_decode( $result );
@@ -551,7 +551,7 @@ $res_data = mysqli_query($con,$sel_query);
 				<?php include_once "notification-box.php"; ?>
             </div>
 			
-			<div id="create_project" class="modal custom-modal fade" role="dialog">
+			<div id="create_project" class="modal custom-modal " role="dialog" style="display:none">
 				<div class="modal-dialog">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<div class="modal-content modal-lg">

@@ -33,7 +33,7 @@ if(!isset($_SESSION['user_id'])){
 		<link rel="stylesheet" type="text/css" href="assets/css/dataTables.bootstrap.min.css">	
 		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-datetimepicker.min.css">
 		<link rel="stylesheet" type="text/css" href="assets/plugins/summernote/dist/summernote.css">
-		<script src="http://206.189.129.119:8200/socket.io/socket.io.js"></script>
+		<script src="http://157.230.57.197:9200/socket.io/socket.io.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js">
 
@@ -47,7 +47,7 @@ if(!isset($_SESSION['user_id'])){
 
 		<script>
 		function reloadGroup(id){
-			window.ipAddress="http://206.189.129.119";
+			window.ipAddress="http://157.230.57.197";
 
 			localStorage.setItem("USERID", id);
 
@@ -75,7 +75,7 @@ if(!isset($_SESSION['user_id'])){
 			}
 			}
     }
-    xmlHttp.open("GET", window.ipAddress+':8100/GETUSERCHATGROUPS/' + userId, true); // true for asynchronous 
+    xmlHttp.open("GET", window.ipAddress+':9100/GETUSERCHATGROUPS/' + userId, true); // true for asynchronous 
 	xmlHttp.send(null);
 	
 	}
