@@ -47,18 +47,12 @@ if(!isset($_SESSION['user_id'])){
 
 		<script>
 		function reloadGroup(id){
-			window.ipAddress="http://157.230.57.197";
+			window.chatAPIAddress="http://157.230.57.197:9100";
 
 			localStorage.setItem("USERID", id);
 
 			userId = localStorage.getItem("USERID");
     if(userId){
-        // $.get(window.ipAddress+':8100/GETUSERCHATGROUPS/' + userId).then((res) => {
-        //     console.log(res);
-        //     localStorage.setItem("GROUPS", JSON.stringify(res.data.groups));
-        //     localStorage.setItem("MESSAGES", JSON.stringify(res.data.messages));
-        //     //$rootScope.$broadcast('onLoadingProgress', true);
-		// })
 		
 		var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
@@ -75,7 +69,7 @@ if(!isset($_SESSION['user_id'])){
 			}
 			}
     }
-    xmlHttp.open("GET", window.ipAddress+':9100/GETUSERCHATGROUPS/' + userId, true); // true for asynchronous 
+    xmlHttp.open("GET", window.chatAPIAddress+'/GETUSERCHATGROUPS/' + userId, true); // true for asynchronous 
 	xmlHttp.send(null);
 	
 	}

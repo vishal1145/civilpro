@@ -1,4 +1,5 @@
 <?php 
+
 include "header.php";
 include "sidebar.php";	
 $obj = new connection();
@@ -129,7 +130,7 @@ if(isset($_POST['Add_Timecard'])){
 	$machine = $_POST["multiple_machine"];
 	$hours = array_intersect_key($hours, $machine);
 	$hourss = implode(",",$hours);
-
+	
     $project_name = $_POST['project_name'];
     $employee_id = $_POST['select_emp_nama'];
 	$deadline = $_POST['deadline'];

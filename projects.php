@@ -346,7 +346,7 @@ $res_data = mysqli_query($con,$sel_query);
 						<div class="col-xs-8 text-right m-b-30">
 							<a href="#" class="btn btn-primary rounded pull-right" data-toggle="modal" data-target="#create_project"><i class="fa fa-plus"></i> Create Project</a>
 							<div class="view-icons">
-								<a href="projects.php" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+								<!-- <a href="projects.php" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a> -->
 								<a href="project-list.php" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
 							</div>
 						</div>

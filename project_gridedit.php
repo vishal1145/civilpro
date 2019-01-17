@@ -305,7 +305,7 @@ if(isset($_POST['update_project'])){
 				
 <div id="create_project1" class="modal123 custom-modal123 fade123" role="dialog">
 	<div class="modal-dialog">
-		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<a href="project.php"><button type="button" class="close" data-dismiss="modal">&times;</button></a>
 		<div class="modal-content modal-lg">
 			<div class="modal-header">
 				<h4 class="modal-title">Edit Project</h4>
