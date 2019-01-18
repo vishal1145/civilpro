@@ -190,11 +190,57 @@ die;*/
 
 	public function project_assign(){
 
-		
-			$query = $this->Employee_project->assign();
+		$this->form_validation->set_rules('employee_id','employee_id','trim|required');
+
+		if($this->form_validation->run() == FALSE){
+			$error = strip_tags(validation_errors());
+
+			$result = array(
+
+				'status'	 => '0',
+				'statuscode' => '403',
+				'message'	 => $error,
+			);
+			print_r(json_encode($result));
+			return;
+		}
+
+			 $emp_id = $this->input->post('employee_id');
+
+			$querytemp = $this->Employee_project->assign();
+
+
 			//print_r($query);die;
 
-			if(!empty($query)){
+			if(!empty($querytemp)){
+
+				if(isset($querytemp) && !empty($querytemp)){
+					$query = array();
+					foreach ($querytemp as  $key => $pro_result) {
+					
+						$t_member=	$pro_result['Team_member'];
+						$t_array =  explode(',', $t_member);
+						foreach($t_array as $e_id){
+							if($e_id == $emp_id){
+								array_push($query,$pro_result );
+							}
+						}
+					}	
+				}	
+
+				if(sizeof($query) == 0)
+				{
+					$result = array(
+
+						'status'	 => '0',
+						'statuscode' => '403',
+						'message'	 => 'no project assign',
+						'project'      =>  array()
+
+					);
+					print_r(json_encode($result));
+					return;
+				}
 
 				if(isset($query) && !empty($query)){
 					foreach ($query as  $key => $pro_result) {
