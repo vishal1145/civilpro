@@ -99,9 +99,12 @@ Class Field_report extends CI_Controller
 						     $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
 		//print_r($_FILES['filedreport_picture_list']);die;
 						 
-						    $allowTypes = array('jpg','png','jpeg','gif');
+							$allowTypes = array('jpg','png','jpeg','gif');
+							
 						    if(in_array($fileType, $allowTypes)){
-						        //upload file to server
+							 
+								try{
+								//upload file to server
 						        if(move_uploaded_file($_FILES["filedreport_picture_list"]["tmp_name"], $targetFilePath)){
 									
 									//return true;
@@ -109,6 +112,10 @@ Class Field_report extends CI_Controller
 				       		 }else{
 								 echo "error";
 							 }
+							}catch(Exception $err){
+
+							}
+
 							}
 						}
 					//}

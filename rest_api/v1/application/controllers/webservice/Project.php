@@ -141,6 +141,7 @@ Class Project extends CI_Controller
 			$material_amount = '';
 			
 			//$material_data[$key1]['consumption'] = '';
+			if($material_data  != ""){
 			foreach ($material_data as $key1 => $value2) {
 
 					$material_data[$key1]['material_id'] = $material_data[$key1]['id'];
@@ -153,6 +154,7 @@ Class Project extends CI_Controller
 					
 					
 			}
+		}
 		
 		}
 
