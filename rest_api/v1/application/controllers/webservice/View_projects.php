@@ -302,10 +302,10 @@ die;*/
 									$final_result_hour = $final_val_hour['remain_hours'];
 								}
 							}
-					
+							if(isset($final_result_hour)) {
 					$project_detail[$key]['hour'] = $final_result_hour;
 								
-								
+							}
 					}
 				}
 				
