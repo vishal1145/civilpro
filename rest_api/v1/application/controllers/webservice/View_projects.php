@@ -287,7 +287,7 @@ die;*/
 						$project_detail[$key]['project_name'] = $projects['Project_name'];
 						
 						$project_detail[$key]['employee'] = $query[$key]['employee_2'];
-						
+					$project_detail[$key]['hour'] = 0;	
 
 						$query3 = $this->db->select('*');
 								$this->db->from('time_card');
