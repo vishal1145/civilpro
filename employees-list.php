@@ -346,9 +346,11 @@ $SearchArray = array();
 										</div>
 									</div>
 									<div class="col-sm-6">
-										<div class="form-group">
+										<div class="form-group" style="position:relative">
 											<label class="control-label">Password</label>
-											<input name="pass" class="form-control" value="<?php echo $row['password']; ?>" type="password">
+											<input style="padding-right:50px;" name="pass" class="form-control" value="<?php echo $row['password']; ?>" type="password">
+											<i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show1" onclick="visible()" class="fa fa-eye"></i>
+											<i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show2" onclick="visible()" class="fa fa-eye-slash"></i>
 										</div>
 									</div>
 									<div class="col-sm-6">
@@ -803,6 +805,20 @@ $SearchArray = array();
 
 
 <script type="text/javascript">
+
+function visible() {
+  var x = document.getElementById("clientpassword");
+  if (x.type === "password") {
+    x.type = "text";
+	document.getElementById("show1").style.display="block";
+	document.getElementById("show2").style.display="none";
+  } else {
+	document.getElementById("show1").style.display="none";
+	document.getElementById("show2").style.display="block";
+    x.type = "password";
+  }
+}
+
     
         $(document).ready(function(){
             $(".emplyoee_info").validate({

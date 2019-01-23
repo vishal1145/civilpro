@@ -123,8 +123,11 @@ input.btn.btn-success.btn-block.exportButton {width: 150px;}
 if(isset($_SESSION['user_id'])){
 if(isset($_POST['Add_Timecard'])){
 	
+	try{
+		$multiple_machine = $_POST['multiple_machine'];
+	}
 
-	$multiple_machine = $_POST['multiple_machine'];
+	
 	$machine_name = implode(",",$_POST["multiple_machine"]);
 	$hours = $_POST["machine_multiple_add"];
 	$machine = $_POST["multiple_machine"];

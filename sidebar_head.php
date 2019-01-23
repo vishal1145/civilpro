@@ -18,9 +18,9 @@ $connn = mysqli_connect('localhost','root','','civilpro');
 								<a href="#" class="noti-dot"><span> Employees</span> <span class="menu-arrow"></span></a>
 								<ul class="list-unstyled" style="display: none;">
 									<li><a href="employees.php">All Employees</a></li>
-									<li class="active"><a href="holidays.php">Holidays</a></li>
+									<!-- <li class="active"><a href="holidays.php">Holidays</a></li>
 									<li><a href="leaves.html"><span>Leave Requests</span> <span class="badge bg-primary pull-right">1</span></a></li>
-									<li><a href="attendance.html">Attendance</a></li>
+									<li><a href="attendance.html">Attendance</a></li> -->
 									<li><a href="departments.php">Departments</a></li>
 									<li><a href="designations.php">Designations</a></li>
 								</ul>

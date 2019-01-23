@@ -173,7 +173,7 @@ if(isset($_REQUEST['searchclient'])){
 								<h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="client-profile.html"> </a></h4>
 								<h5 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="client-profile.php?id=<?php echo $row['id']; ?>"><?php echo $row['first_name']; ?></a></h5>
 								<div class="small text-muted"><?php echo $row['company']; ?></div>
-								<a href="chat.php" class="btn btn-default btn-sm m-t-10">Message</a>
+								<!-- <a href="chat.php" class="btn btn-default btn-sm m-t-10">Message</a> -->
 								<a href="client-profile.php?id=<?php echo $row['id'];?>" class="btn btn-default btn-sm m-t-10">View Profile</a>
 							</div>
 						</div>						
@@ -239,9 +239,11 @@ if(isset($_REQUEST['searchclient'])){
 											</div>
 										</div>
 										<div class="col-md-6">
-											<div class="form-group">
+											<div class="form-group" style="position:relative">
 												<label class="control-label">Password</label>
-												<input name="password" id="pswrd" class="form-control" type="password">
+												<input style="padding-right:50px;" name="password" id="pswrd" class="form-control" type="password">
+												<i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show1" onclick="visible()" class="fa fa-eye"></i>
+												<i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show2" onclick="visible()" class="fa fa-eye-slash"></i>
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -253,7 +255,7 @@ if(isset($_REQUEST['searchclient'])){
 										<div class="col-md-6">  
 											<div class="form-group">
 												<label class="control-label">Client ID <span class="text-danger">*</span></label>
-												<input name="clientid" id="cid" class="form-control floating" type="text">
+												<input disabled name="clientid" id="cid" class="form-control floating" type="text">
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -269,7 +271,7 @@ if(isset($_REQUEST['searchclient'])){
 											</div>
 										</div>
 									</div>
-									<div class="table-responsive m-t-15">
+									<!-- <div class="table-responsive m-t-15">
 										<table class="table table-striped custom-table">
 											<thead>
 												<tr>
@@ -411,7 +413,7 @@ if(isset($_REQUEST['searchclient'])){
 												</tr>
 											</tbody>
 										</table>
-									</div>
+									</div> -->
 									<div class="m-t-20 text-center">
 										<button name="addclient" id="formsubmit" value="submitform" class="btn btn-primary">Create Client</button>
 									</div>
@@ -458,9 +460,11 @@ if(isset($_REQUEST['searchclient'])){
 											</div>
 										</div>
 										<div class="col-md-6">
-											<div class="form-group">
+											<div class="form-group" style="position: relative;">
 												<label class="control-label">Password</label>
-												<input name="clientpass" class="form-control" id="clientpassword" type="password">
+												<input style="padding-right:50px;" name="clientpass" class="form-control" id="clientpassword" type="password">
+												<i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show1" onclick="visible()" class="fa fa-eye"></i>
+												<i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show2" onclick="visible()" class="fa fa-eye-slash"></i>
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -472,7 +476,7 @@ if(isset($_REQUEST['searchclient'])){
 										<div class="col-md-6">  
 											<div class="form-group">
 												<label class="control-label">Client ID <span class="text-danger">*</span></label>
-												<input name="clientid" class="form-control floating" id="client-id" type="text">
+												<input disabled name="clientid" class="form-control floating" id="client-id" type="text">
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -488,7 +492,7 @@ if(isset($_REQUEST['searchclient'])){
 											</div>
 										</div>
 									</div>
-									<div class="table-responsive m-t-15">
+									<!-- <div class="table-responsive m-t-15">
 										<table class="table table-striped custom-table">
 											<thead>
 												<tr>
@@ -630,7 +634,7 @@ if(isset($_REQUEST['searchclient'])){
 												</tr>
 											</tbody>
 										</table>
-									</div>
+									</div> -->
 									<div class="m-t-20 text-center">
 									<input type="hidden" name="client_edit_id" class="client_id" id="client_edit_id"/>
 										<button class="savedetail btn btn-primary" name="updateform" type="submit" class="btn btn-primary">Save Changes</button>
@@ -644,6 +648,36 @@ if(isset($_REQUEST['searchclient'])){
 			</div>			
 
 <script>
+//password visible or hide case logic
+function visible() {
+  var x = document.getElementById("clientpassword");
+  if (x.type === "password") {
+    x.type = "text";
+	document.getElementById("show1").style.display="block";
+	document.getElementById("show2").style.display="none";
+  } else {
+	document.getElementById("show1").style.display="none";
+	document.getElementById("show2").style.display="block";
+    x.type = "password";
+  }
+}
+
+function visible() {
+  var x = document.getElementById("pswrd");
+  if (x.type === "password") {
+    x.type = "text";
+	document.getElementById("show1").style.display="block";
+	document.getElementById("show2").style.display="none";
+  } else {
+	document.getElementById("show1").style.display="none";
+	document.getElementById("show2").style.display="block";
+    x.type = "password";
+  }
+}
+
+
+
+
 $(document).ready(function(){
  jQuery('.edit').click(function(){
 	  $('#edit_client').modal('show'); 
