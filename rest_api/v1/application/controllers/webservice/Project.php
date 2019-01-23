@@ -44,7 +44,7 @@ Class Project extends CI_Controller
 
 		
 
-			$material_data = '';
+			$material_data = array();
 			$employee_data = array();
 			foreach ($query as $key => $value1) {
 
