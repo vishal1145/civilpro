@@ -242,8 +242,8 @@ if(isset($_REQUEST['searchclient'])){
 											<div class="form-group" style="position:relative">
 												<label class="control-label">Password</label>
 												<input style="padding-right:50px;" name="password" id="pswrd" class="form-control" type="password">
-												<i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show1" onclick="visible()" class="fa fa-eye"></i>
-												<i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show2" onclick="visible()" class="fa fa-eye-slash"></i>
+												<i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show3" onclick="visible2()" class="fa fa-eye"></i>
+												<i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show4" onclick="visible2()" class="fa fa-eye-slash"></i>
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -662,15 +662,15 @@ function visible() {
   }
 }
 
-function visible() {
+function visible2() {
   var x = document.getElementById("pswrd");
   if (x.type === "password") {
     x.type = "text";
-	document.getElementById("show1").style.display="block";
-	document.getElementById("show2").style.display="none";
+	document.getElementById("show3").style.display="block";
+	document.getElementById("show4").style.display="none";
   } else {
-	document.getElementById("show1").style.display="none";
-	document.getElementById("show2").style.display="block";
+	document.getElementById("show3").style.display="none";
+	document.getElementById("show4").style.display="block";
     x.type = "password";
   }
 }
