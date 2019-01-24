@@ -29,6 +29,28 @@ include "sidebar.php";
 						}
 ?>
 <style>.error{color: red;}</style>
+
+
+<!-- Delete query -->
+<?php 
+						$abc = new connection();
+						$con = $abc->connect();
+						if (isset($_POST['delete_button'])) {
+						$id= $_POST['machine_id'];
+						$del="DELETE FROM machine WHERE machine_id= $id";
+						$delete=mysqli_query($con,$del); 
+						if($delete == true)
+						{
+							//echo "delete successfull";
+							header('Refresh:0');
+							//alert("successfully delete");
+						}
+						else
+						{
+							echo "Not delete";
+						}
+						}					
+?>
 <!-- Fectch data  -->
 <?php
 $fetch="SELECT * FROM machine";
@@ -70,25 +92,7 @@ $db=mysqli_query($con,$fetch);
 								<h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="#"><?php echo $row['machine_name']; ?></a></h4>
 							</div>
 						</div>
-<!-- Delete query -->
- <?php 
-						$abc = new connection();
-						$con = $abc->connect();
-						if (isset($_POST['delete_button'])) {
-						$id= $_POST['machine_id'];
-						$del="DELETE FROM machine WHERE machine_id= $id  ";
-						$delete=mysqli_query($con,$del); 
-						if($delete >0)
-						{
-							//echo "delete successfull";
-							header('Refresh:0');
-						}
-						else
-						{
-							echo "Not delete";
-						}
-						}					
-?>
+
 
 
 				<div id="delete_employee<?php echo $row['machine_id']; ?>" class="modal custom-modal fade" role="dialog">
