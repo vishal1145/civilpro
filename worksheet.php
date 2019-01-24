@@ -126,7 +126,10 @@ if(isset($_POST['Add_Timecard'])){
 	try{
 		$multiple_machine = $_POST['multiple_machine'];
 	}
-
+	catch(Exception $e)
+	{
+	   //You are here means that the exception occurred now do something else here.
+	}
 	
 	$machine_name = implode(",",$_POST["multiple_machine"]);
 	$hours = $_POST["machine_multiple_add"];

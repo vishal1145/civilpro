@@ -12,8 +12,8 @@ $user_id = $_SESSION['user_id'];
 
 
 	if(isset($_POST['create_designation'])){
-		$designation_name = $_POST['designation_name'];
-		$department_info  = $_POST['department_info'];
+	 $designation_name = $_POST['designation_name'];
+		 $department_info  = $_POST['department_info'];
 		$time_set  		  = time();
 		$log_user_qury = "INSERT INTO designation (designation_name,department_name,time_set)
 		VALUES ('$designation_name','$department_info',$time_set)";
@@ -204,14 +204,15 @@ echo "UPDATE designation SET designation_name='$designation_name', department_na
 									<!-- <input class="form-control" type="text" name="department_name"> -->
 								</div>
 								<div class="m-t-20 text-center">
-									<button class="btn btn-primary" value="create" name="create_designation">Create Designation</button>
+									<button class="btn btn-primary" value="create" name="create_designation"  >Create Designation</button>
 								</div>
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-			<?php                   
+			<?php  
+			                
 		/*	$sel_query = "Select * from designation";
 			$res_data = mysqli_query($con,$sel_query);	
 			
@@ -220,8 +221,7 @@ echo "UPDATE designation SET designation_name='$designation_name', department_na
 			
 			<?php //} ?>
         </div>
-
-   
+		
        	<div id="designation_edit" class="modal custom-modal fade" role="dialog">
 			<div class="modal-dialog">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>

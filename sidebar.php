@@ -1,7 +1,7 @@
 <?php
 
 include "url_file.php";
-$connn = mysqli_connect('45.114.79.179','attodayi_civil','civilpro@123','attodayi_civilpro');
+$connn = mysqli_connect('157.230.57.197','attodayi_civil','civilpro@123','attodayi_civilpro');
 
 $current_url = basename($_SERVER['PHP_SELF']);
 $active = "class=\"active\"";
