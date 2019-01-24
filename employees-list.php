@@ -256,10 +256,15 @@ $SearchArray = array();
 				 ?>
 
 
+
+
 											<td style="display: none"><?php echo $time_setting_value['time_set']; ?></td>
 											<td>
-												<a href="" class="avatar">J</a>
+												<a href="" class="avatar">
+												<img src="<?php echo $row['img']; ?>" />
+												</a>
 												<h2>
+											
 													<a href="#"><?php echo $row['first_name']; ?> 
 													<span>
 														<?php echo $des_name; ?>

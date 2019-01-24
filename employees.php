@@ -226,7 +226,7 @@ if(isset($_REQUEST['empl-search'])){
 
                         
                         ?>
-                        <div class="row staff-grid-row">
+             <div class="row staff-grid-row">
                     <?php while($row = mysqli_fetch_array($result))
                     {
 						//designationa get
