@@ -161,7 +161,36 @@ if(isset($_REQUEST['empl-search'])){
             
        ?>
 
+<script>
+//password visible or hide case logic
+function visible() {
+  var x = document.getElementById("clientpassword");
+  if (x.type === "password") {
+    x.type = "text";
+	document.getElementById("show1").style.display="block";
+	document.getElementById("show2").style.display="none";
+  } else {
+	document.getElementById("show1").style.display="none";
+	document.getElementById("show2").style.display="block";
+    x.type = "password";
+  }
+}
 
+//password visible or hide case logic
+function visible2() {
+  var x = document.getElementById("pswrd1");
+  if (x.type === "password") {
+    x.type = "text";
+	document.getElementById("show1").style.display="block";
+	document.getElementById("show2").style.display="none";
+  } else {
+	document.getElementById("show1").style.display="none";
+	document.getElementById("show2").style.display="block";
+    x.type = "password";
+  }
+}
+   
+</script>
             <div class="page-wrapper">
                 <div class="content container-fluid">
                     <div class="row">
@@ -662,7 +691,7 @@ if(isset($_REQUEST['empl-search'])){
                                             <label class="control-label">Password</label>
                                             <input style="padding-right:50px;" class="form-control" type="password" id="pswrd1" name="pass">
                                             <i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show1" onclick="visible2()" class="fa fa-eye"></i>
-												<i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show2" onclick="visible2()" class="fa fa-eye-slash"></i>
+											<i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show2" onclick="visible2()" class="fa fa-eye-slash"></i>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -724,7 +753,7 @@ if(isset($_REQUEST['empl-search'])){
                                         </div>
                                     </div>
                                 </div>
-                                <div class="table-responsive m-t-15">
+                                <!-- <div class="table-responsive m-t-15">
                                     <table class="table table-striped custom-table">
                                         <thead>
                                             <tr>
@@ -908,7 +937,7 @@ if(isset($_REQUEST['empl-search'])){
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
+                                </div> -->
                                 <div class="m-t-20 text-center">
                                     <button id="emply_id" type="submit" name="create_employe" class="btn btn-primary">Create Employee</button>
                                 </div>
@@ -949,34 +978,7 @@ if(isset($_REQUEST['empl-search'])){
 
 <script type="text/javascript">
 
-//password visible or hide case logic
-function visible() {
-  var x = document.getElementById("clientpassword");
-  if (x.type === "password") {
-    x.type = "text";
-	document.getElementById("show1").style.display="block";
-	document.getElementById("show2").style.display="none";
-  } else {
-	document.getElementById("show1").style.display="none";
-	document.getElementById("show2").style.display="block";
-    x.type = "password";
-  }
-}
-
-//password visible or hide case logic
-function visible2() {
-  var x = document.getElementById("pswrd1");
-  if (x.type === "password") {
-    x.type = "text";
-	document.getElementById("show1").style.display="block";
-	document.getElementById("show2").style.display="none";
-  } else {
-	document.getElementById("show1").style.display="none";
-	document.getElementById("show2").style.display="block";
-    x.type = "password";
-  }
-}
-    
+ 
         $(document).ready(function(){
  
          
