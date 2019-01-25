@@ -19,6 +19,7 @@ $con = $obj->connect();
          $employee_phone = $_POST['phone'];
          $employee_comp  = $_POST['company'];
          $employee_desi  = $_POST['designation'];
+         $img_url = $_POST['empfile'];
          $time_set = time();
          //echo $employee_fname;
          $get_email = "SELECT * FROM employee where `email` = '$employee_email'";
@@ -36,7 +37,7 @@ $con = $obj->connect();
 
 
 
-          $insert_emp = "INSERT INTO employee(first_name,last_name,username,email,password,confirm_pass,employee_id,joining_date,phone,img,company,designation,device_id,device_type,time_set) VALUES('$employee_fname','$employee_lname','$employee_uname','$employee_email','".md5($employee_pass)."','".md5($employee_cpass)."','$employee_eid','$employee_jdate',$employee_phone,'','$employee_comp',$employee_desi,'','',$time_set)";
+          $insert_emp = "INSERT INTO employee(first_name,last_name,username,email,password,confirm_pass,employee_id,joining_date,phone,img,company,designation,device_id,device_type,time_set) VALUES('$employee_fname','$img_url','$employee_lname','$employee_uname','$employee_email','".md5($employee_pass)."','".md5($employee_cpass)."','$employee_eid','$employee_jdate',$employee_phone,'','$employee_comp',$employee_desi,'','',$time_set)";
          //die;
         // die('here');
       
@@ -271,7 +272,7 @@ function visible2() {
                             <div class="profile-widget">
                                 <div class="profile-img">
                                 <a href="" class="avatar">
-												<?php 
+												 <?php 
                                      $imgurl  = $row['img'];
 												if($row['img'] == "")
 													$imgurl  = "https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg";
@@ -279,7 +280,7 @@ function visible2() {
 													?>
 
 
-												<img src="<?php echo $imgurl; ?>"  />
+												<img src="<?php echo $imgurl; ?>"  /> 
 
 												</a>
                                 </div>
@@ -675,8 +676,8 @@ function visible2() {
                                 <div class="row">
                                 <div class="col-sm-12">
                                
-                                         <input type="submit" value="Upload Image" name="submit">
-                       
+                                         <input type="file"  (change)="upload($event)" value="Upload Image" name="submit">
+                                        <input type="text" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile">
                                   </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
@@ -998,6 +999,9 @@ function visible2() {
         $(document).ready(function(){
  
          
+            $( "#empfile" ).change(function() {
+  alert( "Handler for .change() called." );
+});
 
             $(".emplyoee_info").validate({
 
@@ -1129,6 +1133,7 @@ function visible2() {
         format: 'YYYY-MM-DD',
        // timeFormat: 'HH:mm'
      });
+
 
 
 
