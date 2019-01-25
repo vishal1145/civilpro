@@ -15,7 +15,7 @@ $user_id = $_SESSION['user_id'];
 	 $designation_name = $_POST['designation_name'];
 		 $department_info  = $_POST['department_info'];
 		$time_set  		  = time();
-		$log_user_qury = "INSERT INTO designation (designation_name,department_name,time_set)
+		$log_user_qury = "INSERT INTO designation (designation_name,department_info,time_set)
 		VALUES ('$designation_name','$department_info',$time_set)";
 		$res_data = mysqli_query($con,$log_user_qury);
 
@@ -182,7 +182,7 @@ echo "UPDATE designation SET designation_name='$designation_name', department_na
 							<h4 class="modal-title">Add Designation</h4>
 						</div>
 						<div class="modal-body">
-							<form method="POST">
+							<form method="post" action="">
 								<div class="form-group">
 									<label>Designation Name <span class="text-danger">*</span></label>
 									<input class="form-control" type="text" name="designation_name">
@@ -204,7 +204,7 @@ echo "UPDATE designation SET designation_name='$designation_name', department_na
 									<!-- <input class="form-control" type="text" name="department_name"> -->
 								</div>
 								<div class="m-t-20 text-center">
-									<button class="btn btn-primary" value="create" name="create_designation"  >Create Designation</button>
+									<button type="submit"  class="btn btn-primary" value="create" name="create_designation"  >Create Designation</button>
 								</div>
 							</form>
 						</div>
