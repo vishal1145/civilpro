@@ -213,7 +213,7 @@ function visible2() {
                         </div>
                     </div>
                     <div class="row filter-row">
-                    <form method="post" name="employee_search">
+                    <form action="" method="post" name="employee_search">
                            <div class="col-sm-3 col-xs-6">  
                                 <div class="form-group form-focus">
                                     <label class="control-label">Employee ID</label>
@@ -244,7 +244,7 @@ function visible2() {
                            </div>
                            <div class="col-sm-3 col-xs-6">  
                            <input type="submit" name="empl-search" class="btn btn-success btn-block" value="search">
-						   <input type="button" class="ref_page btn btn-info btn-block" value="Reset">
+						   <input type="submit" class="ref_page btn btn-info btn-block" value="Reset">
                                 <!-- <a href="#" class="btn btn-success btn-block"> Search </a>  -->
                            </div>  
                            </form>   
@@ -270,7 +270,18 @@ function visible2() {
                         <div class="col-md-4 col-sm-4 col-xs-6 col-lg-3">
                             <div class="profile-widget">
                                 <div class="profile-img">
-                                    <a href="#"><img class="avatar" src="assets/img/user.jpg" alt=""></a>
+                                <a href="" class="avatar">
+												<?php 
+                                     $imgurl  = $row['img'];
+												if($row['img'] == "")
+													$imgurl  = "https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg";
+
+													?>
+
+
+												<img src="<?php echo $imgurl; ?>"  />
+
+												</a>
                                 </div>
                                 <div class="dropdown profile-action">
                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
@@ -662,6 +673,11 @@ function visible2() {
                         <form name="add-employee" class="emplyoee_info" method="post" action="" enctype="multipart/form-data">
                             <form class="m-b-30">
                                 <div class="row">
+                                <div class="col-sm-12">
+                               
+                                         <input type="submit" value="Upload Image" name="submit">
+                       
+                                  </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">First Name <span class="text-danger">*</span></label>
