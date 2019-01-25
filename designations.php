@@ -15,7 +15,7 @@ $user_id = $_SESSION['user_id'];
 	 $designation_name = $_POST['designation_name'];
 		 $department_info  = $_POST['department_info'];
 		$time_set  		  = time();
-		$log_user_qury = "INSERT INTO designation (designation_name,department_info,time_set)
+		$log_user_qury = "INSERT INTO designation (designation_name,department_name,time_set)
 		VALUES ('$designation_name','$department_info',$time_set)";
 		$res_data = mysqli_query($con,$log_user_qury);
 
@@ -161,7 +161,7 @@ echo "UPDATE designation SET designation_name='$designation_name', department_na
 							<h4 class="modal-title">Delete Designation</h4>
 						</div>
 						<div class="modal-body card-box">
-						<form method="POST">
+						<form method="POST" action="">
 							<p>Are you sure want to delete this?</p>
 							<div class="m-t-20 text-left">
 								<a href="#" class="btn btn-default" data-dismiss="modal">Close</a>

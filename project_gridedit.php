@@ -271,8 +271,17 @@ if(isset($_POST['update_project'])){
 
 ?> 
 
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.css" />
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-typeahead.css" />
+<script>
+ function close2()
+ {
+ //document.getElementyById("create_project1").style.display="none";
+ window.location.href = "projects.php";
+ }
+</script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-typeahead.css" />
 <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"/>
 <link rel="stylesheet" type="text/css" href="assets/autocomplete/css/style.css"/> 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> 
@@ -305,7 +314,7 @@ if(isset($_POST['update_project'])){
 				
 <div id="create_project1" class="modal123 custom-modal123 fade123" role="dialog">
 	<div class="modal-dialog">
-		<a href="project.php"><button type="button" class="close" data-dismiss="modal">&times;</button></a>
+		<a href="project.php"><button type="button" class="close" data-dismiss="modal" onclick="close2(); return false;">&times;</button></a>
 		<div class="modal-content modal-lg">
 			<div class="modal-header">
 				<h4 class="modal-title">Edit Project</h4>
