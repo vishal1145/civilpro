@@ -238,12 +238,13 @@ $SearchArray = array();
 							
                         while($row = mysqli_fetch_array($result))
 							{
-								$desig = $row['designation'];
+								$desig = $row['designation'];							
 								$get_desi = "SELECT * FROM designation where designation_id = $desig";
 								$get_designation = mysqli_query($con,$get_desi);
 								$designation_name = mysqli_fetch_array($get_designation);
 								$des_name = $designation_name['designation_name']; 
-								
+							
+                                               
 								?>
 										<tr>
 											
@@ -261,7 +262,9 @@ $SearchArray = array();
 											<td style="display: none"><?php echo $time_setting_value['time_set']; ?></td>
 											<td>
 												<a href="" class="avatar">
-												<img src="<?php echo $row['img']; ?>" />
+												
+												<img src="<?php echo $row['img']; ?>"  />
+
 												</a>
 												<h2>
 											

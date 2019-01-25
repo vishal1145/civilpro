@@ -1563,4 +1563,11 @@ body.deshboard-1 .page-wrapper {
 img#edit_image {
     margin-bottom: 20px;
 }
+
+.imgpostion{
+	height: 38px;
+    width: 38px;
+    object-fit: cover;
+    object-position: top;
+}
 /***************************11-10-18 end*************************************/
