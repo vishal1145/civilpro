@@ -1,7 +1,7 @@
 <?php
 
 include "url_file.php";
-$connn = mysqli_connect('157.230.57.197','attodayi_civil','civilpro@123','attodayi_civilpro');
+$connn = mysqli_connect('157.230.57.197','root','Ithours_123','attodayi_civilpro');
 
 $current_url = basename($_SERVER['PHP_SELF']);
 $active = "class=\"active\"";
@@ -76,7 +76,7 @@ $removeClass = "";
 
 								$user_id = $_SESSION['user_id'];
 								$selct_user = "SELECT * FROM Users WHERE user_id = '$user_id'";
-								$user_query = $mysqli_query($connn,$selct_user);
+								$user_query = mysqli_query($connn,$selct_user);
 								$get_user_role = mysqli_fetch_object($user_query);
 								if($get_user_role->user_role == '1'){
 									echo "<li class='Users'> 

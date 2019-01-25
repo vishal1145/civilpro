@@ -124,7 +124,7 @@ $con = $obj->connect();
 
   }
 
-	if(isset($_POST['rearch_res'])){
+	if(isset($_POST['search_project'])){
 
 		/*echo "<pre>";
         print_r($_POST);
@@ -175,7 +175,7 @@ $SearchArray = array();
 						</div>
 					</div>
 					<div class="row filter-row">
-						  <form method="post" name="employee_search">
+						  <form action="" method="post">
 						<div class="col-sm-3 col-xs-6">  
 							<div class="form-group form-focus">
 								<label class="control-label">Employee ID</label>
@@ -208,7 +208,10 @@ $SearchArray = array();
 							</div>
 						</div>
 						<div class="col-sm-3 col-xs-6">  
-							 <input type="submit" name="rearch_res" class="btn btn-success btn-block" value="Search">
+							 <!-- <input type="button" name="rearch_res" class="ref_page btn btn-success btn-block" value="Search"> -->
+
+							 <input type="submit" class="btn btn-success btn-block" value="Search" name="search_project">  
+
 							  <input type="button" class="ref_page btn btn-info btn-block" value="Reset">
 							
 						</div>  
@@ -238,7 +241,7 @@ $SearchArray = array();
 							
                         while($row = mysqli_fetch_array($result))
 							{
-								$desig = $row['designation'];							
+								$desig = $row['designation'];
 								$get_desi = "SELECT * FROM designation where designation_id = $desig";
 								$get_designation = mysqli_query($con,$get_desi);
 								$designation_name = mysqli_fetch_array($get_designation);
@@ -262,10 +265,18 @@ $SearchArray = array();
 											<td style="display: none"><?php echo $time_setting_value['time_set']; ?></td>
 											<td>
 												<a href="" class="avatar">
-												
-												<img src="<?php echo $row['img']; ?>"  />
+												<?php 
+$imgurl  = $row['img'];
+												if($row['img'] == "")
+													$imgurl  = "https://serving.plexop.net/media/4/1/87288.jpg";
+
+													?>
+
+
+												<img src="<?php echo $imgurl; ?>"  />
 
 												</a>
+
 												<h2>
 											
 													<a href="#"><?php echo $row['first_name']; ?> 
