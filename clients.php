@@ -108,16 +108,16 @@ if(isset($_REQUEST['searchclient'])){
 						</div>
 						<div class="col-sm-8 col-xs-9 text-right m-b-20">
 							<a href="#" class="btn btn-primary rounded pull-right" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Add Client</a>
-							<div class="view-icons">
+							<!-- <div class="view-icons">
 								<a href="clients.php" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
 								<a href="clients-list.php" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
-							</div>
+							</div> -->
 						</div>
 					</div>			
 					
 					
                     <div class="row filter-row">
-					<form method="POST">
+					<form action="" method="post">
 
 						<div class="col-sm-3 col-xs-6">  
 							<div class="form-group form-focus">
@@ -160,7 +160,18 @@ if(isset($_REQUEST['searchclient'])){
 						<div class="col-md-4 col-sm-4 col-xs-6 col-lg-3">
 							<div class="profile-widget">
 								<div class="profile-img">									
-									<a href="client-profile.php?id=<?php echo $row['id'];?>"><img class="avatar" src="upload_images/<?php echo $row['img'];?> " alt=""></a>
+								<a href="" class="avatar">
+												<?php 
+                                     $imgurl  = $row['img'];
+												if($row['img'] == "")
+													$imgurl  = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmRgVKJ4PxPoxFWVEVgKqJZ_f152FxwaboW-CsTXgZTz_fA_xqpg";
+
+													?>
+
+
+												<img src="<?php echo $imgurl; ?>"  />
+
+												</a>
 								</div>
 								<div class="dropdown profile-action">
 									<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
