@@ -37,7 +37,7 @@ $con = $obj->connect();
 
 
 
-          $insert_emp = "INSERT INTO employee(first_name,last_name,username,email,password,confirm_pass,employee_id,joining_date,phone,img,company,designation,device_id,device_type,time_set) VALUES('$employee_fname','$img_url','$employee_lname','$employee_uname','$employee_email','".md5($employee_pass)."','".md5($employee_cpass)."','$employee_eid','$employee_jdate',$employee_phone,'','$employee_comp',$employee_desi,'','',$time_set)";
+          $insert_emp = "INSERT INTO employee(first_name,last_name,username,email,password,confirm_pass,employee_id,joining_date,phone,img,company,designation,device_id,device_type,time_set) VALUES('$employee_fname','$employee_lname','$employee_uname','$employee_email','".md5($employee_pass)."','".md5($employee_cpass)."','$employee_eid','$employee_jdate',$employee_phone,'$img_url','$employee_comp',$employee_desi,'','',$time_set)";
          //die;
         // die('here');
       
@@ -190,6 +190,217 @@ function visible2() {
     x.type = "password";
   }
 }
+
+
+
+function generateUUID() {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxxxxxxxxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+};
+ 
+$(document).ready(function(){
+ 
+    $("#empic").change(function() {
+
+
+
+
+
+var send_file = this.files[0];
+//const reader = new FileReader();
+// reader.onload = function(event: any) {
+// self.document_link = event.target.result;
+// };
+// reader.readAsDataURL(element.target.files[0]);
+
+const fileName = send_file.name;
+
+
+const fileName1 = generateUUID() + fileName.substring(fileName.indexOf("."), fileName.length);
+
+let photoKey = fileName1;
+photoKey = "Quacck/" + "123" + "/" + photoKey;
+
+var albumBucketName = 'dolphino';
+var bucketRegion = 'us-west-2';
+var IdentityPoolId = 'us-west-2:ff182092-2a76-489c-9d58-45ba742d9e7d'
+
+AWS.config.update({
+    region: 'us-west-2', //'us-west-2',
+    credentials: new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: IdentityPoolId
+    })
+});
+
+var aws = new AWS.S3({
+    apiVersion: '2012-10-17', //'2006-03-01',
+    params: {
+        Bucket: albumBucketName
+    }
+});
+
+
+aws.upload({
+        Key: photoKey,
+        Body: send_file,
+        ACL: "public-read"
+    }, function(err, data) {
+        if (err) {
+            return alert("There was an error uploading your Image: ");
+        } else {
+
+$("#empfile").val(data.Location);
+            console.log(data);
+        }
+    });
+
+
+
+
+});
+
+
+ $(".emplyoee_info").validate({
+
+     rules: {
+
+         fname: "required",
+         lname: "required",
+         uname: "required",
+         email: "required",
+         pass :{ 
+             required: true,
+             minlength: 6,
+           }, 
+         cpass: { 
+         required: true,
+               equalTo: "#pswrd1",
+                minlength: 6,
+          },
+         eid  : "required",
+         jdate: "required",
+         phone:
+               {
+                 required: true,
+                 minlength: 10, 
+               },
+         company:"required",
+         designation:"required",
+     },
+
+     messages: {
+     fname: "Please enter your First Name",
+       lname: "Please enter your Last Name",
+       uname: "Please enter your User Name",
+       email: "Please enter your Email",
+       pass : { 
+            required:"Please enter your password",
+            minlength: "Your password must be at least 6 characters",  
+            },
+       //minlength: "Your password must be at least 6 characters long"
+     
+       cpass: { 
+            required:"Please enter your password",
+           // minlength: "Your confirm password must be at least 6 characters",  
+            },
+       eid  : "Please enter your Employee ID",
+       jdate: "Please enter your Joining Date",
+       phone: {required: "Please enter your Phone",
+               minlength: "Your Phone must be at least 10 characters long"},
+       company: "Please enter your Company",
+       designation: "Please enter your Designation",
+
+   },
+
+   submitHandler: function(form) {
+   form.submit();
+     }
+
+   
+
+ });
+
+
+  $(".employee_info_data").validate({
+
+     rules: {
+
+         fname: "required",
+         lname: "required",
+         uname: "required",
+         email: "required",
+         pass : {
+
+           required : true,
+           minlength : 6,
+         },
+
+         cpass: {
+
+             equalTo: ".employeepassword",
+             minlength : 6,
+         },
+
+         eid  : "required",
+         jdate: "required",
+         phone: "required",
+         company:"required",
+         designation:"required",
+     },
+
+     messages: {
+     fname: "Please enter your First Name",
+       lname: "Please enter your Last Name",
+       uname: "Please enter your User Name",
+       email: "Please enter your Email",
+       password: { 
+      required:"The Password is Required"
+
+    },
+       eid  : "Please enter your Employee ID",
+       jdate: "Please enter your Joining Date",
+       phone: "Please enter your Phone",
+       company: "Please enter your Company",
+       designation: "Please enter your Designation",
+
+   },
+
+   submitHandler: function(form) {
+   form.submit();
+     }
+
+   
+
+ });
+
+
+jQuery('#openmodal').click(function(){
+$('#add_employee').modal('show'); 
+
+  
+
+});
+
+
+
+
+
+jQuery('.datetimepicker').datetimepicker({
+//alert('ddfd');
+format: 'YYYY-MM-DD',
+// timeFormat: 'HH:mm'
+});
+
+});
+
+
+
+
    
 </script>
             <div class="page-wrapper">
@@ -643,14 +854,7 @@ function visible2() {
             </div> 
 
 
-<script type="text/javascript">
-    
-       /* $(document).ready(function(){
-           
- 
-});*/
 
-</script>
 
 
 
@@ -676,8 +880,8 @@ function visible2() {
                                 <div class="row">
                                 <div class="col-sm-12">
                                
-                                         <input type="file"  (change)="upload($event)" value="Upload Image" name="submit">
-                                        <input type="text" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile">
+                                         <input type="file" value="Upload Image" id="empic">
+                                        <input type="hidden" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile" id="empfile">
                                   </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
@@ -993,149 +1197,6 @@ function visible2() {
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
 
 
-<script type="text/javascript">
-
- 
-        $(document).ready(function(){
- 
-         
-            $( "#empfile" ).change(function() {
-  alert( "Handler for .change() called." );
-});
-
-            $(".emplyoee_info").validate({
-
-                rules: {
-
-                    fname: "required",
-                    lname: "required",
-                    uname: "required",
-                    email: "required",
-                    pass :{ 
-                        required: true,
-                        minlength: 6,
-                      }, 
-                    cpass: { 
-                    required: true,
-                          equalTo: "#pswrd1",
-                           minlength: 6,
-                     },
-                    eid  : "required",
-                    jdate: "required",
-                    phone:
-                          {
-                            required: true,
-                            minlength: 10, 
-                          },
-                    company:"required",
-                    designation:"required",
-                },
-
-                messages: {
-                fname: "Please enter your First Name",
-                  lname: "Please enter your Last Name",
-                  uname: "Please enter your User Name",
-                  email: "Please enter your Email",
-                  pass : { 
-                       required:"Please enter your password",
-                       minlength: "Your password must be at least 6 characters",  
-                       },
-                  //minlength: "Your password must be at least 6 characters long"
-                
-                  cpass: { 
-                       required:"Please enter your password",
-                      // minlength: "Your confirm password must be at least 6 characters",  
-                       },
-                  eid  : "Please enter your Employee ID",
-                  jdate: "Please enter your Joining Date",
-                  phone: {required: "Please enter your Phone",
-                          minlength: "Your Phone must be at least 10 characters long"},
-                  company: "Please enter your Company",
-                  designation: "Please enter your Designation",
-
-              },
-
-              submitHandler: function(form) {
-              form.submit();
-                }
-
-              
-
-            });
 
 
-             $(".employee_info_data").validate({
-
-                rules: {
-
-                    fname: "required",
-                    lname: "required",
-                    uname: "required",
-                    email: "required",
-                    pass : {
-
-                      required : true,
-                      minlength : 6,
-                    },
-
-                    cpass: {
-
-                        equalTo: ".employeepassword",
-                        minlength : 6,
-                    },
-
-                    eid  : "required",
-                    jdate: "required",
-                    phone: "required",
-                    company:"required",
-                    designation:"required",
-                },
-
-                messages: {
-                fname: "Please enter your First Name",
-                  lname: "Please enter your Last Name",
-                  uname: "Please enter your User Name",
-                  email: "Please enter your Email",
-                  password: { 
-                 required:"The Password is Required"
-
-               },
-                  eid  : "Please enter your Employee ID",
-                  jdate: "Please enter your Joining Date",
-                  phone: "Please enter your Phone",
-                  company: "Please enter your Company",
-                  designation: "Please enter your Designation",
-
-              },
-
-              submitHandler: function(form) {
-              form.submit();
-                }
-
-              
-
-            });
-
-
- jQuery('#openmodal').click(function(){
-	  $('#add_employee').modal('show'); 
- )};
-             
- 
-});
-
-
-
-
-
-    jQuery('.datetimepicker').datetimepicker({
-        //alert('ddfd');
-        format: 'YYYY-MM-DD',
-       // timeFormat: 'HH:mm'
-     });
-
-
-
-
-     
-</script>
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
