@@ -205,6 +205,11 @@ function generateUUID() {
  
 $(document).ready(function(){
  
+
+    callapi({ PRCID : 'MAXEMP'}).then(function(res){
+$("#eidcontrol").val(res.id)
+})
+
     $("#empic").change(function() {
 
 
@@ -429,7 +434,7 @@ format: 'YYYY-MM-DD',
                            <div class="col-sm-3 col-xs-6">  
                                 <div class="form-group form-focus">
                                     <label class="control-label">Employee ID</label>
-                                    <input name="empl_find_id" type="text" class="form-control floating" />
+                                    <input name="empl_find_id" type="text" class="form-control floating" id="empl_find_id" />
                                 </div>
                            </div>
                            <div class="col-sm-3 col-xs-6">  
@@ -923,8 +928,8 @@ format: 'YYYY-MM-DD',
                                     </div>
                                     <div class="col-sm-6">  
                                         <div class="form-group">
-                                            <label class="control-label">Employee ID <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="eid">
+                                            <label class="control-label">Employee ID<span class="text-danger">*</span></label>
+                                            <input type="text" disabled class="form-control" name="eid" id="eidcontrol">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">  
