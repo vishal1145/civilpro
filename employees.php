@@ -929,7 +929,7 @@ format: 'YYYY-MM-DD',
                                     <div class="col-sm-6">  
                                         <div class="form-group">
                                             <label class="control-label">Employee ID<span class="text-danger">*</span></label>
-                                            <input type="text" disabled class="form-control" name="eid" id="eidcontrol">
+                                            <input type="text" readonly="readonly"  class="form-control" name="eid" id="eidcontrol">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">  

@@ -17,9 +17,10 @@ $password 	= $_POST['password'];
 $clientid 	= $_POST['clientid'];
 $phone 		= $_POST['phone'];
 $cname 		= $_POST['companyname'];
+$img_url    = $_POST['empfile'];
 $time_set 	= time(); 
 
-$sql="INSERT INTO Client (img,first_name,last_name,user_name,email,password,client_id,phone_no,company,birthday,address,gender,state,country,pincode,time_set) VALUES ('','$firstname','$lastname','$username','$emailid','$password','$clientid','$phone','$cname','','','','','','',$time_set)";
+$sql="INSERT INTO Client (first_name,last_name,user_name,email,password,client_id,phone_no,img,company,birthday,address,gender,state,country,pincode,time_set) VALUES ('$firstname','$lastname','$username','$emailid','$password','$clientid','$phone','$img_url ','$cname','','','','','','',$time_set)";
 
 $insert_result=mysqli_query($con,$sql);
 if($insert_result == true)
@@ -45,8 +46,9 @@ if (isset($_POST['updateform'])) {
     $clientid = (isset($_POST['clientid']) ? $_POST['clientid'] : "");
     $clientph = (isset($_POST['clientph']) ? $_POST['clientph'] : ""); 	
     $company = (isset($_POST['company']) ? $_POST['company'] : "");	
-	
-	$sql ="UPDATE Client SET first_name='$firstname', last_name='$lastname', user_name='$username', email='$clientemail', password='$clientpass', client_id='$clientid', phone_no='$clientph', company='$company' WHERE id=$editid";
+	$img_url    = $_POST['empfile1'];
+
+	$sql ="UPDATE Client SET first_name='$firstname', last_name='$lastname', user_name='$username', email='$clientemail', password='$clientpass', client_id='$clientid', phone_no='$clientph', company='$company', img='$img_url' WHERE id=$editid";
 	
 	$update=mysqli_query($con,$sql);
 						if($update == true){
@@ -97,6 +99,230 @@ if(isset($_REQUEST['searchclient'])){
 }
 				
 ?>
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
+			<script src = "https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"  type="text/javascript"> </script> 
+			<script type="text/javascript">
+    //password visible or hide case logic
+    function visible() {
+        var x = document.getElementById("clientpassword");
+        if (x.type === "password") {
+            x.type = "text";
+            document.getElementById("show1").style.display = "block";
+            document.getElementById("show2").style.display = "none";
+        } else {
+            document.getElementById("show1").style.display = "none";
+            document.getElementById("show2").style.display = "block";
+            x.type = "password";
+        }
+    }
+
+function visible2() {
+    var x = document.getElementById("pswrd");
+    if (x.type === "password") {
+        x.type = "text";
+        document.getElementById("show3").style.display = "block";
+        document.getElementById("show4").style.display = "none";
+    } else {
+        document.getElementById("show3").style.display = "none";
+        document.getElementById("show4").style.display = "block";
+        x.type = "password";
+    }
+}
+
+
+
+
+$(document).ready(function() {
+    jQuery('.edit').click(function() {
+        $('#edit_client').modal('show');
+
+        var id = jQuery(this).attr("data-edit");
+        var firstname = jQuery(this).attr("data-firstname");
+        var lastname = jQuery(this).attr("data-lastname");
+        var username = jQuery(this).attr("data-username");
+        var email = jQuery(this).attr("data-email");
+        var password = jQuery(this).attr("data-password");
+        var conpassword = jQuery(this).attr("data-password");
+        var clientid = jQuery(this).attr("data-clientid");
+        var ph = jQuery(this).attr("data-ph");
+        var company = jQuery(this).attr("data-company");
+
+        jQuery("#client_edit_id").val(id);
+        jQuery("#first_name").val(firstname);
+        jQuery("#last_name").val(lastname);
+        jQuery("#user_name").val(username);
+        jQuery("#clientemail").val(email);
+        jQuery("#clientpassword").val(password);
+        jQuery("#clientconpassword").val(conpassword);
+        jQuery("#client-id").val(clientid);
+        jQuery("#clientph").val(ph);
+        jQuery("#companyname").val(company);
+    });
+});
+
+$(document).ready(function() {
+    jQuery("#addclientform").validate({
+        rules: {
+            firstname: "required",
+            username: "required",
+            emailid: "required",
+            clientid: "required",
+            phone: {
+                required: true,
+                minlength: 10,
+                maxlength: 11,
+            },
+            companyname: "required",
+            password: {
+                required: true,
+                minlength: 6,
+            },
+            confirmpass: {
+                equalTo: "#pswrd",
+                minlength: 6,
+            }
+        },
+        messages: {
+            firstname: "Please Enter Your Name",
+            username: "Please Enter Your Username",
+            emailid: "Please Enter Your Email",
+            clientid: "Please Enter Your Client ID",
+            phone: {
+                required: "Please Enter Your Contact Number",
+                minlength: "Please enter at least 10 characters.",
+                maxlength: "Please enter no more than 11 characters.",
+            },
+            companyname: "Please Enter Your Company Name",
+            password: {
+                required: "The Password is Required"
+
+            }
+        }
+    });
+});
+
+$(document).ready(function() {
+    jQuery("#editclientform").validate({
+        rules: {
+            firstname: "required",
+            username: "required",
+            clientid: "required",
+            clientemail: "required",
+            client_ph: "required",
+            company: "required",
+            clientpass: {
+                required: true,
+                minlength: 6,
+            },
+            conpass: {
+                equalTo: "#clientpassword",
+                minlength: 6,
+            }
+        },
+        messages: {
+            firstname: "Please Enter Your Name",
+            username: "Please Enter Your Username",
+            clientemail: "Please Enter Your Email",
+            clientid: "Please Enter Your Client ID",
+            client_ph: "Please Enter Your Contact Number",
+            company: "Please Enter Your Company Name",
+            clientpass: {
+                required: "The Password is Required"
+
+            }
+        }
+    });
+});
+
+
+
+function generateUUID() {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxxxxxxxxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+};
+
+$(document).ready(function() {
+
+
+            callapi({
+                PRCID: 'MAXEMP'
+            }).then(function(res) {
+                $("#eidcontrol").val(res.id)
+            });
+
+			function uploadTOAWS(that){
+				var send_file = that.files[0];
+                const fileName = send_file.name;
+                const fileName1 = generateUUID() + fileName.substring(fileName.indexOf("."), fileName.length);
+                let photoKey = fileName1;
+                photoKey = "Quacck/" + "123" + "/" + photoKey;
+                var albumBucketName = 'dolphino';
+                var bucketRegion = 'us-west-2';
+                var IdentityPoolId = 'us-west-2:ff182092-2a76-489c-9d58-45ba742d9e7d'
+                AWS.config.update({
+                    region: 'us-west-2', //'us-west-2',
+                    credentials: new AWS.CognitoIdentityCredentials({
+                        IdentityPoolId: IdentityPoolId
+                    })
+                });
+                var aws = new AWS.S3({
+                    apiVersion: '2012-10-17', //'2006-03-01',
+                    params: {
+                        Bucket: albumBucketName
+                    }
+                });
+                aws.upload({
+                    Key: photoKey,
+                    Body: send_file,
+                    ACL: "public-read"
+                }, function(err, data) {
+                    if (err) {
+						
+                        return alert("There was an error uploading your Image: ");
+                    } else {
+
+                        $("#empfile").val(data.Location);
+						document.getElementById("loader_img2").style.display = "none";
+						$("#empfile1").val(data.Location);
+						document.getElementById("loader_img").style.display = "none";
+                        console.log(data);
+                    }
+                });
+			}
+
+            $("#empic").change(function() {
+				document.getElementById("loader_img2").style.display = "block";
+                uploadTOAWS(this);
+            });
+
+			$("#empic1").change(function() {
+				document.getElementById("loader_img").style.display = "block";
+                uploadTOAWS(this);
+            });
+
+});
+
+//$('#loader_img').show();
+
+// main image loaded ?
+//$('#empfile1').on('load', function(){
+  // hide/remove the loading image
+  $('#loader_img').hide();
+//});
+            </script>
+
+
 
 <div class="page-wrapper">
 
@@ -224,7 +450,13 @@ if(isset($_REQUEST['searchclient'])){
 						<div class="modal-body">
 							<div class="m-b-30">
 								<form name="add-client" id="addclientform" action="" method="post">
+
 									<div class="row">
+									<div class="col-sm-12">
+									<img id="loader_img2" style="display:none"  src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif" width="50">  
+							   <input type="file" value="Upload Image" id="empic">
+							  <input type="hidden" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile" id="empfile">
+						</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="control-label">First Name <span class="text-danger">*</span></label>
@@ -266,7 +498,7 @@ if(isset($_REQUEST['searchclient'])){
 										<div class="col-md-6">  
 											<div class="form-group">
 												<label class="control-label">Client ID <span class="text-danger">*</span></label>
-												<input disabled name="clientid" id="cid" class="form-control floating" type="text">
+												<input readonly="readonly"  name="clientid" id="eidcontrol"  class="form-control floating" type="text">
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -443,8 +675,18 @@ if(isset($_REQUEST['searchclient'])){
 						</div>
 						<div class="modal-body">
 							<div class="m-b-30">
-								<form name="edit-client" id="editclientform" method="post">
+								<form name="edit-client" action="" id="editclientform" method="post">
 									<div class="row">
+									<div class="col-sm-12">
+<!--                                
+							   <input type="file" value="Upload Image" id="empic">
+							  <input type="hidden" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile" id="empfile"> -->
+
+<img id="loader_img" style="display:none"  src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif" width="50">
+							  <input type="file" value="Upload Image" id="empic1">
+							  <input type="hidden" name="empfile1" id="empfile1">
+
+						</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="control-label">First Name <span class="text-danger">*</span></label>
@@ -487,7 +729,7 @@ if(isset($_REQUEST['searchclient'])){
 										<div class="col-md-6">  
 											<div class="form-group">
 												<label class="control-label">Client ID <span class="text-danger">*</span></label>
-												<input disabled name="clientid" class="form-control floating" id="client-id" type="text">
+												<input disabled name="clientid" id="client-id" class="form-control floating"  type="text">
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -658,138 +900,10 @@ if(isset($_REQUEST['searchclient'])){
 				</div>
 			</div>			
 
-<script>
-//password visible or hide case logic
-function visible() {
-  var x = document.getElementById("clientpassword");
-  if (x.type === "password") {
-    x.type = "text";
-	document.getElementById("show1").style.display="block";
-	document.getElementById("show2").style.display="none";
-  } else {
-	document.getElementById("show1").style.display="none";
-	document.getElementById("show2").style.display="block";
-    x.type = "password";
-  }
-}
-
-function visible2() {
-  var x = document.getElementById("pswrd");
-  if (x.type === "password") {
-    x.type = "text";
-	document.getElementById("show3").style.display="block";
-	document.getElementById("show4").style.display="none";
-  } else {
-	document.getElementById("show3").style.display="none";
-	document.getElementById("show4").style.display="block";
-    x.type = "password";
-  }
-}
 
 
 
 
-$(document).ready(function(){
- jQuery('.edit').click(function(){
-	  $('#edit_client').modal('show'); 
-	  
-   var id = jQuery(this).attr("data-edit");
-   var firstname = jQuery(this).attr("data-firstname");
-   var lastname = jQuery(this).attr("data-lastname");
-   var username = jQuery(this).attr("data-username");
-   var email = jQuery(this).attr("data-email");
-   var password = jQuery(this).attr("data-password");
-   var conpassword = jQuery(this).attr("data-password");
-   var clientid = jQuery(this).attr("data-clientid");
-   var ph = jQuery(this).attr("data-ph");
-   var company = jQuery(this).attr("data-company");
-   
-  jQuery("#client_edit_id").val(id);
-  jQuery("#first_name").val(firstname);
-  jQuery("#last_name").val(lastname);
-  jQuery("#user_name").val(username);
-  jQuery("#clientemail").val(email);
-  jQuery("#clientpassword").val(password);
-  jQuery("#clientconpassword").val(conpassword);
-  jQuery("#client-id").val(clientid);
-  jQuery("#clientph").val(ph);
-  jQuery("#companyname").val(company);  
-});
-});
-
-$(document).ready(function(){
-jQuery("#addclientform").validate({
-           rules: {
-			    firstname: "required",
-                username: "required",
-                emailid: "required",
-                clientid: "required",
-                phone: {
-                		 required: true,
-                   		 minlength: 10,
-                   		 maxlength: 11,
-                   		},
-                companyname: "required", 
-               password: { 
-                 required: true,
-                    minlength: 6,
-               } , 
-                   confirmpass: { 
-                    equalTo: "#pswrd",
-                     minlength: 6,
-               }
-           },
-     messages:{
-		 firstname: "Please Enter Your Name",
-		 username: "Please Enter Your Username",
-		 emailid: "Please Enter Your Email",
-		 clientid: "Please Enter Your Client ID",
-		 phone: {
-                		 required: "Please Enter Your Contact Number",
-                   		 minlength: "Please enter at least 10 characters.",
-                   		 maxlength: "Please enter no more than 11 characters.",
-                   		},
-		 companyname: "Please Enter Your Company Name",
-         password: { 
-                 required:"The Password is Required"
-
-               }
-     }
-			});
-			});
 			
-$(document).ready(function(){
-jQuery("#editclientform").validate({
-           rules: {
-			    firstname: "required",
-                username: "required",
-                clientid: "required",
-                clientemail: "required",
-                client_ph: "required",
-                company: "required", 
-                clientpass: 
-				{ 
-                 required: true,
-                    minlength: 6,
-               } , 
-                   conpass: { 
-                    equalTo: "#clientpassword",
-                     minlength: 6,
-               }
-           },
-     messages:{
-		 firstname: "Please Enter Your Name",
-		 username: "Please Enter Your Username",
-		 clientemail: "Please Enter Your Email",
-		 clientid: "Please Enter Your Client ID",
-		 client_ph: "Please Enter Your Contact Number",
-		 company: "Please Enter Your Company Name",
-         clientpass: { 
-                 required:"The Password is Required"
 
-               }
-     }
-			});
-			});
-</script>
 <?php include "footer.php";?>
