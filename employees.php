@@ -104,8 +104,9 @@ if(isset($_POST['employee_update'])){
     $company_cat = $_POST['company_cat'];
     $emp_designation = $_POST['designation_cat'];
     $emp_employee_id = $_POST['eid'];
+    $img_url    = $_POST['empfile'];
 
-   $update = "UPDATE employee SET first_name='$emp_fname',last_name='$emp_lname',username='$emp_uname',email='$emp_email',password=md5('$emp_pass'),confirm_pass=md5('$emp_cpass'),phone='$emp_phone',employee_id='$emp_employee_id',joining_date='$emp_jdate',company='$company_cat',designation='$emp_designation' where empl_id= '$idd' ";
+   $update = "UPDATE employee SET first_name='$emp_fname',last_name='$emp_lname',username='$emp_uname',email='$emp_email',password=md5('$emp_pass'),confirm_pass=md5('$emp_cpass'),phone='$emp_phone',employee_id='$emp_employee_id',img='$img_url',joining_date='$emp_jdate',company='$company_cat',designation='$emp_designation' where empl_id= '$idd' ";
 
     $get_data = mysqli_query($con,$update);
 
@@ -203,69 +204,131 @@ function generateUUID() {
     return uuid;
 };
  
-$(document).ready(function(){
+// $(document).ready(function(){
  
 
-    callapi({ PRCID : 'MAXEMP'}).then(function(res){
-$("#eidcontrol").val(res.id)
-})
+//     callapi({ PRCID : 'MAXEMP'}).then(function(res){
+// $("#eidcontrol").val(res.id)
+// })
 
-    $("#empic").change(function() {
-
-
+//     $("#empic").change(function() {
 
 
 
-var send_file = this.files[0];
-//const reader = new FileReader();
-// reader.onload = function(event: any) {
-// self.document_link = event.target.result;
-// };
-// reader.readAsDataURL(element.target.files[0]);
-
-const fileName = send_file.name;
 
 
-const fileName1 = generateUUID() + fileName.substring(fileName.indexOf("."), fileName.length);
+// var send_file = this.files[0];
+// //const reader = new FileReader();
+// // reader.onload = function(event: any) {
+// // self.document_link = event.target.result;
+// // };
+// // reader.readAsDataURL(element.target.files[0]);
 
-let photoKey = fileName1;
-photoKey = "Quacck/" + "123" + "/" + photoKey;
+// const fileName = send_file.name;
 
-var albumBucketName = 'dolphino';
-var bucketRegion = 'us-west-2';
-var IdentityPoolId = 'us-west-2:ff182092-2a76-489c-9d58-45ba742d9e7d'
 
-AWS.config.update({
-    region: 'us-west-2', //'us-west-2',
-    credentials: new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: IdentityPoolId
-    })
+// const fileName1 = generateUUID() + fileName.substring(fileName.indexOf("."), fileName.length);
+
+// let photoKey = fileName1;
+// photoKey = "Quacck/" + "123" + "/" + photoKey;
+
+// var albumBucketName = 'dolphino';
+// var bucketRegion = 'us-west-2';
+// var IdentityPoolId = 'us-west-2:ff182092-2a76-489c-9d58-45ba742d9e7d'
+
+// AWS.config.update({
+//     region: 'us-west-2', //'us-west-2',
+//     credentials: new AWS.CognitoIdentityCredentials({
+//         IdentityPoolId: IdentityPoolId
+//     })
+// });
+
+// var aws = new AWS.S3({
+//     apiVersion: '2012-10-17', //'2006-03-01',
+//     params: {
+//         Bucket: albumBucketName
+//     }
+// });
+
+
+// aws.upload({
+//         Key: photoKey,
+//         Body: send_file,
+//         ACL: "public-read"
+//     }, function(err, data) {
+//         if (err) {
+//             return alert("There was an error uploading your Image: ");
+//         } else {
+
+// $("#empfile").val(data.Location);
+//             console.log(data);
+//         }
+//     });
+
+
+
+
+// });
+
+
+$(document).ready(function() {
+
+
+callapi({
+    PRCID: 'MAXEMP'
+}).then(function(res) {
+    $("#eidcontrol").val(res.id)
 });
 
-var aws = new AWS.S3({
-    apiVersion: '2012-10-17', //'2006-03-01',
-    params: {
-        Bucket: albumBucketName
-    }
-});
-
-
-aws.upload({
+function uploadTOAWS(that){
+    var send_file = that.files[0];
+    const fileName = send_file.name;
+    const fileName1 = generateUUID() + fileName.substring(fileName.indexOf("."), fileName.length);
+    let photoKey = fileName1;
+    photoKey = "Quacck/" + "123" + "/" + photoKey;
+    var albumBucketName = 'dolphino';
+    var bucketRegion = 'us-west-2';
+    var IdentityPoolId = 'us-west-2:ff182092-2a76-489c-9d58-45ba742d9e7d'
+    AWS.config.update({
+        region: 'us-west-2', //'us-west-2',
+        credentials: new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: IdentityPoolId
+        })
+    });
+    var aws = new AWS.S3({
+        apiVersion: '2012-10-17', //'2006-03-01',
+        params: {
+            Bucket: albumBucketName
+        }
+    });
+    aws.upload({
         Key: photoKey,
         Body: send_file,
         ACL: "public-read"
     }, function(err, data) {
         if (err) {
+            
             return alert("There was an error uploading your Image: ");
         } else {
 
-$("#empfile").val(data.Location);
+            $("#empfile").val(data.Location);
+            document.getElementById("loader_img2").style.display = "none";
+            $("#empfile1").val(data.Location);
+            document.getElementById("loader_img").style.display = "none";
             console.log(data);
         }
     });
+}
 
+$("#empic").change(function() {
+    document.getElementById("loader_img2").style.display = "block";
+    uploadTOAWS(this);
+});
 
-
+$("#empic1").change(function() {
+    document.getElementById("loader_img").style.display = "block";
+    uploadTOAWS(this);
+});
 
 });
 
@@ -401,13 +464,14 @@ format: 'YYYY-MM-DD',
 // timeFormat: 'HH:mm'
 });
 
-});
+
 
 
 
 
    
 </script>
+
             <div class="page-wrapper">
                 <div class="content container-fluid">
                     <div class="row">
@@ -546,6 +610,12 @@ format: 'YYYY-MM-DD',
                            <form action="" method="post" class="employee_info_data">
                             
                                 <div class="row">
+                                <div class="col-sm-12">
+									<img id="loader_img" style="display:none"  src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif" width="50">  
+                               
+                                         <input type="file" value="Upload Image" id="empic1">
+                                        <input type="hidden" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile" id="empfile1">
+                                  </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">First Name <span class="text-danger">*</span></label>
@@ -665,7 +735,7 @@ format: 'YYYY-MM-DD',
                                         </div>
                                     </div>
                                 </div>
-                                <div class="table-responsive m-t-15">
+                                <!-- <div class="table-responsive m-t-15">
                                     <table class="table table-striped custom-table">
                                         <thead>
                                             <tr>
@@ -849,7 +919,7 @@ format: 'YYYY-MM-DD',
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
+                                </div> -->
                                 <div class="m-t-20 text-center">
                                     <button type="submit" name="employee_update" class="btn btn-primary">Save Changes</button>
                                 </div>
@@ -884,6 +954,7 @@ format: 'YYYY-MM-DD',
                             <form class="m-b-30">
                                 <div class="row">
                                 <div class="col-sm-12">
+									<img id="loader_img2" style="display:none"  src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif" width="50">  
                                
                                          <input type="file" value="Upload Image" id="empic">
                                         <input type="hidden" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile" id="empfile">
