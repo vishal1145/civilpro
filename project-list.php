@@ -112,7 +112,7 @@ die;*/
 
 
 
-	echo $log_user_qury = "INSERT INTO project (Project_name, Client_id,Start_date,end_date,Rate,billing_type,Total_hours,Priority,Project_leader,Team_member,Project_Address,machine,material,consumption,decription,images)
+	echo $log_user_qury = "INSERT INTO Project (Project_name, Client_id,Start_date,end_date,Rate,billing_type,Total_hours,Priority,Project_leader,Team_member,Project_Address,machine,material,consumption,decription,images)
      VALUES ('$project_name', '$client_id', '$start_date','$end_date','$rate','$billing_type','$proTotalHour','$priority','$employee_id','$team_id','$project_address','$machine','$materials','$consmp_name','$description','$image')";
      
     $res_data = mysqli_query($con,$log_user_qury);	
@@ -416,12 +416,14 @@ $res_data = mysqli_query($con,$sel_query);
 											$array_value = $rowData['Project_leader'];
 											$array =  array_filter(explode(',', $array_value));
 											foreach($array as $key1 => $value_data){ 
-											 $sql = "select empl_id, first_name from employee where empl_id = $value_data";
+											 $sql = "select empl_id, first_name,img from employee where empl_id = $value_data";
 											 $proj_leader = mysqli_query($con,$sql);
 											 while($proLeaderDate = mysqli_fetch_assoc($proj_leader)){
 										?>
 										<li>
-											<a href="#" data-toggle="tooltip" title="<?php echo $proLeaderDate['first_name']; ?> "><img src="assets/img/user.jpg" alt="Jeffery Lalor"></a>
+											<a href="#" data-toggle="tooltip" title="<?php echo $proLeaderDate['first_name']; ?> ">
+											<img src="<?php echo $proLeaderDate['img']; ?>" alt="Jeffery Lalor">
+											</a>
 										</li>
 									<?php } }?>
 									</ul>
@@ -430,15 +432,23 @@ $res_data = mysqli_query($con,$sel_query);
 												<ul class="team-members">
 												<?php
 									$array_value = $rowData['Team_member'];
-										$array =  explode(',', $array_value);
+										$arraytemp =  explode(',', $array_value);
+										if($arraytemp[0] == "")
+										{
+											$array = array();
+										}
+										else
+										{
+											$arraytemp = $array;
+										}
 										foreach($array as $key => $value_data){ 
 										if($key <= 3){
-											$sql = "select empl_id, first_name from employee where empl_id = $value_data";
+											$sql = "select empl_id, first_name, img from employee where empl_id = $value_data";
 											 $team_member = mysqli_query($con,$sql);
 											 while($teamMemberDate = mysqli_fetch_assoc($team_member)){	
 										?>
 										<li>
-										<a href="#" title="<?php echo $teamMemberDate['first_name']; ?>" data-toggle="tooltip"><img src="assets/img/user.jpg" alt="<?php echo $value_data; ?>"></a>
+										<a href="#" title="<?php echo $teamMemberDate['first_name']; ?>" data-toggle="tooltip"><img src="<?php echo $teamMemberDate['img']; ?>" alt="<?php echo $value_data; ?>"></a>
 										</li>
 										
 										<?php } } }
