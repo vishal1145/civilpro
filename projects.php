@@ -853,7 +853,7 @@ $(div_id).on('keyup',function(){
 
 
 	<div id="create_project1" class="modal custom-modal fade" role="dialog">
-	<div class="modal-dialog">
+	<div class="modal-dialog" >
 		<button type="button" class="close" data-dismiss="modal">&times;</button>
 		<div class="modal-content modal-lg">
 			<div class="modal-header">

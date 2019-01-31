@@ -194,7 +194,8 @@ if(isset($_POST['update_project'])){
     $edit_project_address = $_POST['edit_project_address'];
 
 
-    $description = mysqli_real_escape_string($con,$_POST['description']);
+	$description = mysqli_real_escape_string($con,$_POST['description']);
+    //$description = mysqli_real_escape_string($con,$_POST['description']);
 	//$image = (isset($_FILES['image']['name']) ? $_FILES['image']['name'] : $_POST['hidden_image']);
 	
 	if(!empty($_FILES['image']['name']) && isset($_FILES['image']['name'])){
@@ -248,7 +249,7 @@ if(isset($_POST['update_project'])){
 
 		echo "<script> alert('Material fields empty!'); </script>";
 		//header("Refresh:0");
-		//header('Location:'.'http://112.196.9.211:8230/civilpro/project_edit.php?val=$val');
+		//header('Location:'.'                                                                                                                         http://112.196.9.211:8230/civilpro/project_edit.php?val=$val');
 		 echo "<script> 
 		 location.href='http://$_SERVER[HTTP_HOST]/civilpro/project_edit.php?val=$val';</script>";
 			 exit;
@@ -294,27 +295,27 @@ if(isset($_POST['update_project'])){
 
 
 
-            <div class="page-wrapper">
+            <!-- <div class="page-wrapper">
                 <div class="content container-fluid">
 					<div class="row">
 						<div class="col-sm-4">
 							<h4 class="page-title">Projects</h4>
 						</div>
-						<!-- <div class="col-sm-8 text-right m-b-20">
+						 <div class="col-sm-8 text-right m-b-20">
 							<a href="#" class="btn btn-primary rounded pull-right" data-toggle="modal" data-target="#create_project"><i class="fa fa-plus"></i> Create Project</a>
 							
-						</div> -->
+						</div>
 					</div>
 					
 					
                 </div>
 				
-            </div>
+            </div> -->
 			
 				
 <div id="create_project1" class="modal123 custom-modal123 fade123" role="dialog">
-	<div class="modal-dialog">
-		<a href="project.php"><button type="button" class="close" data-dismiss="modal" onclick="close2(); return false;">&times;</button></a>
+	<div class="modal-dialog" style="width:88% !important;margin: 50px 0 0px 300px !important;" >
+		<a href="project.php"><button style="position: absolute;right: 19%;top: 10px;z-index: 1;" type="button" class="close" data-dismiss="modal" onclick="close2(); return false;">&times;</button></a>
 		<div class="modal-content modal-lg">
 			<div class="modal-header">
 				<h4 class="modal-title">Edit Project</h4>
