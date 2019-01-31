@@ -195,7 +195,6 @@ if(isset($_POST['update_project'])){
 
 
 	$description = mysqli_real_escape_string($con,$_POST['description']);
-    //$description = mysqli_real_escape_string($con,$_POST['description']);
 	//$image = (isset($_FILES['image']['name']) ? $_FILES['image']['name'] : $_POST['hidden_image']);
 	
 	if(!empty($_FILES['image']['name']) && isset($_FILES['image']['name'])){
