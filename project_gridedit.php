@@ -673,12 +673,12 @@ if(input_val == ""){
 					</div> -->
 					<div class="form-group">
 						<label>Description</label>
-						<textarea rows="4" cols="5" class="form-control summernote" id="edit_description" placeholder="Enter your message here" name="description" value="<?php echo $row["decription"]; ?>"></textarea>
+						<textarea rows="4" cols="5" class="form-control summernote" id="edit_description" placeholder="Enter your message here" name="description" value=""><?php echo $row["decription"]; ?></textarea>
 					</div>
 					<div class="form-group">
 						<label>Upload Files</label>
 						<input class="form-control" type="file" name="image">
-						<img id="edit_image" height="150" width="150">
+						<img id="edit_image" height="150" width="150" src="Upload/project/<?php echo $row['images']; ?>">
 						<input type="hidden" name="hidden_image" id="hidden_image">
 					</div>
 					<div class="m-t-20 text-center">
