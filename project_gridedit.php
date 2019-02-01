@@ -197,16 +197,17 @@ if(isset($_POST['update_project'])){
 	$description = mysqli_real_escape_string($con,$_POST['description']);
 	//$image = (isset($_FILES['image']['name']) ? $_FILES['image']['name'] : $_POST['hidden_image']);
 	
-	if(!empty($_FILES['image']['name']) && isset($_FILES['image']['name'])){
-		$image = $_FILES['image']['name'];
-	}else{
-		$image = $_POST['hidden_image'];
-	} 
+	// if(!empty($_FILES['image']['name']) && isset($_FILES['image']['name'])){
+	// 	$image = $_FILES['image']['name'];
+	// }else{
+	// 	$image = $_POST['hidden_image'];
+	// } 
 	
-	$target = "Upload/project/".basename($image);
-	//$target_path = $target_path.basename( $_FILES['fileToUpload']['name']); 
-	move_uploaded_file($_FILES['image']['tmp_name'], $target);
+	// $target = "Upload/project/".basename($image);
+	// //$target_path = $target_path.basename( $_FILES['fileToUpload']['name']); 
+	// move_uploaded_file($_FILES['image']['tmp_name'], $target);
 
+	$image= $_POST['empfile'];
 
 	for($i=0;$i < count($consumption);$i++){
          
@@ -270,13 +271,122 @@ if(isset($_POST['update_project'])){
 
 
 ?> 
-
+<script src = "https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"  type="text/javascript"> </script> 
 <script>
  function close2()
  {
  //document.getElementyById("create_project1").style.display="none";
  window.location.href = "projects.php";
  }
+
+
+
+ function generateUUID() {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxxxxxxxxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+};
+
+ $(document).ready(function() {
+
+
+callapi({
+	PRCID: 'MAXEMP'
+}).then(function(res) {
+	$("#eidcontrol").val(res.id)
+});
+
+function uploadTOAWS(that){
+	var send_file = that.files[0];
+	const fileName = send_file.name;
+	const fileName1 = generateUUID() + fileName.substring(fileName.indexOf("."), fileName.length);
+	let photoKey = fileName1;
+	photoKey = "Quacck/" + "123" + "/" + photoKey;
+	var albumBucketName = 'dolphino';
+	var bucketRegion = 'us-west-2';
+	var IdentityPoolId = 'us-west-2:ff182092-2a76-489c-9d58-45ba742d9e7d'
+	AWS.config.update({
+		region: 'us-west-2', //'us-west-2',
+		credentials: new AWS.CognitoIdentityCredentials({
+			IdentityPoolId: IdentityPoolId
+		})
+	});
+	var aws = new AWS.S3({
+		apiVersion: '2012-10-17', //'2006-03-01',
+		params: {
+			Bucket: albumBucketName
+		}
+	});
+	aws.upload({
+		Key: photoKey,
+		Body: send_file,
+		ACL: "public-read"
+	}, function(err, data) {
+		if (err) {
+			
+			return alert("There was an error uploading your Image: ");
+		} else {
+
+try{
+			$("#empfile").val(data.Location);
+} catch(err){
+
+}
+
+
+try{
+			document.getElementById("loader_img2").style.display = "none";
+}catch(err)
+{
+
+}
+		try{	$("#empfile1").val(data.Location);
+		}
+		catch(err)
+{
+
+}
+try{	document.getElementById("loader_img").style.display = "none";
+}
+catch(err)
+{
+
+}
+
+try{
+			$("#empfile").attr('src',data.Location);
+} catch(err)
+{
+
+}
+
+try{
+			$("#edit_image").attr('src',data.Location);
+} catch(err)
+{
+
+}
+
+		}
+	});
+}
+
+$("#empic").change(function() {
+	document.getElementById("loader_img2").style.display = "block";
+	uploadTOAWS(this);
+});
+
+$("#empic1").change(function() {
+	document.getElementById("loader_img").style.display = "block";
+	uploadTOAWS(this);
+});
+
+});
+
 </script>
 
 
@@ -313,7 +423,7 @@ if(isset($_POST['update_project'])){
 			
 				
 <div id="create_project1" class="modal123 custom-modal123 fade123" role="dialog">
-	<div class="modal-dialog" style="width:88% !important;margin: 50px 0 0px 300px !important;" >
+	<div class="modal-dialog" style="width:88% !important;margin: 150px 0 0px 300px !important;" >
 		<a href="project.php"><button style="position: absolute;right: 19%;top: 10px;z-index: 1;" type="button" class="close" data-dismiss="modal" onclick="close2(); return false;">&times;</button></a>
 		<div class="modal-content modal-lg">
 			<div class="modal-header">
@@ -677,9 +787,14 @@ if(input_val == ""){
 					</div>
 					<div class="form-group">
 						<label>Upload Files</label>
-						<input class="form-control" type="file" name="image">
-						<img id="edit_image" height="150" width="150" src="Upload/project/<?php echo $row['images']; ?>">
-						<input type="hidden" name="hidden_image" id="hidden_image">
+						<!-- <input type="file" value="Upload Image" id="empic"> -->
+						<img id="loader_img2" style="display:none" src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif" width="50">
+						
+						
+						<img id="edit_image" height="150" width="150" src="<?php echo $row['images']; ?>">
+						<input class="form-control" id="empic" type="file" name="image">
+						<input type="hidden" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile" id="empfile">
+						<!-- <input type="hidden" name="hidden_image" id="hidden_image"> -->
 					</div>
 					<div class="m-t-20 text-center">
 						<button class="btn btn-primary" name="update_project" value="update" >Save Changes</button>
