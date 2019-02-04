@@ -351,6 +351,13 @@ try{
 
 }
 
+try{
+			$("#add_emp").attr('src',data.Location);
+} catch(err)
+{
+
+}
+
 		}
 	});
 }
@@ -993,7 +1000,18 @@ format: 'YYYY-MM-DD',
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <div class="modal-content modal-lg">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Employee</h4>
+                            <h4 class="modal-title">Add Employee   <a href="" class="avatar">
+												 <?php 
+                                     $imgurl  = $row['img'];
+												if($row['img'] == "")
+													$imgurl  = "https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg";
+
+													?>
+
+
+												<img id="add_emp" src="<?php echo $row['img'] ?>"  /> 
+
+												</a></h4>
                         </div>
                         <div class="modal-body">
                         <form name="add-employee" class="emplyoee_info" method="post" action="" enctype="multipart/form-data">
