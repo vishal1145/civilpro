@@ -602,7 +602,7 @@ format: 'YYYY-MM-DD',
 													?>
 
 
-												<img src="<?php echo $imgurl; ?>"  /> 
+												<img src="<?php echo $row['img'] ?>"  /> 
 
 												</a>
                                 </div>
@@ -666,7 +666,7 @@ format: 'YYYY-MM-DD',
                                 <div class="col-sm-12">
 									<img id="loader_img" style="display:none"  src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif" width="50">  
                                
-                                         <input type="file" value="Upload Image" id="empic1">
+                                         <input accept="image/jpg,image/svg,image/jpeg, image/png" type="file" value="Upload Image" id="empic1">
                                         <input type="hidden" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile" id="empfile1">
                                   </div>
                                     <div class="col-sm-6">
@@ -1020,7 +1020,7 @@ format: 'YYYY-MM-DD',
                                 <div class="col-sm-12">
 									<img id="loader_img2" style="display:none"  src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif" width="50">  
                                
-                                         <input type="file" value="Upload Image" id="empic">
+                                         <input accept="image/jpg,image/svg,image/jpeg, image/png" type="file" value="Upload Image" id="empic">
                                         <input type="hidden" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile" id="empfile">
                                   </div>
                                     <div class="col-sm-6">
