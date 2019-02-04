@@ -171,7 +171,9 @@ if($res_dataaa){
 		$find_emp_name = $_POST['employee_name'];
          
         $find_project_id = $_POST['project_id'];
-        $find_date = $_POST['search_date'];
+		// $find_date = $_POST['search_date'];
+		$start_date = $_POST['start_date'];
+		$end_date = $_POST['end_date'];
         $find_status = $_POST['status'];
 
 $SearchArray = array();
@@ -181,12 +183,24 @@ $SearchArray = array();
    if(!empty($find_project_id)){
   $SearchArray[] = "u.project_name like '%$find_project_id%'";
   }
-   if(!empty($find_date)){
-  $SearchArray[] = "u.card_date like '%$find_date%'";
+//    if(!empty($find_date)){
+//   $SearchArray[] = "u.card_date like '%$find_date%'";
+//   }
+
+if(!empty($start_date)){
+	 $SearchArray[] = "STR_TO_DATE(u.card_date,'%m/%d/%Y') > STR_TO_DATE('$start_date','%m/%d/%Y')";
+   }
+
+   if(!empty($end_date)){
+	$SearchArray[] = "STR_TO_DATE(u.card_date,'%m/%d/%Y') < STR_TO_DATE('$end_date','%m/%d/%Y')";
   }
+
    if(!empty($find_status) || $find_status != NULL ){
   $SearchArray[] = "u.status like '%$find_status%'";
   }
+//   if(!empty($start_date) || $find_status != NULL ){
+// 	$SearchArray[] = "u.status like '%$find_status%'";
+// 	}
 
    $searchQuery = implode(" AND ",$SearchArray);
  //echo "SELECT * FROM employee where $searchQuery";
@@ -197,7 +211,8 @@ $SearchArray = array();
 
          $Time_Card =("SELECT * FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id where $searchQuery ");
         $Time_Cardd = mysqli_query($con,$Time_Card);
-            
+		
+		//echo $Time_Card;
 
 	}else{
 					$Time_Card = "SELECT * FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id ORDER BY `id` DESC" ;
@@ -212,6 +227,7 @@ $SearchArray = array();
 					<div class="row">
 						<div class="col-sm-8">
 							<h4 class="page-title">Time Cards</h4>
+							
 						</div>
 						<div class="col-sm-4 text-right m-b-30">
 							<a href="#" class="btn btn-primary rounded" data-toggle="modal" data-target="#add_todaywork"><i class="fa fa-plus"></i> Add Time Card</a>
@@ -220,14 +236,14 @@ $SearchArray = array();
 			 <!-- =======================  Searching section ============================== -->
 					
 					<div class="row filter-row">
-					   <form method="post" name="employee_search">
-						<div class="col-sm-3 col-xs-6">  
+					   <form method="post" action="" name="employee_search">
+						<div class="col-sm-2 col-xs-6">  
 							<div class="form-group form-focus">
 								<label class="control-label">Employee name</label>
 								<input type="text" name="employee_name" class="form-control floating" />
 							</div>
 						</div>
-						<div class="col-sm-3 col-xs-6"> 
+						<div class="col-sm-2 col-xs-6"> 
 							<div class="form-group form-focus select-focus">
 								
 							<?php
@@ -244,14 +260,35 @@ $SearchArray = array();
 									</select>
 							</div>
 						</div>
-						<div class="col-sm-2 col-xs-6"> 
+						<!-- <div class="col-sm-2 col-xs-6"> 
 							<div class="form-group form-focus">
 										<label class="control-label">Date</label>
 										<div class="cal-icon form-group form-focus">
 											<input class="form-control datetimepicker floating" type="text" id="datepickerr1" name="search_date">
 										</div>
 									</div>
+						</div> -->
+
+
+						<div class="col-sm-2 col-xs-6"> 
+							<div class="form-group form-focus">
+								<label class="control-label">Start Date</label>
+								<div class="cal-icon form-group form-focus">
+								<input class="form-control datetimepicker floating" type="text" id="datetimepickerExportStart" name="start_date">
+								</div>
+							</div>
 						</div>
+
+						<div class="col-sm-2 col-xs-6"> 
+							<div class="form-group form-focus">
+								<label class="control-label">End Date</label>
+								<div class="cal-icon form-group form-focus"><input class="form-control datetimepicker floating" type="text" id="datetimepickerExportEnd" name="end_date">
+								</div>
+							</div>
+						</div>
+
+
+
 						<div class="col-sm-2 col-xs-6"> 
 							<div class="form-group form-focus select-focus">
 								
