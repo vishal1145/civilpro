@@ -306,18 +306,53 @@ function uploadTOAWS(that){
         Body: send_file,
         ACL: "public-read"
     }, function(err, data) {
-        if (err) {
-            
-            return alert("There was an error uploading your Image: ");
-        } else {
+		if (err) {
+			
+			return alert("There was an error uploading your Image: ");
+		} else {
 
-            $("#empfile").val(data.Location);
-            document.getElementById("loader_img2").style.display = "none";
-            $("#empfile1").val(data.Location);
-            document.getElementById("loader_img").style.display = "none";
-            console.log(data);
-        }
-    });
+try{
+			$("#empfile").val(data.Location);
+} catch(err){
+
+}
+
+
+try{
+			document.getElementById("loader_img2").style.display = "none";
+}catch(err)
+{
+
+}
+		try{	$("#empfile1").val(data.Location);
+		}
+		catch(err)
+{
+
+}
+try{	document.getElementById("loader_img").style.display = "none";
+}
+catch(err)
+{
+
+}
+
+try{
+			$("#empfile").attr('src',data.Location);
+} catch(err)
+{
+
+}
+
+try{
+			$("#edit_image").attr('src',data.Location);
+} catch(err)
+{
+
+}
+
+		}
+	});
 }
 
 $("#empic").change(function() {
@@ -604,7 +639,18 @@ format: 'YYYY-MM-DD',
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
                     <div class="modal-content modal-md">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Employee</h4>
+                            <h4 class="modal-title">Edit Employee       <a href="" class="avatar">
+												 <?php 
+                                     $imgurl  = $row['img'];
+												if($row['img'] == "")
+													$imgurl  = "https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg";
+
+													?>
+
+
+												<img id="edit_image" src="<?php echo $row['img'] ?>"  /> 
+
+												</a></h4>
                         </div>
                         <form method="post" action="">
                            <form action="" method="post" class="employee_info_data">
