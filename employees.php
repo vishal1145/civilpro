@@ -671,6 +671,8 @@ format: 'YYYY-MM-DD',
                                   </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
+
+
                                             <label class="control-label">First Name <span class="text-danger">*</span></label>
                                             <input name="employee_data" value="<?php echo $row['empl_id']; ?>" type="hidden">
                                             <input name="fname" class="form-control" value="<?php echo $row["first_name"]; ?>" type="text">
@@ -696,7 +698,7 @@ format: 'YYYY-MM-DD',
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group" style="position: relative;">
-                                            <label class="control-label">Password</label>
+                                            <label class="control-label">Password </label> 
                                             <input style="padding-right:50px;" id="clientpassword" name="pass" class="form-control" value="<?php echo $row['password']; ?>" type="password">
                                             <i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show1" onclick="visible()" class="fa fa-eye"></i>
 												<i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show2" onclick="visible()" class="fa fa-eye-slash"></i>
@@ -788,7 +790,7 @@ format: 'YYYY-MM-DD',
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="table-responsive m-t-15">
+                                <div class="table-responsive m-t-15">
                                     <table class="table table-striped custom-table">
                                         <thead>
                                             <tr>
@@ -823,7 +825,7 @@ format: 'YYYY-MM-DD',
                                                     <input type="checkbox">
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <!-- <tr>
                                                 <td>Leave Request</td>
                                                 <td class="text-center">
                                                     <input checked="" type="checkbox">
@@ -969,10 +971,10 @@ format: 'YYYY-MM-DD',
                                                 <td class="text-center">
                                                     <input type="checkbox">
                                                 </td>
-                                            </tr>
+                                            </tr> -->
                                         </tbody>
                                     </table>
-                                </div> -->
+                                </div>
                                 <div class="m-t-20 text-center">
                                     <button type="submit" name="employee_update" class="btn btn-primary">Save Changes</button>
                                 </div>
