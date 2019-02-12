@@ -271,16 +271,17 @@ function generateUUID() {
 // });
 
 
-$(document).ready(function() {
+function readempic1File(input,empid){
 
 
-callapi({
-    PRCID: 'MAXEMP'
-}).then(function(res) {
-    $("#eidcontrol").val(res.id)
-});
+document.getElementById("loader_img"+ empid).style.display = "block";
+    uploadTOAWS(input,empid);
+}
 
-function uploadTOAWS(that){
+
+
+
+function uploadTOAWS(that,empid){
     var send_file = that.files[0];
     const fileName = send_file.name;
     const fileName1 = generateUUID() + fileName.substring(fileName.indexOf("."), fileName.length);
@@ -319,18 +320,18 @@ try{
 
 
 try{
-			document.getElementById("loader_img2").style.display = "none";
+			document.getElementById("loader_img_add").style.display = "none";
 }catch(err)
 {
 
 }
-		try{	$("#empfile1").val(data.Location);
+		try{	$("#empfile1"+ empid).val(data.Location);
 		}
 		catch(err)
 {
 
 }
-try{	document.getElementById("loader_img").style.display = "none";
+try{	document.getElementById("loader_img" + empid).style.display = "none";
 }
 catch(err)
 {
@@ -345,7 +346,7 @@ try{
 }
 
 try{
-			$("#edit_image").attr('src',data.Location);
+			$("#edit_image" + empid).attr('src',data.Location);
 } catch(err)
 {
 
@@ -362,15 +363,22 @@ try{
 	});
 }
 
+$(document).ready(function() {
+
+
+callapi({
+    PRCID: 'MAXEMP'
+}).then(function(res) {
+    $("#eidcontrol").val(res.id)
+});
+
+
 $("#empic").change(function() {
-    document.getElementById("loader_img2").style.display = "block";
+    document.getElementById("loader_img_add").style.display = "block";
     uploadTOAWS(this);
 });
 
-$("#empic1").change(function() {
-    document.getElementById("loader_img").style.display = "block";
-    uploadTOAWS(this);
-});
+
 
 });
 
@@ -655,7 +663,7 @@ format: 'YYYY-MM-DD',
 													?>
 
 
-												<img id="edit_image" src="<?php echo $row['img'] ?>"  /> 
+												<img id="edit_image<?php echo $row['empl_id']; ?>" src="<?php echo $row['img'] ?>"  /> 
 
 												</a></h4>
                         </div>
@@ -664,10 +672,10 @@ format: 'YYYY-MM-DD',
                             
                                 <div class="row">
                                 <div class="col-sm-12">
-									<img id="loader_img" style="display:none"  src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif" width="50">  
+									<img id="loader_img<?php echo $row['empl_id']; ?>" style="display:none"  src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif" width="50">  
                                
-                                         <input accept="image/jpg,image/svg,image/jpeg, image/png" type="file" value="Upload Image" id="empic1">
-                                        <input type="hidden" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile" id="empfile1">
+                                         <input accept="image/jpg,image/svg,image/jpeg, image/png" type="file" value="Upload Image" onChange="readempic1File(this,<?php echo $row['empl_id']; ?>);" id="empic1">
+                                        <input type="hidden" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile" id="empfile1<?php echo $row['empl_id']; ?>">
                                   </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
@@ -696,20 +704,20 @@ format: 'YYYY-MM-DD',
                                             <input name="email" class="form-control" value="<?php echo $row['email']; ?>" type="email">
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group" style="position: relative;">
+                                    <!-- <div class="col-sm-6">
+                                       <div class="form-group" style="position: relative;">
                                             <label class="control-label">Password </label> 
                                             <input style="padding-right:50px;" id="clientpassword" name="pass" class="form-control" value="<?php echo $row['password']; ?>" type="password">
                                             <i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show1" onclick="visible()" class="fa fa-eye"></i>
 												<i style="position: absolute;position: absolute;top: 60%;right: 20px;font-size: 14px;" id="show2" onclick="visible()" class="fa fa-eye-slash"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
+                                        </div> 
+                                    </div> -->
+                                    <!-- <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">Confirm Password</label>
                                             <input name="cpass" class="form-control" value="<?php echo $row['confirm_pass']; ?>" class="employeepassword" type="password">
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-sm-6">  
                                         <div class="form-group">
                                             <label class="control-label">Employee ID <span class="text-danger">*</span></label>
@@ -1020,7 +1028,7 @@ format: 'YYYY-MM-DD',
                             <form class="m-b-30">
                                 <div class="row">
                                 <div class="col-sm-12">
-									<img id="loader_img2" style="display:none"  src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif" width="50">  
+									<img id="loader_img_add" style="display:none"  src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif" width="50">  
                                
                                          <input accept="image/jpg,image/svg,image/jpeg, image/png" type="file" value="Upload Image" id="empic">
                                         <input type="hidden" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile" id="empfile">

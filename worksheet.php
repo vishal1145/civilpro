@@ -137,8 +137,8 @@ if(isset($_POST['Add_Timecard'])){
 	$hours = array_intersect_key($hours, $machine);
 	$hourss = implode(",",$hours);
 	
-    $project_name = $_POST['project_name'];
-    $employee_id = $_POST['select_emp_nama'];
+  $project_name = $_POST['project_name'];
+  $employee_id = $_POST['select_emp_nama'];
 	$deadline = $_POST['deadline'];
 	$total_hour = $_POST['total_hour'];
 	$remain_hour = $_POST['remain_hour'];
@@ -196,7 +196,13 @@ if(!empty($start_date)){
   }
 
    if(!empty($find_status) || $find_status != NULL ){
-  $SearchArray[] = "u.status like '%$find_status%'";
+		 if($find_status != "all")
+		 {
+			$SearchArray[] = "u.status like '%$find_status%'";
+
+		 }
+		 
+ 
   }
 //   if(!empty($start_date) || $find_status != NULL ){
 // 	$SearchArray[] = "u.status like '%$find_status%'";
@@ -208,10 +214,16 @@ if(!empty($start_date)){
    	        // echo "<pre>";
             // print_r($searchQuery);
             // echo "</pre>"; die;
-
-         $Time_Card =("SELECT * FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id where $searchQuery ");
-        $Time_Cardd = mysqli_query($con,$Time_Card);
-		
+if($searchQuery == "")
+{
+	$Time_Card =("SELECT * FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id ");		 
+	$Time_Cardd = mysqli_query($con,$Time_Card);
+       
+}
+else{
+  $Time_Card =("SELECT * FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id where $searchQuery ");		 
+				 $Time_Cardd = mysqli_query($con,$Time_Card);
+}		
 		//echo $Time_Card;
 
 	}else{
@@ -247,7 +259,7 @@ if(!empty($start_date)){
 							<div class="form-group form-focus select-focus">
 								
 							<?php
-										$log_user_qury = "SELECT * FROM project_id";
+										$log_user_qury = "SELECT Project_id ,Project_name from project";
 										$res_data = mysqli_query($con,$log_user_qury);
 										?>
 									<select class="select_pro" name="project_id" >
@@ -293,7 +305,7 @@ if(!empty($start_date)){
 							<div class="form-group form-focus select-focus">
 								
 								<select name="status" class="select floating "> 
-									<option value="">Select status</option>
+									<option value="all">Select status</option>
 									<option value="1">Approve</option>
 									<option value="0">Decline</option>
 								</select>
