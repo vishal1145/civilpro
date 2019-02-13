@@ -259,7 +259,7 @@ else{
 							<div class="form-group form-focus select-focus">
 								
 							<?php
-										$log_user_qury = "SELECT Project_id ,Project_name from project";
+										$log_user_qury = "SELECT Project_id ,Project_name from Project";
 										$res_data = mysqli_query($con,$log_user_qury);
 										?>
 									<select class="select_pro" name="project_id" >

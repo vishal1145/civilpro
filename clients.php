@@ -141,7 +141,7 @@ function visible2() {
 $(document).ready(function() {
     jQuery('.edit').click(function() {
         $('#edit_client').modal('show');
-
+debugger;
         var id = jQuery(this).attr("data-edit");
         var firstname = jQuery(this).attr("data-firstname");
         var lastname = jQuery(this).attr("data-lastname");
@@ -152,6 +152,7 @@ $(document).ready(function() {
         var clientid = jQuery(this).attr("data-clientid");
         var ph = jQuery(this).attr("data-ph");
         var company = jQuery(this).attr("data-company");
+		var img_url = jQuery(this).attr("data-img-url");
 
         jQuery("#client_edit_id").val(id);
         jQuery("#first_name").val(firstname);
@@ -163,6 +164,7 @@ $(document).ready(function() {
         jQuery("#client-id").val(clientid);
         jQuery("#clientph").val(ph);
         jQuery("#companyname").val(company);
+		jQuery("#empfile1").val(img_url);
     });
 });
 
@@ -402,7 +404,7 @@ $(document).ready(function() {
 								<div class="dropdown profile-action">
 									<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
 									<ul class="dropdown-menu pull-right">
-										<li><a href="#" class="edit" data-edit="<?php echo $row['id'];?>"data-firstname="<?php echo $row['first_name'];?>" data-lastname="<?php echo $row['last_name']; ?>" data-username="<?php echo $row['user_name']; ?>" data-email="<?php echo $row['email']; ?>" data-password="<?php echo $row['password']; ?>" data-clientid="<?php echo $row['client_id']; ?>" data-ph="<?php echo $row['phone_no']; ?>" data-company="<?php echo $row['company']; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+										<li><a href="#" class="edit" data-edit="<?php echo $row['id'];?>" data-img-url="<?php echo $imgurl; ?>" data-firstname="<?php echo $row['first_name'];?>" data-lastname="<?php echo $row['last_name']; ?>" data-username="<?php echo $row['user_name']; ?>" data-email="<?php echo $row['email']; ?>" data-password="<?php echo $row['password']; ?>" data-clientid="<?php echo $row['client_id']; ?>" data-ph="<?php echo $row['phone_no']; ?>" data-company="<?php echo $row['company']; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
 										<li><a href="#" data-toggle="modal" data-target="#delete_client<?php echo $row['id']; ?>"><i class="fa fa-trash-o m-r-5"></i> Delete</a>		
 										</li>
 									</ul>

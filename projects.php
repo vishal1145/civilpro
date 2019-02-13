@@ -1133,7 +1133,7 @@ $(div_id).on('keyup',function(){
 						<label>Upload Files</label>
 						<input class="form-control" type="file" name="image">
 						<img id="edit_image" height="150" width="150">
-						<input type="hidden" name="hidden_image" id="hidden_image">
+						<input type="hidden" value="" name="hidden_image" id="hidden_image">
 					</div>
 					<div class="m-t-20 text-center">
 						<button class="btn btn-primary" name="update_project" value="update" >Save Changes</button>
@@ -1459,7 +1459,12 @@ $(document).ready(function(){
 				}
 				//$("#edit_materials").val(res.data.material);
 				$("#select2-Priority-d1-container").text(res.data.new_priority);
-				$('#edit_image').attr('src', 'Upload/project/'+res.data.images);
+				if(	$('#edit_image').attr.src == "")
+				{
+					$('#edit_image').attr('src', 'https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg');
+				}else{
+					$('#edit_image').attr('src', 'Upload/project/'+res.data.images);
+				}
 				console.log(res.data.images);
 				$("#hidden_image").val(res.data.images);
 				$('#client_id1 option[value='+res.data.Client_id+']').attr('selected','selected');
