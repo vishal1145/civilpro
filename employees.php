@@ -718,7 +718,7 @@ format: 'YYYY-MM-DD',
 									<img id="loader_img<?php echo $row['empl_id']; ?>" style="display:none"  src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif" width="50">  
                                
                                          <input accept="image/jpg,image/svg,image/jpeg, image/png" type="file" value="Upload Image" onChange="readempic1File(this,<?php echo $row['empl_id']; ?>);" id="empic1">
-                                        <input type="hidden" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile" id="empfile1<?php echo $row['empl_id']; ?>">
+                                        <input type="hidden" value="<?php echo $row['img'] ?>" name="empfile" id="empfile1<?php echo $row['empl_id']; ?>">
                                   </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
