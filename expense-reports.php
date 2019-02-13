@@ -275,7 +275,7 @@ if($res_dataaa){
 											<td class="col-md-4 set_wtd_icon" style="text-align: center;">
 												<?php
 												 $images_value = $card_data['picture']; 
-												 $image_val = explode('#',$images_value);
+												 $image_val = explode('###',$images_value);
 												 foreach ($image_val as $key => $image1) { ?>
 												 	
 											 	<a class="fancybox" rel="gallery1" href="<?php echo $image1; ?>" >

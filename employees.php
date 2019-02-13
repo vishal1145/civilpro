@@ -164,6 +164,48 @@ if(isset($_REQUEST['empl-search'])){
        ?>
 
 <script>
+
+var selectedid = null;
+
+function changepass()
+{
+var udtpass= document.getElementById('pass').value;
+var cudtpass= document.getElementById('cpass').value;
+if(cudtpass==udtpass)
+{
+
+$.ajax({
+               url: "operations.php",
+               data: {id: selectedid, password: udtpass , op_name : "RESETPASSWORD" },
+               //dataType: "json",
+               type: "POST",
+               success: function (data) {
+                $("#resetmodal").modal('hide');
+                alert("Your password successfully updated");
+                // location.reload();
+               	//alert('123');
+              
+               //    if(data == '1')
+               //    location.reload();
+                   }
+               });
+}else
+{
+    alert("Please Eneter the same password in confirm password field")
+}
+}
+
+function reset_password(id){
+    
+ 
+    $("#resetmodal").modal('show');
+ 
+    selectedid=id;
+
+// alert(id);
+
+}
+
 //password visible or hide case logic
 function visible() {
   var x = document.getElementById("clientpassword");
@@ -617,6 +659,7 @@ format: 'YYYY-MM-DD',
                                 <div class="dropdown profile-action">
                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                     <ul class="dropdown-menu pull-right">
+                                    <li><a href="#" id="resetbtn" class="reset_click" onClick="reset_password(<?php echo $row['empl_id']; ?>)"><i class="fa fa-lock m-r-5"></i> Reset</a></li>
                                         <li><a href="#" class="edit_click" data-toggle="modal" data-target="#edit_employee<?php echo $row['empl_id']; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
                                         <li><a href="#" data-toggle="modal" data-target="#delete_employee<?php echo $row['empl_id']; ?>"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
                                     </ul>
@@ -799,7 +842,7 @@ format: 'YYYY-MM-DD',
                                     </div>
                                 </div>
                                 <div class="table-responsive m-t-15">
-                                    <table class="table table-striped custom-table">
+                                      <!-- <table class="table table-striped custom-table">
                                         <thead>
                                             <tr>
                                                 <th>Module Permission</th>
@@ -833,7 +876,7 @@ format: 'YYYY-MM-DD',
                                                     <input type="checkbox">
                                                 </td>
                                             </tr>
-                                            <!-- <tr>
+                                          <tr>
                                                 <td>Leave Request</td>
                                                 <td class="text-center">
                                                     <input checked="" type="checkbox">
@@ -1326,6 +1369,45 @@ format: 'YYYY-MM-DD',
     
             
         </div>
+
+
+
+
+
+        <div id="resetmodal" class="modal in" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content modal-sm">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Change Password</h4>
+      </div>
+      <div class="modal-body">
+      <div >
+  
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" name="password" class="form-control" id="pass">
+  </div>
+ <div class="form-group">
+    <label for="cpwd">Confirm Password:</label>
+    <input type="password" name="op_name" class="form-control" id="cpass">
+  </div>
+ 
+ 
+  <input type="submit" onclick="changepass()" class="btn btn-default"></button>
+</div>
+      </div>
+      <!-- <div class="modal-footer">
+      <button type="button" class="btn btn-info" data-dismiss="modal">Change Password</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div> -->
+    </div>
+
+  </div>
+</div>
+
         <div class="sidebar-overlay" data-reff="#sidebar"></div>
         <script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
@@ -1342,6 +1424,14 @@ format: 'YYYY-MM-DD',
     .error{
         color: red;
     }
+    @media (min-width: 768px)
+    {
+        .modal-sm {
+    width: 500px;
+    margin: 0 auto;
+    }
+
+}
 </style>
 
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>

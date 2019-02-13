@@ -28,8 +28,8 @@ $removeClass = "";
 
 									<li <?php echo ($current_url == "employees.php") ? $active : ''?> ><a <?php echo ($current_url == "employees.php") ? $active : ''?> href="employees.php">All Employees</a></li>
 
-									<!-- <li <?php echo ($current_url == "holidays.php") ? $active : ''?>><a <?php echo ($current_url == "holidays.php") ? $active : ''?> href="holidays.php">Holidays</a></li>
-									<li><a href="#"><span>Leave Requests</span> <span class="badge bg-primary pull-right">1</span></a></li>
+									 <li <?php echo ($current_url == "holidays.php") ? $active : ''?>><a <?php echo ($current_url == "holidays.php") ? $active : ''?> href="holidays.php">Holidays</a></li>
+									<!--<li><a href="#"><span>Leave Requests</span> <span class="badge bg-primary pull-right">1</span></a></li>
 									<li><a href="#">Attendance</a></li> -->
 									<li <?php echo ($current_url == "departments.php") ? $active : ''?>><a <?php echo ($current_url == "departments.php") ? $active : ''?> href="departments.php">Departments</a></li>
 									<li <?php echo ($current_url == "designations.php") ? $active : ''?>><a <?php echo ($current_url == "designations.php") ? $active : ''?> href="designations.php">Designations</a></li>
