@@ -115,7 +115,7 @@ while($rowData = mysqli_fetch_assoc($res_data)){
 						<div class="modal-header">
 							<h4 class="modal-title">Delete Holiday</h4>
 						</div>
-						<form method="POST">
+						<form method="POST" action="">
 							<div class="modal-body card-box">
 								<p>Are you sure want to delete this?</p>
 								<div class="m-t-20 text-left">
@@ -141,7 +141,7 @@ while($rowData = mysqli_fetch_assoc($res_data)){
 							<h4 class="modal-title">Add Holiday</h4>
 						</div>
 						<div class="modal-body">
-							<form method="POST">
+							<form method="POST" action="">
 								<div class="form-group">
 									<label>Holiday Name <span class="text-danger">*</span></label>
 									<input class="form-control" required="" name="holiday_name" type="text">
@@ -174,7 +174,7 @@ while($rowData = mysqli_fetch_assoc($res_data)){
 							<h4 class="modal-title">Edit Holiday</h4>
 						</div>
 						<div class="modal-body">
-							<form method="post">
+							<form method="post" action="">
 								<div class="form-group">
 									<label>Holiday Name <span class="text-danger">*</span></label>
 									<input class="form-control" value="<?php echo $rowData['holiday_name'];?>" name="holiday_name" required="" type="text">
