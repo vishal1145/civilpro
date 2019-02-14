@@ -230,6 +230,16 @@ else{
 					$Time_Card = "SELECT * FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id ORDER BY `id` DESC" ;
                     $Time_Cardd = mysqli_query($con,$Time_Card);
 	}
+	$olddate=null;
+	$oldenddate=null;
+
+	if(isset($_POST['start_date']) && !empty($_POST['start_date'])) {
+    $olddate = $_POST['start_date'];
+}
+
+if(isset($_POST['end_date']) && !empty($_POST['end_date'])) {
+	$oldenddate = $_POST['end_date'];
+}
 
 ?>
 
@@ -286,7 +296,9 @@ else{
 							<div class="form-group form-focus">
 								<label class="control-label">Start Date</label>
 								<div class="cal-icon form-group form-focus">
-								<input class="form-control datetimepicker floating" autocomplete="off" type="text" id="datetimepickerExportStart" name="start_date">
+								
+								<input class="form-control datetimepicker floating" value="<?php echo $olddate; ?>" autocomplete="off" type="text" id="datetimepickerExportStart" name="start_date">
+								
 								</div>
 							</div>
 						</div>
@@ -294,7 +306,8 @@ else{
 						<div class="col-sm-2 col-xs-6"> 
 							<div class="form-group form-focus">
 								<label class="control-label">End Date</label>
-								<div class="cal-icon form-group form-focus"><input autocomplete="off" class="form-control datetimepicker floating" type="text" id="datetimepickerExportEnd" name="end_date">
+								<div class="cal-icon form-group form-focus">
+								<input autocomplete="off" value="<?php echo $oldenddate; ?>" class="form-control datetimepicker floating" type="text" id="datetimepickerExportEnd" name="end_date">
 								</div>
 							</div>
 						</div>
