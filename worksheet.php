@@ -188,11 +188,11 @@ $SearchArray = array();
 //   }
 
 if(!empty($start_date)){
-	 $SearchArray[] = "STR_TO_DATE(u.card_date,'%m/%d/%Y') > STR_TO_DATE('$start_date','%m/%d/%Y')";
+	 $SearchArray[] = "STR_TO_DATE(u.card_date,'%m/%d/%Y') >= STR_TO_DATE('$start_date','%m/%d/%Y')";
    }
 
    if(!empty($end_date)){
-	$SearchArray[] = "STR_TO_DATE(u.card_date,'%m/%d/%Y') < STR_TO_DATE('$end_date','%m/%d/%Y')";
+	$SearchArray[] = "STR_TO_DATE(u.card_date,'%m/%d/%Y') <= STR_TO_DATE('$end_date','%m/%d/%Y')";
   }
 
    if(!empty($find_status) || $find_status != NULL ){
@@ -286,7 +286,7 @@ else{
 							<div class="form-group form-focus">
 								<label class="control-label">Start Date</label>
 								<div class="cal-icon form-group form-focus">
-								<input class="form-control datetimepicker floating" type="text" id="datetimepickerExportStart" name="start_date">
+								<input class="form-control datetimepicker floating" autocomplete="off" type="text" id="datetimepickerExportStart" name="start_date">
 								</div>
 							</div>
 						</div>
@@ -294,7 +294,7 @@ else{
 						<div class="col-sm-2 col-xs-6"> 
 							<div class="form-group form-focus">
 								<label class="control-label">End Date</label>
-								<div class="cal-icon form-group form-focus"><input class="form-control datetimepicker floating" type="text" id="datetimepickerExportEnd" name="end_date">
+								<div class="cal-icon form-group form-focus"><input autocomplete="off" class="form-control datetimepicker floating" type="text" id="datetimepickerExportEnd" name="end_date">
 								</div>
 							</div>
 						</div>

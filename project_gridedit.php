@@ -255,7 +255,7 @@ if(isset($_POST['update_project'])){
 			 exit;
 	}
 	
-    $sql = "UPDATE project SET Project_name='$project_name', Client_id='$client_id',Start_date='$start_date',end_date='$end_date',Rate='$rate',billing_type='$billing_type',Total_hours='$proTotalHour',Priority='$Priority', Project_leader='$edit_project_leader',Team_member='$edit_team',material='$material_value',machine='$edit_machines',consumption='$consmp_name',Project_Address='$edit_project_address',decription='$description',images='$image' WHERE Project_id=$products_id";
+    $sql = "UPDATE Project SET Project_name='$project_name', Client_id='$client_id',Start_date='$start_date',end_date='$end_date',Rate='$rate',billing_type='$billing_type',Total_hours='$proTotalHour',Priority='$Priority', Project_leader='$edit_project_leader',Team_member='$edit_team',material='$material_value',machine='$edit_machines',consumption='$consmp_name',Project_Address='$edit_project_address',decription='$description',images='$image' WHERE Project_id=$products_id";
    
 	$res_data = mysqli_query($con, $sql);	
    
