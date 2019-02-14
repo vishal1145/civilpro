@@ -242,6 +242,33 @@ if(isset($_POST['end_date']) && !empty($_POST['end_date'])) {
 }
 
 ?>
+<script>
+
+function projectcall()
+{
+	//$('#projectnamecheck').is(":checked")
+    if($('#projectnamecheck').is(":checked"))   
+				$("#projectname").show();
+				
+    else
+				$("#projectname").hide();
+				$("#emplname").hide();
+}
+function emplcall()
+{
+    if($('#emplcheckmark').is(":checked"))   
+				$("#emplname").show();
+			
+    else
+				$("#emplname").hide();
+				$("#projectname").hide();
+}
+
+// if($('#projectnamecheck').is(':checked'))
+// {
+// 	$("#projectname").css('display','block');
+// }
+</script>
 
 <!-- ===================================================================== -->
             <div class="page-wrapper">
@@ -354,21 +381,61 @@ if(isset($_POST['end_date']) && !empty($_POST['end_date'])) {
 				        <div class="modal-body">
 				          <form action="export_time_card.php" method="post" class="exportForm" id="exportForm">
 					         
-								<label class="control-label">Start Date</label>
+							<label class="control-label">Start Date</label>
 								<div class="form-group form-focus">
 									<div class="cal-icon form-group form-focus">
-										<input class="form-control datetimepicker floating" type="text" id="datetimepickerExportStart" name="start_date">
+										<input class="form-control datetimepicker floating"  type="text" id="datetimepickerExportStart" name="start_date">
 									</div>
 								</div>
 							  
 								<label class="control-label">End Date</label>
 								<div class="form-group form-focus">
 									<div class="cal-icon form-group form-focus">
-										<input class="form-control datetimepicker floating" type="text" id="datetimepickerExportEnd" name="end_date">
+										<input class="form-control datetimepicker floating"  type="text" id="datetimepickerExportEnd" name="end_date">
 									</div>
 								</div>
-								  
-								<input type="submit" name="export_button" class="btn btn-success btn-block exportButton" value="Export">
+
+								<div class="form-check form-check-inline pull-left">
+  <input class="form-check-input" onchange="emplcall()" type="radio" id="emplcheckmark" name="data_select" value="option1">
+  <label class="form-check-label" for="inlineCheckbox1">Export by Person</label>
+</div>
+<div class="form-check form-check-inline ">
+  <input class="form-check-input"  onchange="projectcall()" style="margin-left:40px;" type="radio" id="projectnamecheck" name="data_select" value="option2">
+  <label class="form-check-label" for="inlineCheckbox2">Export by Project</label>
+</div>
+<?php
+										$log_user_qury = "SELECT Project_id ,Project_name from Project";
+										$res_data = mysqli_query($con,$log_user_qury);
+										?>
+										<div class="row">
+										<div class="col-sm-5" id="projectname" style="display:none;">
+                    <select class="select_pro" name="project_id" >
+										<option value="">Select project</option>				
+										<?php	if ($res_data->num_rows > 0) { 
+											while($row = $res_data->fetch_assoc()) {
+										?>
+												<option value="<?php echo $row['Project_id']; ?>"><?php echo $row['Project_name']; ?></option>
+										<?php } }?>
+									</select>
+									</div>
+									<?php
+										$log_user_qury = "SELECT Project_id ,Project_name from Project";
+										$res_data = mysqli_query($con,$log_user_qury);
+										?>
+									<div class="col-sm-5" id="emplname" style="display:none;">
+                    <select class="select_pro" name="project_id" >
+										<option value="">Select Employee</option>				
+										<?php
+					$selectemp = mysqli_query($con, "SELECT empl_id,first_name from employee");
+					if(mysqli_num_rows($selectemp) > 0){
+					while($res_selectemp = $selectemp->fetch_assoc()) {					
+					?>
+												<option <?php echo $res_selectemp['empl_id']; ?>"><?php echo $res_selectemp['first_name']; ?></option>
+										<?php } }?>
+									</select>
+									</div>
+								  </div>
+								<input style="margin-top:30px;" type="submit" name="export_button" class="btn btn-success btn-block exportButton" value="Export">
 								
 
 				          </form>		
