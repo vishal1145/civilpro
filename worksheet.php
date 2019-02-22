@@ -1793,6 +1793,11 @@ else
         };
 
 				function downloadPdf(start, end, type){
+					
+					var data_range = 		{
+	start_date : start,
+	end_date : end
+}
 
             var settings = {
 							"async": true,
