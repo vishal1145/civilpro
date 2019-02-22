@@ -1716,7 +1716,7 @@ else
                     );
 
                     var obj = {
-                        date: data[j].card_date, client: data[j].first_name + " " + data[j].last_name, project: data[j].Project_name,
+                        date: data[j].card_date, client: data[j].c_first_name + " " + data[j].c_last_name, project: data[j].Project_name,
                         task: data[j].work_type, notes: data[j].description, hours: data[j].hours, billes: data[j].billed
                     }
 
