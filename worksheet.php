@@ -411,14 +411,14 @@ function emplcall()
 							<label class="control-label">Start Date</label>
 								<div class="form-group form-focus">
 									<div class="cal-icon form-group form-focus">
-										<input class="form-control datetimepicker floating" autocomplete="off"  type="text" id="datetimepickerExportStart2" name="start_date">
+										<input class="form-control datetimepicker floating" value="02/1/2019" autocomplete="off"  type="text" id="datetimepickerExportStart2" name="start_date">
 									</div>
 								</div>
 							  
 								<label class="control-label">End Date</label>
 								<div class="form-group form-focus">
 									<div class="cal-icon form-group form-focus">
-										<input class="form-control datetimepicker floating" autocomplete="off"  type="text" id="datetimepickerExportEnd2" name="end_date">
+										<input class="form-control datetimepicker floating" value="02/28/2019" autocomplete="off"  type="text" id="datetimepickerExportEnd2" name="end_date">
 									</div>
 								</div>
 
@@ -1650,12 +1650,16 @@ function exportData(){
 	var date2 = document.getElementById("datetimepickerExportEnd2").value;
 
 var allfileds = date && date2;
-
+if(date>=date2)
+{
+	alert("Please enter the correct date");
+	return;
   if(!allfileds)
 	{
 		alert("Please Complete the Date fields");
 		return;
 	}
+}
         var selValue = $('input[name=exportcheck]:checked').val(); 
 
 				var selValue1 = $('input[name=downloadtype]:checked').val(); 
