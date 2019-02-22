@@ -1667,8 +1667,8 @@ if(date>=date2)
         // $('p').html('<br/>Selected Radio Button Value is : <b>' + selValue + '</b>');
 		//
 
-	var start_date = "11-12-2019";
-	var end_date = "11-12-208";
+	var start_date = date;//"11-12-2019";
+	var end_date = date2;// "11-12-208";
 
 
 if(selValue1 === "1")
