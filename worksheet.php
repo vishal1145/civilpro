@@ -1666,26 +1666,43 @@ if(date>=date2)
 				document.getElementById("loaderview").style.display="block"
         // $('p').html('<br/>Selected Radio Button Value is : <b>' + selValue + '</b>');
 		//
+
+	var start_date = "11-12-2019";
+	var end_date = "11-12-208";
+
+
 if(selValue1 === "1")
-downloadXLX('start', 'end', selValue);
+downloadXLX(start_date, end_date, selValue);
 else
-		downloadPdf('start', 'end', selValue);
+		downloadPdf(start_date, end_date, selValue);
 
 
 }
         var employees = [];
         function downloadXLX(start, end, type) {
 
+			var data_range = 		{
+	start_date : start,
+	end_date : end
+}
+
+					
             var settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": "http://157.230.57.197:9100/api/xlsx-download/" + type,
-                "method": "GET",
-                "headers": {
-                    "cache-control": "no-cache",
-                    "Postman-Token": "22bcea08-4075-4767-9edd-44703ec086c5"
-                }
+							"async": true,
+  "crossDomain": true,
+  "url": "http://157.230.57.197:9100/api/xlsx-download/" + type,
+  "method": "POST",
+  "headers": {
+    "Content-Type": "application/json",
+    "cache-control": "no-cache",
+    "Postman-Token": "baf3f5c0-68b1-4f09-b1c3-f49896e2cdcf"
+  },
+  "processData": false,
+  "data":JSON.stringify(data_range)
             }
+
+
+				
 
             $.ajax(settings).done(function (response) {
                 console.log(response);
@@ -1776,16 +1793,22 @@ else
         };
 
 				function downloadPdf(start, end, type){
-					var settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": "https://rentalant.com/api/pdf-download/" + type,
-                "method": "GET",
-                "headers": {
-                    "cache-control": "no-cache",
-                    "Postman-Token": "22bcea08-4075-4767-9edd-44703ec086c5"
-                }
+
+            var settings = {
+							"async": true,
+  "crossDomain": true,
+  "url": "https://rentalant.com/api/pdf-download/" + type,
+  "method": "POST",
+  "headers": {
+    "Content-Type": "application/json",
+    "cache-control": "no-cache",
+    "Postman-Token": "baf3f5c0-68b1-4f09-b1c3-f49896e2cdcf"
+  },
+  "processData": false,
+  "data":JSON.stringify(data_range)
             }
+
+
 
             $.ajax(settings).done(function (response) {
 console.log(response);
