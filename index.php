@@ -52,6 +52,8 @@ if(isset($_POST['save_btn'])){
 		<![endif]-->
     <script type="text/javascript"></script><script type="text/javascript"></script><script type="text/javascript"></script><script type="text/javascript">                                                                                                                                                                                                                                                                                                                                                                                                                                               </script></head>
 
+	
+</head>
 
 	
     <body>

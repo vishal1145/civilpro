@@ -114,6 +114,33 @@ li.icon-ginti {
 .row.selectMachinesEdit {display: none;}
 .row.export_section { margin-bottom: 15px;}
 input.btn.btn-success.btn-block.exportButton {width: 150px;}
+
+
+
+
+.loader {
+		border: 3px solid transparent;
+		/* position: absolute;
+		top:50%;
+		left:45%; */
+		border-radius: 50%;
+		border-top: 3px solid #3498db;
+		width: 30px;
+		height: 30px;
+		-webkit-animation: spin 2s linear infinite; / Safari /
+		animation: spin 2s linear infinite;
+	}
+	
+	/ Safari /
+	@-webkit-keyframes spin {
+		0% { -webkit-transform: rotate(0deg); }
+		100% { -webkit-transform: rotate(360deg); }
+	}
+	
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
 </style>
 <?php
 
@@ -384,30 +411,39 @@ function emplcall()
 							<label class="control-label">Start Date</label>
 								<div class="form-group form-focus">
 									<div class="cal-icon form-group form-focus">
-										<input class="form-control datetimepicker floating"  type="text" id="datetimepickerExportStart" name="start_date">
+										<input class="form-control datetimepicker floating" autocomplete="off"  type="text" id="datetimepickerExportStart2" name="start_date">
 									</div>
 								</div>
 							  
 								<label class="control-label">End Date</label>
 								<div class="form-group form-focus">
 									<div class="cal-icon form-group form-focus">
-										<input class="form-control datetimepicker floating"  type="text" id="datetimepickerExportEnd" name="end_date">
+										<input class="form-control datetimepicker floating" autocomplete="off"  type="text" id="datetimepickerExportEnd2" name="end_date">
 									</div>
 								</div>
 
 								<div class="form-check form-check-inline pull-left">
-  <input class="form-check-input" onchange="emplcall()" type="radio" id="emplcheckmark" name="data_select" value="option1">
+  <input class="form-check-input" checked="checked" onchange="emplcall()" type="radio" name="exportcheck"  value="1">
   <label class="form-check-label" for="inlineCheckbox1">Export by Person</label>
 </div>
 <div class="form-check form-check-inline ">
-  <input class="form-check-input"  onchange="projectcall()" style="margin-left:40px;" type="radio" id="projectnamecheck" name="data_select" value="option2">
+  <input class="form-check-input"  onchange="projectcall()" style="margin-left:40px;" type="radio" name="exportcheck"  value="2">
   <label class="form-check-label" for="inlineCheckbox2">Export by Project</label>
+</div>
+
+<div class="form-check form-check-inline pull-left " style="margin-top:10px;margin-right:25px;">
+  <input class="form-check-input" checked="checked" onchange="emplcall()" type="radio" name="downloadtype" value="1">
+  <label class="form-check-label"  for="inlineCheckbox1">Download xls</label>
+</div>
+<div class="form-check form-check-inline " style="margin-top:10px;">
+  <input class="form-check-input"  onchange="projectcall()" style="margin-left:40px;" type="radio" name="downloadtype" value="2">
+  <label class="form-check-label" for="inlineCheckbox2">Download Pdf</label>
 </div>
 <?php
 										$log_user_qury = "SELECT Project_id ,Project_name from Project";
 										$res_data = mysqli_query($con,$log_user_qury);
 										?>
-										<div class="row">
+										<!-- <div class="row">
 										<div class="col-sm-5" id="projectname" style="display:none;">
                     <select class="select_pro" name="project_id" >
 										<option value="">Select project</option>				
@@ -434,9 +470,10 @@ function emplcall()
 										<?php } }?>
 									</select>
 									</div>
-								  </div>
-								<input style="margin-top:30px;" type="submit" name="export_button" class="btn btn-success btn-block exportButton" value="Export">
-								
+								  </div> -->
+								<div style="margin-left: 20px;margin-top: 20px;" id="loaderview" class="loader" style="transform:scale(0.5)"></div>
+
+								<input type="button" onclick="exportData()" style="margin-top:30px;"  id="exportdata" class="btn btn-success btn-block exportButton" value="Export">
 
 				          </form>		
 				        </div>
@@ -1294,6 +1331,14 @@ function emplcall()
 		<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
 		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.1/xlsx.core.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+    </script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
+		
 <script type="text/javascript">
 	$(document).ready( function () {
 		$('#worksheet').DataTable({
@@ -1318,7 +1363,7 @@ function emplcall()
 			      });
 
 				$(function(){
-			    $("#datepicker,#datepicker1,#datepickerr1,#datetimepickerExportStart,#datetimepickerExportEnd").datepicker();
+			    $("#datepicker,#datepicker1,#datepickerr1,#datetimepickerExportStart,#datetimepickerExportEnd,#datetimepickerExportStart2,#datetimepickerExportEnd2").datepicker();
 				    showButtonPanel: true
 				});
 
@@ -1593,6 +1638,166 @@ $( ".add_project_name_edit" ).change(function () {
 });
 
 </script>
+
+
+<script>
+
+
+ document.getElementById("loaderview").style.display="none"
+function exportData(){
+
+	var date = document.getElementById("datetimepickerExportStart2").value;
+	var date2 = document.getElementById("datetimepickerExportEnd2").value;
+
+var allfileds = date && date2;
+
+  if(!allfileds)
+	{
+		alert("Please Complete the Date fields");
+		return;
+	}
+        var selValue = $('input[name=exportcheck]:checked').val(); 
+
+				var selValue1 = $('input[name=downloadtype]:checked').val(); 
+				document.getElementById("loaderview").style.display="block"
+        // $('p').html('<br/>Selected Radio Button Value is : <b>' + selValue + '</b>');
+		//
+if(selValue1 === "1")
+downloadXLX('start', 'end', selValue);
+else
+		downloadPdf('start', 'end', selValue);
+
+
+}
+        var employees = [];
+        function downloadXLX(start, end, type) {
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "http://157.230.57.197:9100/api/xlsx-download/" + type,
+                "method": "GET",
+                "headers": {
+                    "cache-control": "no-cache",
+                    "Postman-Token": "22bcea08-4075-4767-9edd-44703ec086c5"
+                }
+            }
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+                let data = response
+
+                
+                for (var j = 0; j < data.length; j++) {
+                    var index = _.findIndex(
+                        employees,
+                        g => g.employee_id === data[j].employee_id
+                    );
+
+                    var obj = {
+                        date: data[j].card_date, client: data[j].first_name + " " + data[j].last_name, project: data[j].Project_name,
+                        task: data[j].work_type, notes: data[j].description, hours: data[j].hours, billes: data[j].billed
+                    }
+
+                    if (index >= 0) {
+                        employees[index].total = employees[index].total + Number(data[j].hours)
+                        employees[index].dates = employees[index].dates || [];
+                        employees[index].dates.push(obj);
+                    } else {
+                        var group = {
+                            name: data[j].first_name + " " + data[j].last_name,
+                            employee_id: data[j].employee_id,
+                            dates: [obj],
+                            total: Number(data[j].hours)
+                        };
+                        employees.push(group);
+                    }
+                }
+                console.log(employees)
+                getXlX();
+								document.getElementById("loaderview").style.display="none"
+            });
+
+            
+
+            function getXlX() {
+                var header = [{
+                    date: " ",
+                    client: "Client",
+                    project: "Project",
+                    task: "Task",
+                    notes: "Notes",
+                    hours: "Hours",
+                    billes: 'Billed'
+                }]
+                var ws = XLSX.utils.json_to_sheet([{ heading: "Timesheet Details by Project" }], { skipHeader: true, origin: "A" + 1 });
+                var row_no = 2;
+
+                XLSX.utils.sheet_add_json(ws, [{ heading: "Silver Stone Industry" }], { skipHeader: true, origin: "A" + row_no });
+                row_no++;
+
+                XLSX.utils.sheet_add_json(ws, [{ heading: "Between January 26,2019 and Feburary 09, 2019" }], { skipHeader: true, origin: "A" + row_no });
+                row_no++;
+
+                XLSX.utils.sheet_add_json(ws, header, { skipHeader: true, origin: "A" + row_no });
+                row_no++;
+                //lopp on employees
+                for (let i = 0; i < employees.length; i++) {
+
+                    XLSX.utils.sheet_add_json(ws, [{ name: employees[i].name }], { skipHeader: true, origin: "A" + row_no });
+                    row_no++;
+
+                    let init = 1
+                    let l = 0
+                    if (i > 0) {
+                        l = employees[i].dates.length;
+                    }
+
+                    XLSX.utils.sheet_add_json(ws, employees[i].dates, { skipHeader: true, origin: "A" + row_no });
+                    row_no = row_no + employees[i].dates.length;
+
+                    XLSX.utils.sheet_add_json(ws, [{ total: "Total", value: employees[i].total }], { skipHeader: true, origin: "A" + row_no });
+                    row_no++;
+                }
+
+
+                /* add to workbook */
+                var wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "People");
+
+                /* generate an XLSX file */
+                XLSX.writeFile(wb, "sheetjs.xlsx");
+            }
+
+        };
+
+				function downloadPdf(start, end, type){
+					var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://rentalant.com/api/pdf-download/" + type,
+                "method": "GET",
+                "headers": {
+                    "cache-control": "no-cache",
+                    "Postman-Token": "22bcea08-4075-4767-9edd-44703ec086c5"
+                }
+            }
+
+            $.ajax(settings).done(function (response) {
+console.log(response);
+    var aTag = document.createElement('a');
+    aTag.setAttribute('href',response.url);
+		aTag.setAttribute('download',"download");
+    document.body.appendChild(aTag);
+		aTag.click();
+document.getElementById("loaderview").style.display="none"
+		
+
+						});
+				}
+		
+
+    </script>
 
     </body>
 </html>
