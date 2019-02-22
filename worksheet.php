@@ -1681,10 +1681,10 @@ else
         var employees = [];
         function downloadXLX(start, end, type) {
 
-			var data_range = 		{
-	start_date : start,
-	end_date : end
-}
+					var date_range = {
+			 start_date : start,
+			 end_date : end
+					}
 
 					
             var settings = {
@@ -1698,7 +1698,7 @@ else
     "Postman-Token": "baf3f5c0-68b1-4f09-b1c3-f49896e2cdcf"
   },
   "processData": false,
-  "data":JSON.stringify(data_range)
+  "data":JSON.stringify(date_range)
             }
 
 
@@ -1757,7 +1757,7 @@ else
                 XLSX.utils.sheet_add_json(ws, [{ heading: "Silver Stone Industry" }], { skipHeader: true, origin: "A" + row_no });
                 row_no++;
 
-                XLSX.utils.sheet_add_json(ws, [{ heading: "Between January 26,2019 and Feburary 09, 2019" }], { skipHeader: true, origin: "A" + row_no });
+                XLSX.utils.sheet_add_json(ws, [{ heading: "Between "+date_range.start_date+" and "+date_range.end_date }], { skipHeader: true, origin: "A" + row_no });
                 row_no++;
 
                 XLSX.utils.sheet_add_json(ws, header, { skipHeader: true, origin: "A" + row_no });
