@@ -1671,14 +1671,143 @@ if(date>=date2)
 	var end_date = date2;// "11-12-208";
 
 
-if(selValue1 === "1")
+if(selValue1 === "1"){
+	if(selValue === "1"){
 downloadXLX(start_date, end_date, selValue);
+	} else{
+		downloadXLX2(start_date, end_date, selValue);
+	}
+}
 else
 		downloadPdf(start_date, end_date, selValue);
 
 
 }
         var employees = [];
+
+
+				function downloadXLX2(start, end, type) {
+
+					var date_range = {
+			 start_date : start,
+			 end_date : end
+					}
+
+var settings = {
+	"async": true,
+	"crossDomain": true,
+	"url": "http://157.230.57.197:9100/api/xlsx-download/" + type,
+	"method": "POST",
+	"headers": {
+		"Content-Type": "application/json",
+		"cache-control": "no-cache",
+		"Postman-Token": "baf3f5c0-68b1-4f09-b1c3-f49896e2cdcf"
+	},
+	"processData": false,
+	"data": JSON.stringify(date_range)
+}
+
+$.ajax(settings).done(function (response) {
+	console.log(response);
+	let data = response
+
+	employees = [];
+	for (var j = 0; j < data.length; j++) {
+		var index = _.findIndex(
+			employees,
+			g => g.project_id === data[j].project_id
+		);
+		
+
+		var obj = {
+			date: data[j].card_date, team: data[j].emp_first_name + " " + data[j].emp_last_name,
+			client: data[j].cli_first_name + " " + data[j].cli_last_name,
+			task: data[j].work_type, description: data[j].description, hours: data[j].hours, billes: data[j].billed
+		}
+
+		if (index >= 0) {
+
+			var dateIndex = _.findIndex(employees[index].dates, g => g.date === data[j].card_date)
+
+			if (dateIndex >= 0) {
+				employees[index].dates[dateIndex].hours = Number(employees[index].dates[dateIndex].hours) + Number(obj.hours)
+				employees[index].dates[dateIndex].team = employees[index].dates[dateIndex].team + ", " + obj.team
+				employees[index].total = employees[index].total + Number(obj.hours)
+				//employees[index].dates.push(obj);
+			} else {
+
+				employees[index].total = employees[index].total + Number(data[j].hours)
+				employees[index].dates = employees[index].dates || [];
+				employees[index].dates.push(obj);
+			}
+		} else {
+			var group = {
+				name: data[j].Project_name,
+				project_id: data[j].project_id,
+				dates: [obj],
+				total: Number(data[j].hours)
+			};
+			employees.push(group);
+		}
+	}
+	console.log(employees)
+	getXlX2();
+	document.getElementById("loaderview").style.display="none"
+});
+
+
+function getXlX2() {
+	var header = [{
+		date: " ",
+		team: "Team",
+		client: "Client",
+		task: "Task",
+		description: "Description",
+		hours: "Hours",
+		billed: 'Billed'
+	}]
+	var ws = XLSX.utils.json_to_sheet([{ heading: "Timesheet Details by Project" }], { skipHeader: true, origin: "A" + 1 });
+	var row_no = 2;
+
+	// XLSX.utils.sheet_add_json(ws, [{ heading: "Silver Stone Industry" }], { skipHeader: true, origin: "A" + row_no });
+	// row_no++;
+
+	XLSX.utils.sheet_add_json(ws, [{ heading: "Between "+date_range.start_date+" and "+date_range.end_date }], { skipHeader: true, origin: "A" + row_no });
+                row_no++;
+
+	XLSX.utils.sheet_add_json(ws, header, { skipHeader: true, origin: "A" + row_no });
+	row_no++;
+	//lopp on employees
+	for (let i = 0; i < employees.length; i++) {
+
+		XLSX.utils.sheet_add_json(ws, [{ name: employees[i].name }], { skipHeader: true, origin: "A" + row_no });
+		row_no++;
+
+		let init = 1
+		let l = 0
+		if (i > 0) {
+			l = employees[i].dates.length;
+		}
+
+		XLSX.utils.sheet_add_json(ws, employees[i].dates, { skipHeader: true, origin: "A" + row_no });
+		row_no = row_no + employees[i].dates.length;
+
+		XLSX.utils.sheet_add_json(ws, [{ total: "Total", value: employees[i].total }], { skipHeader: true, origin: "A" + row_no });
+		row_no++;
+	}
+
+
+	/* add to workbook */
+	var wb = XLSX.utils.book_new();
+	XLSX.utils.book_append_sheet(wb, ws, "Project_Report");
+
+	/* generate an XLSX file */
+	XLSX.writeFile(wb, "Project_Report.xlsx");
+}
+
+};
+
+
         function downloadXLX(start, end, type) {
 
 					var date_range = {
@@ -1754,8 +1883,8 @@ else
                 var ws = XLSX.utils.json_to_sheet([{ heading: "Timesheet Details by Project" }], { skipHeader: true, origin: "A" + 1 });
                 var row_no = 2;
 
-                XLSX.utils.sheet_add_json(ws, [{ heading: "Silver Stone Industry" }], { skipHeader: true, origin: "A" + row_no });
-                row_no++;
+                // XLSX.utils.sheet_add_json(ws, [{ heading: "Silver Stone Industry" }], { skipHeader: true, origin: "A" + row_no });
+                // row_no++;
 
                 XLSX.utils.sheet_add_json(ws, [{ heading: "Between "+date_range.start_date+" and "+date_range.end_date }], { skipHeader: true, origin: "A" + row_no });
                 row_no++;
@@ -1784,10 +1913,10 @@ else
 
                 /* add to workbook */
                 var wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, "People");
+                XLSX.utils.book_append_sheet(wb, ws, "Employee_Report");
 
                 /* generate an XLSX file */
-                XLSX.writeFile(wb, "sheetjs.xlsx");
+                XLSX.writeFile(wb, "Employee_Report.xlsx");
             }
 
         };
