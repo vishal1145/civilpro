@@ -1709,14 +1709,14 @@ else
                 let data = response
 
                 
-                for (var j = 0; j < data.length; j++) {
+								for (var j = 0; j < data.length; j++) {
                     var index = _.findIndex(
                         employees,
                         g => g.employee_id === data[j].employee_id
                     );
 
                     var obj = {
-                        date: data[j].card_date, client: data[j].c_first_name + " " + data[j].c_last_name, project: data[j].Project_name,
+                        date: data[j].card_date, client: data[j].cli_first_name + " " + data[j].cli_last_name, project: data[j].Project_name,
                         task: data[j].work_type, notes: data[j].description, hours: data[j].hours, billes: data[j].billed
                     }
 
@@ -1726,7 +1726,7 @@ else
                         employees[index].dates.push(obj);
                     } else {
                         var group = {
-                            name: data[j].first_name + " " + data[j].last_name,
+                            name: data[j].emp_first_name + " " + data[j].emp_last_name,
                             employee_id: data[j].employee_id,
                             dates: [obj],
                             total: Number(data[j].hours)
