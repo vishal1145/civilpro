@@ -163,7 +163,8 @@ if(isset($_POST['Add_Timecard'])){
 	$machine = $_POST["multiple_machine"];
 	$hours = array_intersect_key($hours, $machine);
 	$hourss = implode(",",$hours);
-	
+	$taskid = $_POST['taskid'];
+	//$task_name = $_POST['taskname'];
   $project_name = $_POST['project_name'];
   $employee_id = $_POST['select_emp_nama'];
 	$deadline = $_POST['deadline'];
@@ -176,7 +177,7 @@ if(isset($_POST['Add_Timecard'])){
 	$created_date = date("Y-m-d");
 	$time_set=time();
 
-    $log_user_quryy = "INSERT INTO time_card (project_name, employee_id, deadline, total_hours, remain_hours, work_type, card_date, hours, description, machine, machine_hours,created_date,time_set) VALUES ('$project_name','$employee_id' , '$deadline', '$total_hour','$remain_hour', '$work_type', '$work_date','$work_hours', '$description', '$machine_name', '$hourss','$created_date','$time_set')";
+    $log_user_quryy = "INSERT INTO time_card (project_name, employee_id, deadline, total_hours, remain_hours, work_type, card_date, hours, description, machine, machine_hours,created_date,time_set,taskid) VALUES ('$project_name','$employee_id' , '$deadline', '$total_hour','$remain_hour', '$work_type', '$work_date','$work_hours', '$description', '$machine_name', '$hourss','$created_date','$time_set',$taskid)";
    	
 
 $res_dataaa = mysqli_query($con,$log_user_quryy);
@@ -243,18 +244,18 @@ if(!empty($start_date)){
             // echo "</pre>"; die;
 if($searchQuery == "")
 {
-	$Time_Card =("SELECT * FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id ");		 
+	$Time_Card =("SELECT * FROM `time_card` AS u INNER JOIN `employee`  AS e ON e.empl_id = u.employee_id INNER JOIN project_tasks AS PT ON PT.id = u.taskid");		 
 	$Time_Cardd = mysqli_query($con,$Time_Card);
        
 }
 else{
-  $Time_Card =("SELECT * FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id where $searchQuery ");		 
+  $Time_Card =("SELECT * FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id INNER JOIN project_tasks AS PT ON PT.id = u.taskid where $searchQuery ");		 
 				 $Time_Cardd = mysqli_query($con,$Time_Card);
 }		
 		//echo $Time_Card;
 
 	}else{
-					$Time_Card = "SELECT * FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id ORDER BY `id` DESC" ;
+					$Time_Card = ("SELECT * FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id INNER JOIN project_tasks AS PT ON PT.id = u.taskid ORDER BY u.id DESC" );
                     $Time_Cardd = mysqli_query($con,$Time_Card);
 	}
 	$olddate=null;
@@ -491,6 +492,7 @@ function emplcall()
 											<th>Employee</th>
 											<th>Date</th>
 											<th>Projects</th>
+											<th>Task Name</th>
 											<th class="text-center">Work Type</th>
 											<th class="text-center">Hours</th>
 											<th class="text-center set_wtd_icon">Description</th>
@@ -536,7 +538,8 @@ function emplcall()
 				</td>
 											<td><?php echo $card_data['card_date']; ?></td>
 											<td>
-												<h2><?php echo $res_proj_name['Project_name']; ?></h2>
+												<h2><?php echo $res_proj_name['Project_name']; ?></h2></td>
+												<td>	<h2><?php echo $card_data['task_name']; ?></h2>
 											</td>
 											<td class="text-center col-md-2"><?php echo $card_data['work_type']; ?></td>
 											<td class="text-center"><?php echo $card_data['hours']; ?></td>
@@ -1213,6 +1216,25 @@ function emplcall()
 
 					</select>
 					</div>
+					<div class="col-md-12 p-0">
+										<div class="form-group">
+										<label>Task Name <span class="text-danger">*</span></label>
+										<?php
+										$project_task_query = "SELECT * from project_tasks ";
+										$project_task_query_res = mysqli_query($con,$project_task_query);
+										?>
+									<select class="select_pro" name="taskid" id="taskidddl" >
+										<option value="">Select Task</option>				
+										<?php	if ($project_task_query_res->num_rows > 0) { 
+											while($project_task_query_res_row = $project_task_query_res->fetch_assoc()) {
+										?>
+												<option value="<?php echo $project_task_query_res_row['id']; ?>"><?php echo $project_task_query_res_row['task_name']; ?></option>
+										<?php } }?>
+
+
+					</select>
+										</div>
+									</div>
 								<div class="row">
 									<div class="form-group col-sm-4">
 										<label>Deadline <span class="text-danger">*</span></label>
@@ -1484,6 +1506,18 @@ $.ajax({
 });
 
 
+function rendertask(project_id){
+	callapi({ Data : { projectid : project_id }, PRCID: 'GETPROJECTTASK' }).then((res) =>{
+							console.log(res);
+
+							$('#taskidddl').children().remove();
+							for(var i=0;i<res.length;i++){
+								$('#taskidddl').append("<option value='"+ res[i].id + "'>"+ res[i].task_name+"</option>")	
+							}
+
+					 });
+}
+
 //add new time card = get team member 
 $('#add_project_name').on('change', function (e) {
     var project_id = this.value;
@@ -1499,6 +1533,10 @@ $('#add_project_name').on('change', function (e) {
                    
                }
            });
+
+					 rendertask(project_id);
+
+
 
 });
 
@@ -1539,6 +1577,28 @@ console.log(err);
 		}
 	});
  });
+
+//  $( "#add_project_name" ).change(function () {
+// 	var project_di = this.value;
+// 	$("#select_emp_nama_append").empty();
+// 	$.ajax({
+// 		url: "project_assign_empolyee.php",
+// 		data: {'project_dia': project_di},
+// 		type: "POST",
+// 		dataType:'JSON',
+// 		success: function (data) {
+// 			//alert(data);
+// 			if(data.msg == "success"){
+// 				$("#select_emp_nama_append").append(data.empName);
+// 				$("#addTimeCtotalHours").val(data.totalHours);
+// 				$("input[name = remain_hour]").val(data.totalRemainHours);
+// 			}
+// 		},
+// 		error:function(err){
+// console.log(err);
+// 		}
+// 	});
+//  });
 
 /*=====================  remain hours ========================= */
 

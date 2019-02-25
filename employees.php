@@ -19,6 +19,7 @@ $con = $obj->connect();
          $employee_phone = $_POST['phone'];
          $employee_comp  = $_POST['company'];
          $employee_desi  = $_POST['designation'];
+        // $hourly_rate  = $_POST['hourlyrate'];
          $img_url = $_POST['empfile'];
          $time_set = time();
          //echo $employee_fname;
@@ -1132,6 +1133,7 @@ format: 'YYYY-MM-DD',
                                             <input class="form-control" type="text" name="phone">
                                         </div>
                                     </div>
+                                   
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">Company</label>
@@ -1166,7 +1168,14 @@ format: 'YYYY-MM-DD',
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Hourly rate </label>
+                                            <input class="form-control" type="text" name="hourlyrate">
+                                        </div>
+                                    </div>
                                 </div>
+                               
                                 <!-- <div class="table-responsive m-t-15">
                                     <table class="table table-striped custom-table">
                                         <thead>

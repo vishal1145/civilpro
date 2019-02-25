@@ -18,6 +18,35 @@ if($_POST['time_carddd'] == "approve_project_act"){
 echo $Time_Cardd = mysqli_query($con,$Time_Card);
 }
 
+if($_POST['task'] == "task"){
+	$project_id = $_POST['project_id'];
+	$query = "select * from project_tasks where project_id = ".$project_id;
+    //$query_res = mysqli_query($con,$query);
+
+//    $rows = array();
+// while($r = mysqli_fetch_assoc($query_res)) {
+//     $rows[] = $r;
+// }
+
+// echo json_encode($rows);
+
+
+
+$result1=mysql_query($con,$query);
+$json = array();
+while($row1 = mysql_fetch_array($result1))     
+ {
+    $json[]= $row1;
+}
+
+$jsonstring = json_encode($json);
+ echo $jsonstring;
+
+
+}
+
+
+
 if($_POST['approve_Priority'] == "approve_Priority"){
   $status = $_POST['Approve'];
  

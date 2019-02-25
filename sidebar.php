@@ -51,6 +51,9 @@ $removeClass = "";
 							<li <?php echo ($current_url == "projects.php") ? 'class="Projects '.$activeClass.'"' : 'class="Projects '.$removeClass.'"' ?>> 
 								<a href="projects.php">Projects</a>
 							</li>
+							<li <?php echo ($current_url == "projects.php") ? 'class="Projects '.$activeClass.'"' : 'class="Projects '.$removeClass.'"' ?>> 
+								<a href="projects.php">Task</a>
+							</li>
 							<!--<li class="Tasks"> 
 								<a href="tasks.html">Tasks</a>
 								<a href="#">Tasks</a>
