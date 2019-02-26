@@ -161,7 +161,7 @@ if (isset($_POST['updateform'])) {
 							<div class="dash-widget clearfix card-box">
 								<span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
 								<div class="dash-widget-info">
-									<h3>37</h3>
+									<h3 id="taskvalue"></h3>
 									<span>Tasks</span>
 								</div>
 							</div>
@@ -1122,6 +1122,17 @@ if (isset($_POST['updateform'])) {
 		<script type="text/javascript" src="assets/js/typeahead.js"></script>
 		<script type="text/javascript" src="assets/js/app.js"></script>
 		<script>
+
+callapi({ PRCID: 'GETTASKCOUNT' }).then((res) =>{
+
+//$('#taskidddl2').children().remove();
+// document.getElementById("taskvalue").innerHTML = res.counts;
+	// for(var i=0;i<res.length;i++){
+	 	$('#taskvalue').append(res.counts)	
+	// }
+});
+
+
 				var data = [
 			  { y: '2014', a: 50, b: 90},
 			  { y: '2015', a: 65,  b: 75},
@@ -1168,6 +1179,7 @@ if (isset($_POST['updateform'])) {
 		  ]
 		});
 
+		
 
 $(document).ready(function(){
     $(".edit").click(function(){
