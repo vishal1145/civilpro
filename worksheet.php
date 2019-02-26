@@ -244,18 +244,18 @@ if(!empty($start_date)){
             // echo "</pre>"; die;
 if($searchQuery == "")
 {
-	$Time_Card =("SELECT * FROM `time_card` AS u INNER JOIN `employee`  AS e ON e.empl_id = u.employee_id INNER JOIN project_tasks AS PT ON PT.id = u.taskid");		 
+	$Time_Card =("SELECT u.*, e.*,PT.id as taskid, PT.task_name FROM `time_card` AS u INNER JOIN `employee`  AS e ON e.empl_id = u.employee_id INNER JOIN project_tasks AS PT ON PT.id = u.taskid");		 
 	$Time_Cardd = mysqli_query($con,$Time_Card);
        
 }
 else{
-  $Time_Card =("SELECT * FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id INNER JOIN project_tasks AS PT ON PT.id = u.taskid where $searchQuery ");		 
+  $Time_Card =("SELECT u.*, e.*,PT.id as taskid, PT.task_name FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id INNER JOIN project_tasks AS PT ON PT.id = u.taskid where $searchQuery ");		 
 				 $Time_Cardd = mysqli_query($con,$Time_Card);
 }		
 		//echo $Time_Card;
 
 	}else{
-					$Time_Card = ("SELECT * FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id INNER JOIN project_tasks AS PT ON PT.id = u.taskid ORDER BY u.id DESC" );
+					$Time_Card = ("SELECT u.*, e.*,PT.id as taskid, PT.task_name FROM `time_card` AS u INNER JOIN `employee` AS e ON e.empl_id = u.employee_id INNER JOIN project_tasks AS PT ON PT.id = u.taskid ORDER BY u.id DESC" );
                     $Time_Cardd = mysqli_query($con,$Time_Card);
 	}
 	$olddate=null;
@@ -639,7 +639,7 @@ function emplcall()
 						$project_name= $_POST['project_name'];
 
 						$select_emp_namaup = $_POST['select_emp_nama'];
-
+						$taskid = $_POST['taskidddl2'];
 						$deadline = $_POST['deadline'];
 						$total_hours = $_POST['total_hours'];
 						$remain_hours = $_POST['remain_hours'];
@@ -669,7 +669,8 @@ function emplcall()
 						 `hours`='".$work_hours."' ,
 						 `description`='".$description."',
 						 `machine`='".$machine_nameup."',						 
-						 `machine_hours`='".$hourss1."'
+						 `machine_hours`='".$hourss1."',
+						 `taskid`='".$taskid."'
 
 						 WHERE id='".$idd."' ";
 
@@ -764,6 +765,25 @@ function emplcall()
 					<?php } } ?>
 					</select> -->
 					</div>
+
+					<div class="col-md-12 p-0">
+										<div class="form-group">
+										<label>Task Name <span class="text-danger">*</span></label>
+										<?php
+										$project_task_query = "SELECT * from project_tasks where id =".$card_data["taskid"];
+										$project_task_query_res = mysqli_query($con,$project_task_query);
+										?>
+									<select class="select_pro" name="taskidddl2" id="taskidddl2" >
+										<?php	if ($project_task_query_res->num_rows > 0) { 
+											while($project_task_query_res_row = $project_task_query_res->fetch_assoc()) {
+										?>
+												<option value="<?php echo $project_task_query_res_row['id']; ?>"><?php echo $project_task_query_res_row['task_name']; ?></option>
+										<?php } }?>
+
+
+					</select>
+										</div>
+									</div>
 					<div class="row">
 									<div class="form-group col-sm-4">
 										<label>Deadline <span class="text-danger">*</span></label>
@@ -1220,7 +1240,7 @@ function emplcall()
 										<div class="form-group">
 										<label>Task Name <span class="text-danger">*</span></label>
 										<?php
-										$project_task_query = "SELECT * from project_tasks ";
+										$project_task_query = "SELECT * from project_tasks where 1=2";
 										$project_task_query_res = mysqli_query($con,$project_task_query);
 										?>
 									<select class="select_pro" name="taskid" id="taskidddl" >
@@ -1515,11 +1535,39 @@ function rendertask(project_id){
 								$('#taskidddl').append("<option value='"+ res[i].id + "'>"+ res[i].task_name+"</option>")	
 							}
 
+							$('#taskidddl2').children().remove();
+							for(var i=0;i<res.length;i++){
+								$('#taskidddl2').append("<option value='"+ res[i].id + "'>"+ res[i].task_name+"</option>")	
+							}
+
 					 });
+
+				
 }
 
 //add new time card = get team member 
 $('#add_project_name').on('change', function (e) {
+    var project_id = this.value;
+    var project_member = 'project_member';
+    $.ajax({
+               url: "approve_ajax.php",
+               dataType:'json',
+               data: {project_id: project_id, project_member: project_member},
+               type: "POST",
+               success: function (data) {
+               //	alert('123');
+               	 $('.add_new_time_cr').html(data);
+                   
+               }
+           });
+
+					 rendertask(project_id);
+
+
+
+});
+
+$('#add_project_name_edit').on('change', function (e) {
     var project_id = this.value;
     var project_member = 'project_member';
     $.ajax({
