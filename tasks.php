@@ -11,9 +11,14 @@ $user_id = $_SESSION['user_id'];
 
 
 ?>
-
+<style>
+.task:hover
+{
+    overflow:hidden !important;
+}
+</style>
 <div class="page-wrapper" style="height:100%">
-    <div class="chat-main-row">
+    <div class="chat-main-row" style="overflow:unset">
         <div class="chat-main-wrapper">
             <div class="col-xs-7 message-view task-view">
                 <div class="chat-window">
@@ -21,150 +26,78 @@ $user_id = $_SESSION['user_id'];
                         <div class="navbar">
                             <div class="pull-left">
                                 <div class="add-task-btn-wrapper">
-                                    <button data-toggle="modal" onclick="opentaskmodal()" data-target="#taskmodal" class="add-task-btn btn btn-default btn-xs">
+                                    <button onclick="opentaskmodal()"  class="add-task-btn btn btn-default btn-xs">
                                         Add Task
                                     </button>
                                 </div>
                             </div>
-                            <ul class="nav navbar-nav pull-right chat-menu">
-                                <li class="dropdown">
-                                    <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cog"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="javascript:void(0)">Pending Tasks</a></li>
-                                        <li><a href="javascript:void(0)">Completed Tasks</a></li>
-                                        <li><a href="javascript:void(0)">All Tasks</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            
                             <a class="task-chat profile-rightbar pull-right" href="#task_window"><i class="fa fa fa-comment"></i></a>
                         </div>
                     </div>
                     <div class="chat-contents">
                         <div class="chat-content-wrap">
-                            <div class="chat-wrap-inner">
+                            <div class="chat-wrap-inner" style="overflow:unset">
                                 <div class="chat-box">
                                     <div class="task-wrapper">
                                         <div class="task-list-container">
+
+
+<?php 
+
+$prject_qury = "select distinct p.Project_id, p.Project_name from project_tasks pt inner join Project p on p.Project_id = pt.project_id";
+$res_data = mysqli_query($con,$prject_qury);
+
+?>
+
+<?php	if ($res_data->num_rows > 0) { 
+											while($row = $res_data->fetch_assoc()) {
+
+										
+
+
+                                          ?>   
+                                                <h5 style="margin-top:5px;padding:5px;margin-bottom:0px"><?php echo $row['Project_name'];?></h5>
+                                                <?php
+                                             $task_qury = "select * from project_tasks pt where pt.project_id = ".$row['Project_id'];
+                                             $task_data = mysqli_query($con,$task_qury);
+
+                                             if ($task_data->num_rows > 0) { 
+                                                while($task_row = $task_data->fetch_assoc()) {
+
+                                             ?>
+                                            
                                             <div class="task-list-body">
-                                                <ul id="task-list">
-                                                    <li class="task">
-                                                        <div class="task-container">
-                                                            <span class="task-action-btn task-check">
+                                                <ul id="task-list" >
+                                                   
+                                                    <li class="task" >
+                                                  
+                                                        <div class="task-container" >
+                                                            <!-- <span class="task-action-btn task-check">
                                                                 <span class="action-circle large complete-btn" title="Mark Complete">
-                                                                    <i class="material-icons">check</i>
+                                                                    <i class="fa fa-check"></i>
                                                                 </span>
+                                                            </span> -->
+                                                            <span class="task-label">
+                                                            <?php echo $task_row['task_name'] ?>
                                                             </span>
-                                                            <span class="task-label" contenteditable="true">Patient appointment booking</span>
-                                                            <span class="task-action-btn task-btn-right">
-                                                                <span class="action-circle large" title="Assign">
-                                                                    <i class="material-icons">person_add</i>
-                                                                </span>
-                                                                <span class="action-circle large delete-btn" title="Delete Task">
-                                                                    <i class="material-icons">delete</i>
-                                                                </span>
+                                                            <div class="pull-right">
+                                                            <span class="text-center">
+                                                                    <i style="margin-top:5px;font-size:18px;margin-right:10px;cursor: pointer;" class="fa fa-edit text-success"></i>
                                                             </span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="task">
-                                                        <div class="task-container">
-                                                            <span class="task-action-btn task-check">
-                                                                <span class="action-circle large complete-btn" title="Mark Complete">
-                                                                    <i class="material-icons">check</i>
-                                                                </span>
+                                                            <span style="margin-bottom:10px;"  class="text-center " onclick="deleteconfirm(<?php echo $task_row['id'] ?>)">
+                                                                    <i style="margin-top:5px;font-size:18px;margin-right:10px;cursor: pointer;" class="fa fa-trash text-danger"></i>
                                                             </span>
-                                                            <span class="task-label" contenteditable="true">Appointment booking with payment gateway</span>
-                                                            <span class="task-action-btn task-btn-right">
-                                                                <span class="action-circle large" title="Assign">
-                                                                    <i class="material-icons">person_add</i>
-                                                                </span>
-                                                                <span class="action-circle large delete-btn" title="Delete Task">
-                                                                    <i class="material-icons">delete</i>
-                                                                </span>
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="completed task">
-                                                        <div class="task-container">
-                                                            <span class="task-action-btn task-check">
-                                                                <span class="action-circle large complete-btn" title="Mark Complete">
-                                                                    <i class="material-icons">check</i>
-                                                                </span>
-                                                            </span>
-                                                            <span class="task-label">Doctor available module</span>
-                                                            <span class="task-action-btn task-btn-right">
-                                                                <span class="action-circle large" title="Assign">
-                                                                    <i class="material-icons">person_add</i>
-                                                                </span>
-                                                                <span class="action-circle large delete-btn" title="Delete Task">
-                                                                    <i class="material-icons">delete</i>
-                                                                </span>
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="task">
-                                                        <div class="task-container">
-                                                            <span class="task-action-btn task-check">
-                                                                <span class="action-circle large complete-btn" title="Mark Complete">
-                                                                    <i class="material-icons">check</i>
-                                                                </span>
-                                                            </span>
-                                                            <span class="task-label" contenteditable="true">Patient and Doctor video conferencing</span>
-                                                            <span class="task-action-btn task-btn-right">
-                                                                <span class="action-circle large" title="Assign">
-                                                                    <i class="material-icons">person_add</i>
-                                                                </span>
-                                                                <span class="action-circle large delete-btn" title="Delete Task">
-                                                                    <i class="material-icons">delete</i>
-                                                                </span>
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="task">
-                                                        <div class="task-container">
-                                                            <span class="task-action-btn task-check">
-                                                                <span class="action-circle large complete-btn" title="Mark Complete">
-                                                                    <i class="material-icons">check</i>
-                                                                </span>
-                                                            </span>
-                                                            <span class="task-label" contenteditable="true">Private chat module</span>
-                                                            <span class="task-action-btn task-btn-right">
-                                                                <span class="action-circle large" title="Assign">
-                                                                    <i class="material-icons">person_add</i>
-                                                                </span>
-                                                                <span class="action-circle large delete-btn" title="Delete Task">
-                                                                    <i class="material-icons">delete</i>
-                                                                </span>
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="task">
-                                                        <div class="task-container">
-                                                            <span class="task-action-btn task-check">
-                                                                <span class="action-circle large complete-btn" title="Mark Complete">
-                                                                    <i class="material-icons">check</i>
-                                                                </span>
-                                                            </span>
-                                                            <span class="task-label" contenteditable="true">Patient Profile add</span>
-                                                            <span class="task-action-btn task-btn-right">
-                                                                <span class="action-circle large" title="Assign">
-                                                                    <i class="material-icons">person_add</i>
-                                                                </span>
-                                                                <span class="action-circle large delete-btn" title="Delete Task">
-                                                                    <i class="material-icons">delete</i>
-                                                                </span>
-                                                            </span>
+                                                            </div>
                                                         </div>
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div class="task-list-footer">
-                                                <div class="new-task-wrapper">
-                                                    <textarea id="new-task" placeholder="Enter new task here. . ."></textarea>
-                                                    <span class="error-message hidden">You need to enter a task first</span>
-                                                    <span class="add-new-task-btn btn" id="add-task">Add Task</span>
-                                                    <span class="cancel-btn btn" id="close-task-panel">Close</span>
-                                                </div>
-                                            </div>
+
+
+                                            <?php } } } }?>
+
+                                           
                                         </div>
                                     </div>
                                     <div class="notification-popup hide">
@@ -179,248 +112,10 @@ $user_id = $_SESSION['user_id'];
                     </div>
                 </div>
             </div>
-           
+
         </div>
     </div>
 
-
-   
-
-    <div id="create_project" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <div class="modal-content modal-lg">
-                <div class="modal-header">
-                    <h4 class="modal-title">Create Project</h4>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Project Name</label>
-                                    <input class="form-control" type="text">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Client</label>
-                                    <select class="select">
-                                        <option>Global Technologies</option>
-                                        <option>Delta Infotech</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Start Date</label>
-                                    <div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>End Date</label>
-                                    <div class="cal-icon"><input class="form-control datetimepicker" style="" type="text"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Rate</label>
-                                    <input placeholder="$50" class="form-control" type="text">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>&nbsp;</label>
-                                    <select class="select">
-                                        <option>Hourly</option>
-                                        <option>Fixed</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Priority</label>
-                                    <select class="select">
-                                        <option>High</option>
-                                        <option>Medium</option>
-                                        <option>Low</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Add Project Leader</label>
-                                    <input class="form-control" type="text">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Team Leader</label>
-                                    <div class="project-members">
-                                        <a href="#" data-toggle="tooltip" title="Jeffery Lalor">
-                                            <img src="assets/img/user.jpg" class="avatar" alt="Jeffery Lalor" height="20" width="20">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Add Team</label>
-                                    <input class="form-control" type="text">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Team Members</label>
-                                    <div class="project-members">
-                                        <a href="#" data-toggle="tooltip" title="John Doe">
-                                            <img src="assets/img/user.jpg" class="avatar" alt="John Doe" height="20" width="20">
-                                        </a>
-                                        <a href="#" data-toggle="tooltip" title="Richard Miles">
-                                            <img src="assets/img/user.jpg" class="avatar" alt="Richard Miles" height="20" width="20">
-                                        </a>
-                                        <a href="#" data-toggle="tooltip" title="John Smith">
-                                            <img src="assets/img/user.jpg" class="avatar" alt="John Smith" height="20" width="20">
-                                        </a>
-                                        <a href="#" data-toggle="tooltip" title="Mike Litorus">
-                                            <img src="assets/img/user.jpg" class="avatar" alt="Mike Litorus" height="20" width="20">
-                                        </a>
-                                        <span class="all-team">+2</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea rows="4" cols="5" class="form-control" placeholder="Enter your message here"></textarea>
-                        </div>
-                        <div class="m-t-20 text-center">
-                            <button class="btn btn-primary">Create Project</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    
-    <div id="assignee" class="modal custom-modal fade center-modal" role="dialog">
-        <div class="modal-dialog">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title">Assign to this task</h3>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group m-b-30">
-                        <input placeholder="Search to add" class="form-control search-input input-lg" type="text">
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary btn-lg">Search</button>
-                        </span>
-                    </div>
-                    <div>
-                        <ul class="media-list media-list-linked chat-user-list">
-                            <li class="media">
-                                <a href="#" class="media-link">
-                                    <div class="media-left"><span class="avatar">R</span></div>
-                                    <div class="media-body media-middle text-nowrap">
-                                        <div class="user-name">Richard Miles</div>
-                                        <span class="designation">Web Developer</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="media">
-                                <a href="#" class="media-link">
-                                    <div class="media-left"><span class="avatar">J</span></div>
-                                    <div class="media-body media-middle text-nowrap">
-                                        <div class="user-name">John Smith</div>
-                                        <span class="designation">Android Developer</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="media">
-                                <a href="#" class="media-link">
-                                    <div class="media-left">
-                                        <span class="avatar">
-                                            <img src="assets/img/user.jpg" alt="John Doe">
-                                        </span>
-                                    </div>
-                                    <div class="media-body media-middle text-nowrap">
-                                        <div class="user-name">Jeffery Lalor</div>
-                                        <span class="designation">Team Leader</span>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="m-t-50 text-center">
-                        <button class="btn btn-primary btn-lg">Assign</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="task_followers" class="modal custom-modal fade center-modal" role="dialog">
-        <div class="modal-dialog">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title">Add followers to this task</h3>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group m-b-30">
-                        <input placeholder="Search to add" class="form-control search-input input-lg" id="btn-input" type="text">
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary btn-lg">Search</button>
-                        </span>
-                    </div>
-                    <div>
-                        <ul class="media-list media-list-linked chat-user-list">
-                            <li class="media">
-                                <a href="#" class="media-link">
-                                    <div class="media-left"><span class="avatar">J</span></div>
-                                    <div class="media-body media-middle text-nowrap">
-                                        <div class="user-name">Jeffery Lalor</div>
-                                        <span class="designation">Team Leader</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="media">
-                                <a href="#" class="media-link">
-                                    <div class="media-left"><span class="avatar">C</span></div>
-                                    <div class="media-body media-middle text-nowrap">
-                                        <div class="user-name">Catherine Manseau</div>
-                                        <span class="designation">Android Developer</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="media">
-                                <a href="#" class="media-link">
-                                    <div class="media-left"><span class="avatar">W</span></div>
-                                    <div class="media-body media-middle text-nowrap">
-                                        <div class="user-name">Wilmer Deluna</div>
-                                        <span class="designation">Team Leader</span>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="m-t-50 text-center">
-                        <button class="btn btn-primary btn-lg">Add to Follow</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 
@@ -432,37 +127,128 @@ $user_id = $_SESSION['user_id'];
 
 
 <div id="taskmodal" class="modal" role="dialog">
-  <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width:50%;margin:100px auto">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button onclick="opentaskmodalclose()" type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <p>Some text in the modal.</p>
-      </div>
-      <div class="modal-footer">
-        <button onclick="opentaskmodalclose()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button onclick="opentaskmodalclose()" type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Task</h4>
+            </div>
+            <div class="modal-body" 
+                <div class="row">
+                    <?php
+                    $log_user_qury = "SELECT Project_id ,Project_name from Project";
+                    $res_data = mysqli_query($con, $log_user_qury);
+                    ?>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <select id="projectid"  class="form-control"  name="project_id">
+                                <option value="<?php echo $row['Project_id']; ?>">Select project</option>
+                                <?php	if ($res_data->num_rows > 0) {
+                                    while ($row = $res_data->fetch_assoc()) {
+                                        ?>
+                                <option value="<?php echo $row['Project_id']; ?>">
+                                    <?php echo $row['Project_name']; ?>
+                                </option>
+                                <?php 
+                            }
+                        } ?>
+                            </select>
+                        </div>
+                        
+                        </div>
+                        <div class="form-group">
+  <label for="pwd">Title:</label>
+  <input type="text" class="form-control" id="tasktitle">
 </div>
+                        <div class="form-group" style="margin-top:10px;">
+  <label for="comment">Description:</label>
+  <textarea class="form-control" rows="5" id="desc"></textarea>
+</div>
+                    </div>
+                    <div class="modal-footer">
+                    <button onclick="addtask()" type="button" style="background:#5bc0de;border:none;color:#fff" class="btn btn-info" data-dismiss="modal">Save</button>
+                        <button onclick="opentaskmodalclose()" type="button" style="background:#f6f6f6;border:none;color:#000" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
 
-<script>
-function opentaskmodal()
-{
-document.getElementById("taskmodal").style.display="block";
+            </div>
+        </div>
+
+        <script>
+            function opentaskmodal() {
+                document.getElementById("taskmodal").style.display = "block";
+            }
+
+            function opentaskmodalclose() {
+                document.getElementById("taskmodal").style.display = "none";
+            }
+//             var tasktitle = document.getElementById("tasktitle").value;
+// var desc = document.getElementById("desc").value;
+// var projectid = document.getElementById("projectid").value;
+
+            // callapi({ PRCID: 'GETALLTASK' }).then((res) =>{
+            //     for(var i=0;i<res.length;i++){
+            //         document.getElementById("tasknamebind").innerHTML=res[i].task_name;
+                 
+            //         // $('#tasknamebind').append(res[i].task_name)	
+            //        }
+            // });
+
+            function deleteconfirm(id){
+              var yesvalue =   confirm("do yuo really want to delete");
+if(yesvalue) {
+    deletetask(id)
 }
-function opentaskmodalclose()
-{
-document.getElementById("taskmodal").style.display="none";
+
+            }
+
+function addtask(){
+// add task 
+var tasktitle = document.getElementById("tasktitle").value;
+var desc = document.getElementById("desc").value;
+var projectid = document.getElementById("projectid").value;
+var prcid = "ADDTASK";
+var data = { taskname : tasktitle , taskdiscription:desc ,  project_id : projectid };
+
+    callapi({ Data : data, PRCID: prcid }).then((res) =>{
+                 if(res){
+                    document.getElementById("taskmodal").style.display = "none";
+                    location.reload();
+                }
+
+            });
+
+           
 }
-</script>
 
-</body>
+function edittask(){
+// add task 
+var prcid = "EDITTASK";
+var data = { taskname : "tastdsagdsagd" , taskdiscription:"sdjsadhskjhdj" ,  taskid : 1 };
+
+            callapi({ Data : data, PRCID: prcid }).then((res) =>{
+
+            });
+}
 
 
-</html> 
+function deletetask(taskid){
+// add task 
+var prcid = "DELETETASKBYID";
+var data = {  taskid : taskid };
+
+            callapi({ Data : data, PRCID: prcid }).then((res) =>{
+                location.reload();
+            });
+}
+
+
+
+        </script>
+
+        </body>
+
+
+        </html> 
