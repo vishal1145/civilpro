@@ -57,7 +57,7 @@ $res_data = mysqli_query($con,$prject_qury);
 
 
                                           ?>   
-                                                <h5 style="margin-top:5px;padding:5px;margin-bottom:0px"><?php echo $row['Project_name'];?></h5>
+                                                <h5 style="margin-top:20px;padding:5px;margin-bottom:5px;font-size:16px;color:#4e4e4e"><?php echo $row['Project_name'];?></h5>
                                                 <?php
                                              $task_qury = "select * from project_tasks pt where pt.project_id = ".$row['Project_id'];
                                              $task_data = mysqli_query($con,$task_qury);
