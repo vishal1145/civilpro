@@ -19,7 +19,17 @@ $user_id = $_SESSION['user_id'];
     overflow:hidden !important;
 }
 </style>
+<style>
 
+.data-id:hover{
+  font-size: 20px;
+  background-color: #7460ee;
+}
+.nameactive{
+	font-size:120px;
+	background: #253035;
+}
+</style>
 
 <div class="sidebar" id="sidebar"  >
                 <div class="sidebar-inner slimscroll">
@@ -34,14 +44,36 @@ $user_id = $_SESSION['user_id'];
                     
                     </li>
                     <?php
-                $log_user_qury = "select count(1) as counts, p.Project_id, max(p.Project_name) as Project_name from project_tasks pt inner join Project p on p.Project_id = pt.project_id group by p.Project_id";
+                $log_user_qury = "select count(1) as counts, p.Project_id, max(p.Project_name) as Project_name from project_tasks pt inner join Project p on p.Project_id = pt.project_id group by p.Project_id order by p.Project_id";
                 $res_data = mysqli_query($con, $log_user_qury);
                 ?>
 <?php	if ($res_data->num_rows > 0) {
+    $counter =0;
                                 while ($row = $res_data->fetch_assoc()) {
+
+                                    $querystring = "-1";
+
+                                    if($counter == 0){
+                                    $querystring  = $row['Project_id'];
+                                    }
+
+                                    $counter++;
+
+                                    $queries1 = array();
+                                            parse_str($_SERVER['QUERY_STRING'], $queries1);
+
+
+                                            if(sizeof($queries1) > 0){
+                                                $querystring = $queries1['id'];
+                                            }
+
+
                                     ?>
-                    <li value="<?php echo $row['Project_id']; ?>"  ng-class="{nameactive : group._id === currentGroup._id}"> 
-					 <a  class = "active" ng-click="openGroup(group)">
+
+                                   
+                    <li class="<?php if($row['Project_id'] === $querystring) { echo 'nameactive'; } ?>"
+                    > 
+					 <a href="?id=<?php echo $row['Project_id'] ?>" class = "active" >
 					 <span style="cursor: pointer;text-transform: capitalize;"><?php echo $row['Project_name']; ?></span>
 							<span class="badge bg-danger pull-right"> 
 							<?php echo $row['counts']; ?>
@@ -93,8 +125,18 @@ $user_id = $_SESSION['user_id'];
 
                                             <?php 
 
-                                            $prject_qury = "select distinct p.Project_id, p.Project_name from project_tasks pt inner join Project p on p.Project_id = pt.project_id where p.Project_id = 6";
-                                            $res_data = mysqli_query($con, $prject_qury);
+                                            $queries = array();
+                                            parse_str($_SERVER['QUERY_STRING'], $queries);
+
+                                            $base_query = "select distinct p.Project_id, p.Project_name from project_tasks pt inner join Project p on p.Project_id = pt.project_id";
+
+                                            if(sizeof($queries) > 0){
+                                                $base_query = $base_query." where p.Project_id = ".$queries['id'];
+                                            }else {
+                                                $base_query = $base_query." order by p.Project_id limit 1";
+                                            }
+
+                                            $res_data = mysqli_query($con, $base_query);
 
                                             ?>
 
@@ -206,7 +248,7 @@ $user_id = $_SESSION['user_id'];
                 <h4 class="modal-title">Add Task</h4>
             </div>
             <div class="modal-body" <div class="row">
-                <?php
+                <!-- <?php
                 $log_user_qury = "SELECT Project_id ,Project_name from Project";
                 $res_data = mysqli_query($con, $log_user_qury);
                 ?>
@@ -226,8 +268,8 @@ $user_id = $_SESSION['user_id'];
                         </select>
                     </div>
 
-                </div>
-                <div class="form-group" style="margin-top:15px;">
+                </div> -->
+                <div class="form-group" style="margin-top:5px;">
                     <label for="pwd">Title:</label>
                     <input type="text" class="form-control" id="tasktitle">
                 </div>
