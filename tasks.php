@@ -2,7 +2,9 @@
 session_start();
 ob_start();
 include "header.php";
-include "sidebar.php";
+
+
+
 $obj = new connection();
 $con = $obj->connect();
 
@@ -17,6 +19,52 @@ $user_id = $_SESSION['user_id'];
     overflow:hidden !important;
 }
 </style>
+
+
+<div class="sidebar" id="sidebar"  >
+                <div class="sidebar-inner slimscroll">
+					<div class="sidebar-menu">
+					<ul>
+					
+					<li > 
+						<a href="dashbord.php"  ><i class="fa fa-home"></i> Back to Home</a>
+					</li>
+					<li class="menu-title" style="text-transform: capitalize;">Projects </a>
+                    
+                    
+                    </li>
+                    <?php
+                $log_user_qury = "select count(1) as counts, p.Project_id, max(p.Project_name) as Project_name from project_tasks pt inner join Project p on p.Project_id = pt.project_id group by p.Project_id";
+                $res_data = mysqli_query($con, $log_user_qury);
+                ?>
+<?php	if ($res_data->num_rows > 0) {
+                                while ($row = $res_data->fetch_assoc()) {
+                                    ?>
+                    <li value="<?php echo $row['Project_id']; ?>"  ng-class="{nameactive : group._id === currentGroup._id}"> 
+					 <a  class = "active" ng-click="openGroup(group)">
+					 <span style="cursor: pointer;text-transform: capitalize;"><?php echo $row['Project_name']; ?></span>
+							<span class="badge bg-danger pull-right"> 
+							<?php echo $row['counts']; ?>
+							</span>
+							<!-- {{group.GroupInfo.GroupName}} -->
+					 </a>
+					</li>
+
+                    <?php 
+                        }
+                    } ?>
+
+				
+					 <li ng-repeat="group in []"> 
+						<a href="chat.html"><span class="status offline"></span> Richard Miles <span class="badge bg-danger pull-right">18</span></a>
+					</li>
+					
+
+				</ul>
+					</div>
+                </div>
+            </div>
+
 <div class="page-wrapper" style="height:100%">
     <div class="chat-main-row" style="overflow:unset">
         <div class="chat-main-wrapper">
@@ -45,7 +93,7 @@ $user_id = $_SESSION['user_id'];
 
                                             <?php 
 
-                                            $prject_qury = "select distinct p.Project_id, p.Project_name from project_tasks pt inner join Project p on p.Project_id = pt.project_id";
+                                            $prject_qury = "select distinct p.Project_id, p.Project_name from project_tasks pt inner join Project p on p.Project_id = pt.project_id where p.Project_id = 6";
                                             $res_data = mysqli_query($con, $prject_qury);
 
                                             ?>
@@ -57,9 +105,11 @@ $user_id = $_SESSION['user_id'];
 
 
                                                     ?>
-                                            <h5 style="margin-top:20px;padding:5px;margin-bottom:5px;font-size:16px;color:#4e4e4e">
+                                            <!-- <h5 style="margin-top:20px;padding:5px;margin-bottom:5px;font-size:16px;color:#4e4e4e">
                                                 <?php echo $row['Project_name']; ?>
-                                            </h5>
+                                            </h5> -->
+
+                                            <input type="hidden" id="projectidhidden" value="<?php echo $row['Project_id']; ?>" />
                                             <?php
                                             $task_qury = "select * from project_tasks pt where pt.project_id = " . $row['Project_id'];
                                             $task_data = mysqli_query($con, $task_qury);
@@ -294,7 +344,7 @@ $user_id = $_SESSION['user_id'];
         // add task 
         var tasktitle = document.getElementById("tasktitle").value;
         var desc = document.getElementById("desc").value;
-        var projectid = document.getElementById("projectid").value;
+        var projectid = document.getElementById("projectidhidden").value;
         var prcid = "ADDTASK";
         var data = {
             taskname: tasktitle,
