@@ -1126,12 +1126,14 @@ if (isset($_POST['updateform'])) {
 callapi({ PRCID: 'GETTASKCOUNT' }).then((res) =>{
 
 //$('#taskidddl2').children().remove();
-// document.getElementById("taskvalue").innerHTML = res.counts;
+//window.count= document.getElementById("taskvalue").innerHTML = res.counts;
 	// for(var i=0;i<res.length;i++){
 	 	$('#taskvalue').append(res.counts)	
+		 count = res.counts
 	// }
-});
 
+
+ var count = null;
 
 				var data = [
 			  { y: '2014', a: 50, b: 90},
@@ -1175,11 +1177,11 @@ callapi({ PRCID: 'GETTASKCOUNT' }).then((res) =>{
 		  	{label: "Employees", value: <?php echo $num_rows14; ?>},
 			{label: "Clients", value: <?php echo $num_rows12; ?>},
 			{label: "Projects", value: <?php echo $num_rows; ?>},
-			{label: "Tasks", value: 10}
+			{label: "Tasks", value: res.counts}
 		  ]
 		});
 
-		
+	});
 
 $(document).ready(function(){
     $(".edit").click(function(){
