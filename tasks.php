@@ -199,8 +199,9 @@ if ($res_data->num_rows > 0) {
                                             $task_data = mysqli_query($con, $task_qury);
 
                                             if ($task_data->num_rows > 0) {
+                                                $row_counter =0 ;
                                                 while ($task_row = $task_data->fetch_assoc()) {
-
+                                                    $row_counter++;
                                                     ?>
 
 										<tr>
@@ -208,11 +209,11 @@ if ($res_data->num_rows > 0) {
                                         <input type="hidden" id="projectidhidden" value="<?php echo $row['Project_id']; ?>" />
 
 											<td>
-												1
+                                            <?php echo $row_counter ?>
 											</td>
 											<td><h2><a href="#"><?php echo $task_row['task_name']; ?></a></h2></td>
                                             <td><h2><a href="#"><?php echo $task_row['task_discription']; ?></a></h2></td>
-											<td>8 Sep 2017 </td>
+											<td> <?php echo $task_row['created_time'] ?> </td>
 											<td>
 												<ul class="team-members">
 
