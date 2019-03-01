@@ -29,6 +29,39 @@ $user_id = $_SESSION['user_id'];
 	font-size:120px;
 	background: #253035;
 }
+.delete{
+    color: red;
+    opacity:0;
+    transition:opacity 0.5s linear;
+    -moz-transition: opacity 0.5s linear;
+    -webkit-transition: opacity 0.5s linear;
+}
+.title:hover .delete {
+   opacity: 1;
+   transition:opacity 0.5s linear;
+   -moz-transition: opacity 0.5s linear;
+   -webkit-transition: opacity 0.5s linear;
+}​
+
+.delete:after{
+    content: '';
+    position: relative;
+    bottom: 0;
+    top: 27px;
+    left: -30%;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-top-color: #000000;
+    border-bottom: 0;
+    /* margin-left: -20px; */
+    /* margin-bottom: -20px; */
+}
+.title:hover .delete {
+   display:block  
+}
+
+
 </style>
 
 <div class="sidebar" id="sidebar"  >
@@ -173,18 +206,51 @@ $user_id = $_SESSION['user_id'];
                                                                 </span>
                                                             </span> -->
                                                             <div class="row">
-                                                            <div class="col-sm-4">
+                                                            <div class="col-sm-2" style="margin-top:15px;">
                                                             <span class="task-label">
                                                                 <?php echo $task_row['task_name'] ?>
                                                             </span>
                                                             </div>
-                                                            <div class="col-sm-6">
+                                                            <div class="col-sm-4" style="margin-top:15px;">
                                                             <span class="task-label">
                                                                 <?php echo $task_row['task_discription'] ?>
                                                             </span>
                                                             </div>
+
+                                                            <div class="col-sm-4" style="margin-top:10px;">
+                                                            
+                                                            <ul class="team-members">
+
+                                                            <?php
+                                                         $log_user_qury = "select * from task_employee te inner join employee e on e.empl_id = te.empl_id where te.task_id =".$task_row['id'];
+                                                        $res_data = mysqli_query($con, $log_user_qury);
+                                                        ?>						
+                                                            <?php	if ($res_data->num_rows > 0) {
+                                                            while ($rowemp = $res_data->fetch_assoc()) {
+                                                            ?>
+                                                            <li class="title" style="margin-right:10px;">
+                                                            <div  class="delete"><a onclick="delete_employe(<?php echo $rowemp['empl_id'] ?> , <?php echo $rowemp['task_id'] ?>)" style="border-radius:0px;border:none;height:unset;width:unset;padding: 3px 5px 3px 5px !important;font-size:8px;margin-bottom: 3px;position:absolute;top:-17px;"  class="btn btn-danger btn-sm">Remove</a></div>
+                                                            <a  href="#">
+                                                            
+                                                            <img src="<?php echo $rowemp['img'] ?>" alt="9"></a>
+                                                            
+                                                            </li>
+                                                           
+                                                            <?php 
+                                                                }} 
+                                                                ?>		
+													
+												</ul>
+                                                
+                                                           
+                                                            </div>
+
                                                             <div class="col-sm-2">
+                                                            
                                                             <div class="pull-right">
+                                                            <span class="text-center" onclick="opentaskmodalemp(<?php echo $task_row['id'] ?>,'<?php echo $task_row['task_name'] ?>','<?php echo $task_row['task_discription'] ?>')">
+                                                                    <i style="margin-top:5px;font-size:18px;margin-right:10px;cursor: pointer;" class="fa fa-plus-circle text-info"></i>
+                                                                </span>
                                                                 <span class="text-center" onclick="opentaskmodaledit(<?php echo $task_row['id'] ?>,'<?php echo $task_row['task_name'] ?>','<?php echo $task_row['task_discription'] ?>')">
                                                                     <i style="margin-top:5px;font-size:18px;margin-right:10px;cursor: pointer;" class="fa fa-edit text-success"></i>
                                                                 </span>
@@ -237,7 +303,7 @@ $user_id = $_SESSION['user_id'];
 
 
 
-
+<!--Add Task>-->
 <div id="taskmodal" class="modal" role="dialog">
     <div class="modal-dialog" style="max-width:50%;margin:100px auto">
 
@@ -291,7 +357,7 @@ $user_id = $_SESSION['user_id'];
 
 
 
-
+<!--Edit Task>-->
 <div id="taskmodaledit" class="modal" role="dialog">
     <div class="modal-dialog" style="max-width:50%;margin:100px auto">
 
@@ -344,9 +410,71 @@ $user_id = $_SESSION['user_id'];
     </div>
 </div>
 
+
+
+
+
+
+<!--Add Employee-->
+<div id="taskmodalemp" class="modal" role="dialog">
+    <div class="modal-dialog" style="max-width:50%;margin:100px auto">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button onclick="opentaskmodalempclose()" type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Employee</h4>
+            </div>
+            <div class="modal-body" <div class="row">
+                 <?php
+                $log_user_qury = "SELECT Project_id ,Project_name from Project";
+                $res_data = mysqli_query($con, $log_user_qury);
+                ?>
+                <div class="row">
+                    <div class="col-sm-12">
+                    <select class="select_pro form-control" id="emp_id" name="emp_id" >
+										<option value="">Select Employee</option>				
+										<?php
+					$selectemp = mysqli_query($con, "SELECT empl_id,first_name from employee");
+					if(mysqli_num_rows($selectemp) > 0){
+					while($res_selectemp = $selectemp->fetch_assoc()) {					
+					?>
+												<option value="<?php echo $res_selectemp['empl_id']; ?>"><?php echo $res_selectemp['first_name']; ?></option>
+										<?php } }?>
+									</select>
+                    </div>
+
+                </div> 
+
+                <!-- <div class="form-group" style="margin-top:5px;">
+                    <label for="pwd">Title:</label>
+                    <input type="text" class="form-control" id="tasktitle">
+                </div>
+                <div class="form-group" style="margin-top:10px;">
+                    <label for="comment">Description:</label>
+                    <textarea class="form-control" rows="5" id="desc"></textarea>
+                </div> -->
+            </div>
+            <div class="modal-footer">
+                <button onclick="add_employe()" type="button" style="background:#5bc0de;border:none;color:#fff" class="btn btn-info" data-dismiss="modal">Add</button>
+                <button onclick="opentaskmodalempclose()" type="button" style="background:#f6f6f6;border:none;color:#000" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <script>
+    window.taskid = -1;
     function opentaskmodal() {
         document.getElementById("taskmodal").style.display = "block";
+    }
+    function opentaskmodalemp(taskid,taskname) {
+        window.taskid = taskid;
+        document.getElementById("taskmodalemp").style.display = "block";
+    }
+    function opentaskmodalempclose() {
+        document.getElementById("taskmodalemp").style.display = "none";
     }
 
     function opentaskmodaledit(id ,task_name, task_discription) {
@@ -380,6 +508,39 @@ $user_id = $_SESSION['user_id'];
             deletetask(id)
         }
 
+    }
+
+
+
+    function add_employe(empl_id){
+        var getempid = document.getElementById("emp_id").value;
+        callapi({
+            Data: { empl_id : getempid , taskid : window.taskid},
+            PRCID: 'ADDEMPLOYEETOTASK'
+        }).then((res) => {
+            if (res) {
+                document.getElementById("taskmodalemp").style.display = "none";
+                location.reload();
+            }
+
+        });
+    }
+
+    function delete_employe(empl_id , taskid){
+
+        var yesvalue1 = confirm("do yuo really want to delete");
+        if (yesvalue1) {
+        callapi({
+            Data: { empl_id : empl_id , taskid : taskid},
+            PRCID: 'DELETEEMPLOYEEFROMTASK'
+        }).then((res) => {
+        
+            deletetask(empl_id , taskid)
+            location.reload();
+       
+
+        });
+        }
     }
 
     function addtask() {
