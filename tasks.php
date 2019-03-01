@@ -156,36 +156,45 @@ $user_id = $_SESSION['user_id'];
                                         <div class="task-list-container">
 
 
-                                            <?php 
-
-                                            $queries = array();
-                                            parse_str($_SERVER['QUERY_STRING'], $queries);
-
-                                            $base_query = "select distinct p.Project_id, p.Project_name from project_tasks pt inner join Project p on p.Project_id = pt.project_id";
-
-                                            if(sizeof($queries) > 0){
-                                                $base_query = $base_query." where p.Project_id = ".$queries['id'];
-                                            }else {
-                                                $base_query = $base_query." order by p.Project_id limit 1";
-                                            }
-
-                                            $res_data = mysqli_query($con, $base_query);
-
-                                            ?>
-
-                                            <?php	if ($res_data->num_rows > 0) {
-                                                while ($row = $res_data->fetch_assoc()) {
 
 
 
 
-                                                    ?>
-                                            <!-- <h5 style="margin-top:20px;padding:5px;margin-bottom:5px;font-size:16px;color:#4e4e4e">
-                                                <?php echo $row['Project_name']; ?>
-                                            </h5> -->
+							
+                                        <table class="table table-striped custom-table datatable">
+									<thead>
 
-                                            <input type="hidden" id="projectidhidden" value="<?php echo $row['Project_id']; ?>" />
-                                            <?php
+										<tr>
+                                        <th>No.</th>
+                                                                            <th>Task Name</th>
+                                                                            <th>Task Description</th>
+                                                                            <th>Created at</th>
+                                                                            <th>Employees</th>
+                                                                            <th>Status</th>
+											<th class="text-right">Action</th>
+										</tr>
+									</thead>
+									
+                                    <tbody>
+
+                                    <?php
+
+$queries = array();
+parse_str($_SERVER['QUERY_STRING'], $queries);
+
+$base_query = "select distinct p.Project_id, p.Project_name from project_tasks pt inner join Project p on p.Project_id = pt.project_id";
+
+if(sizeof($queries) > 0){
+    $base_query = $base_query." where p.Project_id = ".$queries['id'];
+}else {
+    $base_query = $base_query." order by p.Project_id limit 1";
+}
+$res_data = mysqli_query($con, $base_query);
+
+if ($res_data->num_rows > 0) {
+    while ($row = $res_data->fetch_assoc()) {
+
+        
                                             $task_qury = "select * from project_tasks pt where pt.project_id = " . $row['Project_id'];
                                             $task_data = mysqli_query($con, $task_qury);
 
@@ -194,60 +203,40 @@ $user_id = $_SESSION['user_id'];
 
                                                     ?>
 
-                                            <div class="task-list-body">
-                                                <ul id="task-list">
+										<tr>
+                                        
+                                        <input type="hidden" id="projectidhidden" value="<?php echo $row['Project_id']; ?>" />
 
-                                                    <li class="task">
+											<td>
+												1
+											</td>
+											<td><h2><a href="#"><?php echo $task_row['task_name']; ?></a></h2></td>
+                                            <td><h2><a href="#"><?php echo $task_row['task_discription']; ?></a></h2></td>
+											<td>8 Sep 2017 </td>
+											<td>
+												<ul class="team-members">
 
-                                                        <div class="task-container">
-                                                            <!-- <span class="task-action-btn task-check">
-                                                                <span class="action-circle large complete-btn" title="Mark Complete">
-                                                                    <i class="fa fa-check"></i>
-                                                                </span>
-                                                            </span> -->
-                                                            <div class="row">
-                                                            <div class="col-sm-2" style="margin-top:15px;">
-                                                            <span class="task-label">
-                                                                <?php echo $task_row['task_name'] ?>
-                                                            </span>
-                                                            </div>
-                                                            <div class="col-sm-4" style="margin-top:15px;">
-                                                            <span class="task-label">
-                                                                <?php echo $task_row['task_discription'] ?>
-                                                            </span>
-                                                            </div>
+                                                <?php
+                                                                            $log_user_qury = "select distinct img, first_name from task_employee te inner join employee e on e.empl_id = te.empl_id where te.task_id =".$task_row['id'];
+                                                                            $res_data = mysqli_query($con, $log_user_qury);
+                                                                            ?>						
+                                                                            <?php	if ($res_data->num_rows > 0) {
+                                                                            while ($rowemp = $res_data->fetch_assoc()) {
+                                                                            ?>
 
-                                                            <div class="col-sm-4" style="margin-top:10px;">
-                                                            
-                                                            <ul class="team-members">
-
-                                                            <?php
-                                                         $log_user_qury = "select * from task_employee te inner join employee e on e.empl_id = te.empl_id where te.task_id =".$task_row['id'];
-                                                        $res_data = mysqli_query($con, $log_user_qury);
-                                                        ?>						
-                                                            <?php	if ($res_data->num_rows > 0) {
-                                                            while ($rowemp = $res_data->fetch_assoc()) {
-                                                            ?>
-                                                            <li class="title" style="margin-right:10px;">
-                                                            <div  class="delete"><a onclick="delete_employe(<?php echo $rowemp['empl_id'] ?> , <?php echo $rowemp['task_id'] ?>)" style="border-radius:0px;border:none;height:unset;width:unset;padding: 3px 5px 3px 5px !important;font-size:8px;margin-bottom: 3px;position:absolute;top:-17px;"  class="btn btn-danger btn-sm">Remove</a></div>
-                                                            <a style="border:1px solid #999" href="#">
-                                                            
-                                                            <img  src="<?php echo $rowemp['img'] ?>" alt="9"></a>
-                                                            
-                                                            </li>
-                                                           
-                                                            <?php 
-                                                                }} 
-                                                                ?>		
+													<li>
+														<a href="#" title="<?php echo $rowemp['first_name']; ?>" data-toggle="tooltip"><img src="<?php echo $rowemp['img']; ?>" alt="John Doe"></a>
+													</li>
 													
-												</ul>
-                                                
-                                                           
-                                                            </div>
+                                                    <?php 
+                                                                                }} 
+                                                                                ?>	
 
-                                                            <div class="col-sm-2"style="margin-top:15px;">
-                                                            
-                                                            <div class="pull-right">
+												</ul>
+											</td>
+											<td>status </td>
+											<td class="text-right">
+                                            <div class="pull-right">
                                                             <span class="text-center" onclick="opentaskmodalemp(<?php echo $task_row['id'] ?>,'<?php echo $task_row['task_name'] ?>','<?php echo $task_row['task_discription'] ?>')">
                                                                     <i style="margin-top:5px;font-size:18px;margin-right:10px;cursor: pointer;" class="fa fa-plus-circle text-info"></i>
                                                                 </span>
@@ -258,22 +247,31 @@ $user_id = $_SESSION['user_id'];
                                                                     <i style="margin-top:5px;font-size:18px;margin-right:10px;cursor: pointer;" class="fa fa-trash text-danger"></i>
                                                                 </span>
                                                             </div>
-                                                            </div>
-                                                            </div>
-                                                           
-                                                           
-                                                           
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
+												<!-- <div class="dropdown">
+													<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+													<ul class="dropdown-menu pull-right">
+														<li><a href="#" data-toggle="modal" data-target="#edit_project"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+														<li><a href="#" data-toggle="modal" data-target="#delete_project"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+													</ul>
+												</div> -->
+											</td>
+										</tr>
+										
+                                        <?php 
+                                                                                } } } } 
+                                                                                ?>
+
+                                        </tbody>
+								</table>
+				
 
 
-                                            <?php 
-                                        }
-                                    }
-                                }
-                            } ?>
+                                      
+
+                                          
+
+                                           
+
 
 
                                         </div>
@@ -432,7 +430,7 @@ $user_id = $_SESSION['user_id'];
                 ?>
                 <div class="row">
                     <div class="col-sm-12">
-                    <select class="select_pro form-control" id="emp_id" name="emp_id" >
+                    <select class="select_pro form-control" id="emp_id" name="emp_id" onchange="addemployeelocal()">
 										<option value="">Select Employee</option>				
 										<?php
 					$selectemp = mysqli_query($con, "SELECT empl_id,first_name from employee");
@@ -442,8 +440,34 @@ $user_id = $_SESSION['user_id'];
 												<option value="<?php echo $res_selectemp['empl_id']; ?>"><?php echo $res_selectemp['first_name']; ?></option>
 										<?php } }?>
 									</select>
-                    </div>
 
+                                    
+                    </div>
+                    <div class="row" >
+                    <div class="col-sm-12" style="margin-left:10px;">
+                     <ul class="team-members" id="liempimageui">
+
+                                                <?php
+                                                                            $log_user_qury = "select e.empl_id , e.first_name, e.last_name, e.img, pt.id as taskid , COALESCE(te.task_id ,0) as task_id from employee e join project_tasks pt left join task_employee te on e.empl_id = te.empl_id and te.task_id = pt.id";
+                                                                            $res_data = mysqli_query($con, $log_user_qury);
+                                                                            ?>						
+                                                                            <?php	if ($res_data->num_rows > 0) {
+                                                                            while ($rowemp = $res_data->fetch_assoc()) {
+                                                                            ?>
+
+													<li style="margin-bottom:15px;margin-top:10px;display: none;margin-right:15px" class="liempimage" id="<?php echo $rowemp['empl_id']; ?>|<?php echo $rowemp['taskid']; ?>|<?php echo $rowemp['task_id']; ?>">
+														<a style="border:1px solid #999" href="#" title="John Doe" data-toggle="tooltip"><img src="<?php echo $rowemp['img']; ?>" alt="John Doe"></a>
+                                                       <a onclick="removeemployeelocal(<?php echo $rowemp['empl_id']; ?>,<?php echo $rowemp['taskid']; ?>,<?php echo $rowemp['task_id']; ?>)" style="border-radius:0px;border:none;height:unset;width:unset;padding: 3px 5px 3px 5px !important;font-size:8px;margin-bottom: 3px;margin-top:5px;position:absolute;top:0px;" href="#" ><i style="color:red;font-size:18px;margin-left:18px" class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+													<p><?php echo $rowemp['first_name']; ?></p>
+                                                    </li>
+													
+                                                    <?php 
+                                                                                }} 
+                                                                                ?>	
+
+												</ul>
+                    </div>
+                    </div>
                 </div> 
 
                 <!-- <div class="form-group" style="margin-top:5px;">
@@ -456,7 +480,7 @@ $user_id = $_SESSION['user_id'];
                 </div> -->
             </div>
             <div class="modal-footer">
-                <button onclick="add_employe()" type="button" style="background:#5bc0de;border:none;color:#fff" class="btn btn-info" data-dismiss="modal">Add</button>
+                <button onclick="return add_employe();" type="button" style="background:#5bc0de;border:none;color:#fff" class="btn btn-info" data-dismiss="modal">Add</button>
                 <button onclick="opentaskmodalempclose()" type="button" style="background:#f6f6f6;border:none;color:#000" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -469,9 +493,48 @@ $user_id = $_SESSION['user_id'];
     function opentaskmodal() {
         document.getElementById("taskmodal").style.display = "block";
     }
+
+    function addemployeelocal(){
+        var eid = document.getElementById("emp_id").value;
+        try{
+        var id = eid+ "|"+ window.taskid + "|"+ window.taskid;
+        document.getElementById(id).style.display = "block";
+        }catch(err){
+            var id = eid+ "|"+ window.taskid + "|0"
+        document.getElementById(id).style.display = "block";
+        }
+    }
+
+    function removeemployeelocal(eid , taskid, task_id){
+        var id = eid + "|"+taskid + "|"+ task_id;
+        document.getElementById(id).style.display = "none";
+        // var eid = document.getElementById("emp_id").value;
+        // try{
+        //     var id = eid+ "|"+ window.taskid + "|"+ window.taskid;
+        //     document.getElementById(id).style.display = "none";
+        // }catch(err){
+        //     var id = eid+ "|"+ window.taskid + "|0"
+        //     document.getElementById(id).style.display = "none";
+        // }
+    }
+
+    function manageList(){
+        var list = document.getElementsByClassName('liempimage');
+        if(list){
+            for(var i=0;i< list.length; i++){
+                var temps = list[i].id.split("|");
+                if(window.taskid  == temps[1] && temps[2] == temps[1])
+                document.getElementById(list[i].id).style.display = "block";
+                else
+                document.getElementById(list[i].id).style.display = "none";
+            }
+        }
+    }
+
     function opentaskmodalemp(taskid,taskname) {
         window.taskid = taskid;
         document.getElementById("taskmodalemp").style.display = "block";
+        manageList();
     }
     function opentaskmodalempclose() {
         document.getElementById("taskmodalemp").style.display = "none";
@@ -510,9 +573,47 @@ $user_id = $_SESSION['user_id'];
 
     }
 
+function getAddPromise(){
+
+}
+
+    function add_employe(){
+
+        callapi({
+            Data: { empl_id : -1 , taskid : window.taskid},
+            PRCID: 'DELETEEMPLOYEEFROMTASK'
+        }).then((res) => {
+        
+       var pms = [];
+            var list = document.getElementsByClassName('liempimage');
+        if(list){
+            for(var i=0;i< list.length; i++){
+                if(document.getElementById(list[i].id).style.display == "block")
+                {
+                 
+                    var eid = list[i].id.split("|")[0];
+                 
+                 if(eid > 0) {  
+
+                    var p = callapi({            Data: { empl_id : eid , taskid : window.taskid},            PRCID: 'ADDEMPLOYEETOTASK'        });
+                    pms.push(p)
+                 }
+                }
+            }
+        }
+
+        Promise.all(pms).then(function(values) {
+            location.reload();
+});
 
 
-    function add_employe(empl_id){
+            
+       return false;
+
+
+
+        });
+
         var getempid = document.getElementById("emp_id").value;
         callapi({
             Data: { empl_id : getempid , taskid : window.taskid},
