@@ -48,11 +48,28 @@ $removeClass = "";
 							<li <?php echo ($current_url == "materials.php") ? 'class="materials '.$activeClass.'"' : 'class="materials '.$removeClass.'"' ?>> 
 								<a href="materials.php">Materials</a>
 							</li>
-							<li <?php echo ($current_url == "projects.php") ? 'class="Projects '.$activeClass.'"' : 'class="Projects '.$removeClass.'"' ?>> 
+							<li class="submenu" <?php echo ($current_url == "projects.php") ? 'class="Projects '.$activeClass.'"' : 'class="Projects '.$removeClass.'"' ?>> 
 								<a href="projects.php">Projects</a>
+									<!-- <?php
+                $log_user_qury = "SELECT Project_id ,Project_name from Project";
+                $res_data = mysqli_query($con, $log_user_qury);
+                ?>
+                        <ul class="list-unstyled " id="projectid" class="form-control"style="display: none;" name="project_id">
+                            
+                            <?php	if ($res_data->num_rows > 0) {
+                                while ($row = $res_data->fetch_assoc()) {
+                                    ?>
+                            <li  style="color:#fff" value="<?php echo $row['Project_id']; ?>">
+                                <a href=""><?php echo $row['Project_name']; ?></a>
+                            </li>
+                            <?php 
+                        }
+                    } ?>
+                        </ul> -->
+
 							</li>
 							<li <?php echo ($current_url == "tasks.php") ? 'class="Projects '.$activeClass.'"' : 'class="Projects '.$removeClass.'"' ?>> 
-								<a href="tasks.php">Task</a>
+								<a href="tasks.php">Tasks</a>
 							</li>
 							<!--<li class="Tasks"> 
 								<a href="tasks.html">Tasks</a>
@@ -69,7 +86,7 @@ $removeClass = "";
 								<!--<a href="excavator-daily-log.html">Excavator Daily Log</a>-->
 								<a href="excavator-log-list.php">Excavator Daily Log</a>
 							</li>
-							<li class="Chatt"  > 
+							<li class="Chatt"> 
 								<a href="chat_list.php">
 								Chat 
 								<span class="badge bg-primary pull-right " id="unreadcount" ></span></a>
