@@ -230,9 +230,9 @@ $user_id = $_SESSION['user_id'];
                                                             ?>
                                                             <li class="title" style="margin-right:10px;">
                                                             <div  class="delete"><a onclick="delete_employe(<?php echo $rowemp['empl_id'] ?> , <?php echo $rowemp['task_id'] ?>)" style="border-radius:0px;border:none;height:unset;width:unset;padding: 3px 5px 3px 5px !important;font-size:8px;margin-bottom: 3px;position:absolute;top:-17px;"  class="btn btn-danger btn-sm">Remove</a></div>
-                                                            <a  href="#">
+                                                            <a style="border:1px solid #999" href="#">
                                                             
-                                                            <img src="<?php echo $rowemp['img'] ?>" alt="9"></a>
+                                                            <img  src="<?php echo $rowemp['img'] ?>" alt="9"></a>
                                                             
                                                             </li>
                                                            
@@ -245,7 +245,7 @@ $user_id = $_SESSION['user_id'];
                                                            
                                                             </div>
 
-                                                            <div class="col-sm-2">
+                                                            <div class="col-sm-2"style="margin-top:15px;">
                                                             
                                                             <div class="pull-right">
                                                             <span class="text-center" onclick="opentaskmodalemp(<?php echo $task_row['id'] ?>,'<?php echo $task_row['task_name'] ?>','<?php echo $task_row['task_discription'] ?>')">
