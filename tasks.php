@@ -235,13 +235,13 @@ if ($res_data->num_rows > 0) {
 
 												</ul>
 											</td>
-											<td>status </td>
+											<td> <?php echo $task_row['status'] ?> </td>
 											<td class="text-right">
                                             <div class="pull-right">
                                                             <span class="text-center" onclick="opentaskmodalemp(<?php echo $task_row['id'] ?>,'<?php echo $task_row['task_name'] ?>','<?php echo $task_row['task_discription'] ?>')">
                                                                     <i style="margin-top:5px;font-size:18px;margin-right:10px;cursor: pointer;" class="fa fa-plus-circle text-info"></i>
                                                                 </span>
-                                                                <span class="text-center" onclick="opentaskmodaledit(<?php echo $task_row['id'] ?>,'<?php echo $task_row['task_name'] ?>','<?php echo $task_row['task_discription'] ?>')">
+                                                                <span class="text-center" onclick="opentaskmodaledit(<?php echo $task_row['id'] ?>,'<?php echo $task_row['task_name'] ?>','<?php echo $task_row['task_discription'] ?>','<?php echo $task_row['status'] ?>')">
                                                                     <i style="margin-top:5px;font-size:18px;margin-right:10px;cursor: pointer;" class="fa fa-edit text-success"></i>
                                                                 </span>
                                                                 <span style="margin-bottom:10px;" class="text-center " onclick="deleteconfirm(<?php echo $task_row['id'] ?>)">
@@ -399,6 +399,17 @@ if ($res_data->num_rows > 0) {
                     <label for="comment">Description:</label>
                     <textarea class="form-control" rows="5" id="taskdescedit"></textarea>
                 </div>
+
+                <div class="form-group" style="margin-top:10px;">
+                    <label for="comment">Status:</label>
+                    <select id="taskstatusedit" name="leaveCode" class="form-control">
+  <option value="New">New</option>
+  <option value="Dispatch">Dispatch</option>
+  <option value="Complete">Complete</option>
+</select>
+
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button onclick="edittask()" type="button" style="background:#5bc0de;border:none;color:#fff" class="btn btn-info" data-dismiss="modal">Update</button>
@@ -541,11 +552,12 @@ if ($res_data->num_rows > 0) {
         document.getElementById("taskmodalemp").style.display = "none";
     }
 
-    function opentaskmodaledit(id ,task_name, task_discription) {
+    function opentaskmodaledit(id ,task_name, task_discription, task_status) {
         document.getElementById("taskmodaledit").style.display = "block";
        document.getElementById("tasktitleedit").value = task_name;
         document.getElementById("taskdescedit").value = task_discription;
         document.getElementById("taskidedit").value = id;
+        document.getElementById("taskstatusedit").value  = task_status;
     }
 
     function opentaskmodalclose() {
@@ -677,7 +689,8 @@ function getAddPromise(){
         var data = {
             taskname: document.getElementById("tasktitleedit").value,
             taskdiscription: document.getElementById("taskdescedit").value,
-            taskid: document.getElementById("taskidedit").value
+            taskid: document.getElementById("taskidedit").value,
+            taskstatus: document.getElementById("taskstatusedit").value
         };
 
         callapi({
