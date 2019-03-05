@@ -235,7 +235,16 @@ if ($res_data->num_rows > 0) {
 
 												</ul>
 											</td>
-											<td> <?php echo $task_row['status'] ?> </td>
+											<td> 
+                                            <div class="dropdown action-label dropdownbox_<?php echo $task_row['id'] ?>">
+													<a onclick="addopencss(<?php echo $task_row['id'] ?>)" class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-success"></i> <?php echo $task_row['status'] ?> <i class="caret"></i></a>
+													<ul class="dropdown-menu">
+														<li><a onclick="changestatus(<?php echo $task_row['id'] ?>,'New')" ><i class="fa fa-dot-circle-o text-success"></i> New</a></li>
+														<li><a onclick="changestatus(<?php echo $task_row['id'] ?>,'In Progress')"><i class="fa fa-dot-circle-o text-danger"></i> In Progress</a></li>
+                                                        <li><a onclick="changestatus(<?php echo $task_row['id'] ?>,'Complete')"><i class="fa fa-dot-circle-o text-danger"></i> Complete</a></li>
+													</ul>
+												</div>
+                                            <!-- <?php echo $task_row['status'] ?>  --></td>
 											<td class="text-right">
                                             <div class="pull-right">
                                                             <span class="text-center" onclick="opentaskmodalemp(<?php echo $task_row['id'] ?>,'<?php echo $task_row['task_name'] ?>','<?php echo $task_row['task_discription'] ?>')">
@@ -717,6 +726,32 @@ function getAddPromise(){
             location.reload();
         });
     }
+var opendrop = false;
+    function addopencss(id)
+    {
+        opendrop = !opendrop;
+    if(opendrop){
+        $('.dropdownbox_'+id).addClass("open");
+    }else{
+        $('.dropdownbox_'+id).removeClass("open");
+    }
+    }
+
+function changestatus(id, status){
+    var prcid = "UPDATESTATUSBYID";
+        var data = {
+            taskid: id,
+            taskstatus : status
+        };
+
+        callapi({
+            Data: data,
+            PRCID: prcid
+        }).then((res) => {
+            location.reload();
+        });
+}
+
 </script>
 
 </body>

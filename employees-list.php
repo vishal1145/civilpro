@@ -61,7 +61,8 @@ $con = $obj->connect();
          $employee_jdate = $_POST['jdate'];
          $employee_phone = $_POST['phone'];
          $employee_comp  = $_POST['company'];
-         $employee_desi  = $_POST['designation'];
+		 $employee_desi  = $_POST['designation'];
+		 $hourly_rate  = $_POST['hourlyrate'];
          $time_set  = time();
 
          $get_email = "SELECT * FROM employee where `email` = '$employee_email'";
@@ -76,7 +77,7 @@ $con = $obj->connect();
     }
   }else{
 
-      echo  $insert_emp = "INSERT INTO employee(first_name,last_name,username,email,password,confirm_pass,employee_id,joining_date,phone,img,company,designation,device_id,device_type,time_set) VALUES('$employee_fname','$employee_lname','$employee_uname','$employee_email','".md5($employee_pass)."','".md5($employee_cpass)."','$employee_eid','$employee_jdate',$employee_phone,'','$employee_comp',$employee_desi,'','',$time_set)";
+      echo  $insert_emp = "INSERT INTO employee(first_name,last_name,username,email,password,confirm_pass,employee_id,joining_date,phone,img,company,designation,device_id,device_type,time_set,hourly_rate) VALUES('$employee_fname','$employee_lname','$employee_uname','$employee_email','".md5($employee_pass)."','".md5($employee_cpass)."','$employee_eid','$employee_jdate',$employee_phone,'','$employee_comp',$employee_desi,'','',$time_set,$hourly_rate)";
        
       
          $result_data = mysqli_query($con,$insert_emp);
@@ -105,9 +106,10 @@ $con = $obj->connect();
     $emp_jdate = $_POST['jdate'];
     $company_cat = $_POST['company_cat'];
     $emp_designation = $_POST['designation_cat'];
-    $emp_employee_id = $_POST['eid'];
+	$emp_employee_id = $_POST['eid'];
+	$hourly_rate  = $_POST['hourlyrate'];
 
-     $update = "UPDATE employee SET first_name='$emp_fname',last_name='$emp_lname',username='$emp_uname',email='$emp_email',password=md5('$emp_pass'),confirm_pass=md5('$emp_cpass'),phone='$emp_phone',employee_id='$emp_employee_id',joining_date='$emp_jdate',company='$company_cat',designation='$emp_designation' where empl_id= '$idd' ";
+     $update = "UPDATE employee SET first_name='$emp_fname',last_name='$emp_lname',username='$emp_uname',email='$emp_email',password=md5('$emp_pass'),confirm_pass=md5('$emp_cpass'),phone='$emp_phone',employee_id='$emp_employee_id',hourly_rate='$hourly_rate',joining_date='$emp_jdate',company='$company_cat',designation='$emp_designation' where empl_id= '$idd' ";
 
     $get_data = mysqli_query($con,$update);
 
@@ -420,6 +422,12 @@ $SearchArray = array();
 											</select>
 										</div>
 									</div>
+									<div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Hourly Rate </label>
+                                            <input name="hourlyrate" class="form-control" value="<?php echo $row['hourly_rate']; ?>" type="text">
+                                        </div>
+                                    </div>
 								</div>
 								
 								
@@ -598,6 +606,13 @@ $SearchArray = array();
 											</select>
 										</div>
 									</div>
+
+									<div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Hourly Rate </label>
+                                            <input name="hourlyrate" class="form-control" type="text">
+                                        </div>
+                                    </div>
 								</div>
 								<!-- <div class="table-responsive m-t-15">
 									<table class="table table-striped custom-table">

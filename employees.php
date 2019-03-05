@@ -19,7 +19,7 @@ $con = $obj->connect();
          $employee_phone = $_POST['phone'];
          $employee_comp  = $_POST['company'];
          $employee_desi  = $_POST['designation'];
-        // $hourly_rate  = $_POST['hourlyrate'];
+         $hourly_rate  = $_POST['hourlyrate'];
          $img_url = $_POST['empfile'];
          $time_set = time();
          //echo $employee_fname;
@@ -38,7 +38,7 @@ $con = $obj->connect();
 
 
 
-          $insert_emp = "INSERT INTO employee(first_name,last_name,username,email,password,confirm_pass,employee_id,joining_date,phone,img,company,designation,device_id,device_type,time_set) VALUES('$employee_fname','$employee_lname','$employee_uname','$employee_email','".md5($employee_pass)."','".md5($employee_cpass)."','$employee_eid','$employee_jdate',$employee_phone,'$img_url','$employee_comp',$employee_desi,'','',$time_set)";
+          $insert_emp = "INSERT INTO employee(first_name,last_name,username,email,password,confirm_pass,employee_id,joining_date,phone,img,company,designation,device_id,device_type,time_set,hourly_rate) VALUES('$employee_fname','$employee_lname','$employee_uname','$employee_email','".md5($employee_pass)."','".md5($employee_cpass)."','$employee_eid','$employee_jdate',$employee_phone,'$img_url','$employee_comp',$employee_desi,'','',$time_set,$hourly_rate)";
          //die;
         // die('here');
       
@@ -106,8 +106,9 @@ if(isset($_POST['employee_update'])){
     $emp_designation = $_POST['designation_cat'];
     $emp_employee_id = $_POST['eid'];
     $img_url    = $_POST['empfile'];
+    $hourly_rate  = $_POST['hourlyrate'];
 
-   $update = "UPDATE employee SET first_name='$emp_fname',last_name='$emp_lname',username='$emp_uname',email='$emp_email',password=md5('$emp_pass'),confirm_pass=md5('$emp_cpass'),phone='$emp_phone',employee_id='$emp_employee_id',img='$img_url',joining_date='$emp_jdate',company='$company_cat',designation='$emp_designation' where empl_id= '$idd' ";
+   $update = "UPDATE employee SET first_name='$emp_fname',last_name='$emp_lname',username='$emp_uname',email='$emp_email',password=md5('$emp_pass'),confirm_pass=md5('$emp_cpass'),phone='$emp_phone',employee_id='$emp_employee_id',img='$img_url',hourly_rate='$hourly_rate',joining_date='$emp_jdate',company='$company_cat',designation='$emp_designation' where empl_id= '$idd' ";
 
     $get_data = mysqli_query($con,$update);
 
@@ -839,6 +840,12 @@ format: 'YYYY-MM-DD',
                                                 <option>Web Designer</option>
                                                 <option>SEO Analyst</option> -->
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Hourly Rate </label>
+                                            <input name="hourlyrate" class="form-control" value="<?php echo $row['hourly_rate']; ?>" type="text">
                                         </div>
                                     </div>
                                 </div>
