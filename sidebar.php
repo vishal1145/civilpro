@@ -48,7 +48,7 @@ $removeClass = "";
 							<li <?php echo ($current_url == "materials.php") ? 'class="materials '.$activeClass.'"' : 'class="materials '.$removeClass.'"' ?>> 
 								<a href="materials.php">Materials</a>
 							</li>
-							<li class="submenu" <?php echo ($current_url == "projects.php") ? 'class="Projects '.$activeClass.'"' : 'class="Projects '.$removeClass.'"' ?>> 
+							<li  <?php echo ($current_url == "projects.php") ? 'class="Projects '.$activeClass.'"' : 'class="Projects '.$removeClass.'"' ?>> 
 								<a href="projects.php">Projects</a>
 									<!-- <?php
                 $log_user_qury = "SELECT Project_id ,Project_name from Project";
