@@ -5,6 +5,9 @@ include "header.php";
 include "sidebar.php";
 
 
+
+
+
 ?>
 <style>
 #customers {
@@ -51,7 +54,7 @@ include "sidebar.php";
                            <div class="col-sm-3 col-xs-6">  
                                 <div class="form-group form-focus">
                                     <!-- <label class="control-label">Select Date</label> -->
-                                    <input name="empl_find_id" type="date" class="form-control floating" id="empl_find_id">
+                                    <input name="empl_find_id" value="<?php echo date('Y-m-d');?>" type="date" class="form-control floating" id="empl_find_id">
                                 </div>
                            </div>
 													 <div class="col-sm-3 col-xs-6"> 
@@ -94,7 +97,7 @@ include "sidebar.php";
 								<table class="table table-striped custom-table datatable">
 								<thead>
 								<tr>
-							<th colspan="4"><p style="margin-top:10px;">1 March 2019	</p></th>
+							<th colspan="4"><p style="margin-top:10px;"><?php echo date('Y-m-d');?>	</p></th>
 								<th colspan="4"><h4 style="margin-top:10px;">Daily Dispatch Report </h4></th>
 								<th colspan="4"><button type="buttton" class="btn btn-sm btn-info pull-right">Dispatch All</button></th>
 								
@@ -119,6 +122,34 @@ include "sidebar.php";
 								<tbody>
 								<tr>
 								<td>Tom</td>
+								<td>7:00</td>
+								<td>47-17 (Duffy East contract)</td>
+								<td>7:00</td>
+								<td>TV380</td>
+								<td>slab prep</td>
+								<td>7:00</td>
+								<td>7:00</td>
+								<td>7:00</td>
+								<td>7:00</td>
+								<td><button type="buttton" class="btn btn-sm btn-info pull-right">Dispatch </button></td>
+								</tr>
+
+                                <tr>
+								<td>Tom 2</td>
+								<td>7:00</td>
+								<td>47-17 (Duffy East contract)</td>
+								<td>7:00</td>
+								<td>TV380</td>
+								<td>slab prep</td>
+								<td>7:00</td>
+								<td>7:00</td>
+								<td>7:00</td>
+								<td>7:00</td>
+								<td><button type="buttton" class="btn btn-sm btn-info pull-right">Dispatch </button></td>
+								</tr>
+
+                                <tr>
+								<td>Tom 3</td>
 								<td>7:00</td>
 								<td>47-17 (Duffy East contract)</td>
 								<td>7:00</td>
