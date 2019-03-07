@@ -3,6 +3,29 @@ session_start();
 
 include "header.php";
 include "sidebar.php";
+$obj = new  connection();
+$con = $obj->connect();
+
+$user_id = $_SESSION['user_id'];
+
+
+if(isset($_POST['create_report'])){
+    $emp_id = $_POST['emp_id'];
+    $starttime = $_POST['start_time'];
+    $jobsite = $_POST['job_site'];
+    $equipment_id = $_POST['equipment_id'];
+    $scope_work  = $_POST['scope_work'];
+    $special_req = $_POST['special_req'];
+    $trucks   = $_POST['trucks'];
+    $material_id = $_POST['material_id'];
+    $quantity = $_POST['quantity'];
+    $status = $_POST['status'];
+    
+    $dispatch_qury = "INSERT INTO dispatch_log (emp_id, start_time,job_site,equipment_id,scope_work,special_req,trucks,material_id,quantity,status)
+    VALUES ('$emp_id', '$starttime','$jobsite','$equipment_id','$scope_work ','$special_req','$trucks','$material_id','$quantity','$status')";
+  $res_data = mysqli_query($con,$dispatch_qury);
+  
+}
 
 
 
@@ -120,47 +143,37 @@ include "sidebar.php";
 										</tr>
 									</thead>
 								<tbody>
-								<tr>
-								<td>Tom</td>
-								<td>7:00</td>
-								<td>47-17 (Duffy East contract)</td>
-								<td>7:00</td>
-								<td>TV380</td>
-								<td>slab prep</td>
-								<td>7:00</td>
-								<td>7:00</td>
-								<td>7:00</td>
-								<td>7:00</td>
-								<td><button type="buttton" class="btn btn-sm btn-info pull-right">Dispatch </button></td>
-								</tr>
+
+
+                                <?php
+                                $log_user_qury = "select * from dispatch_log dl
+                                inner join employee e on dl.emp_id = e.empl_id  
+                                inner join machine m on dl.equipment_id = m.machine_id
+                                inner join material i on dl.material_id = i.id";
+
+                                $res_data = mysqli_query($con, $log_user_qury);
+                                ?>						
+                                <?php	if ($res_data->num_rows > 0) {
+                                while ($rowemp = $res_data->fetch_assoc()) {
+                                ?>
 
                                 <tr>
-								<td>Tom 2</td>
-								<td>7:00</td>
-								<td>47-17 (Duffy East contract)</td>
-								<td>7:00</td>
-								<td>TV380</td>
-								<td>slab prep</td>
-								<td>7:00</td>
-								<td>7:00</td>
-								<td>7:00</td>
-								<td>7:00</td>
+								<td><?php echo $rowemp['first_name']; ?></td>
+								<td><?php echo $rowemp['start_time']; ?></td>
+								<td><?php echo $rowemp['job_site']; ?></td>
+								<td><?php echo $rowemp['machine_name']; ?></td>
+								<td><?php echo $rowemp['scope_work']; ?></td>
+								<td><?php echo $rowemp['special_req']; ?></td>
+								<td><?php echo $rowemp['trucks']; ?></td>
+								<td><?php echo $rowemp['materials_name']; ?></td>
+								<td><?php echo $rowemp['quantity']; ?></td>
+								<td><?php echo $rowemp['status']; ?></td>
 								<td><button type="buttton" class="btn btn-sm btn-info pull-right">Dispatch </button></td>
 								</tr>
+                        <?php 
+                            }}
+                            ?>
 
-                                <tr>
-								<td>Tom 3</td>
-								<td>7:00</td>
-								<td>47-17 (Duffy East contract)</td>
-								<td>7:00</td>
-								<td>TV380</td>
-								<td>slab prep</td>
-								<td>7:00</td>
-								<td>7:00</td>
-								<td>7:00</td>
-								<td>7:00</td>
-								<td><button type="buttton" class="btn btn-sm btn-info pull-right">Dispatch </button></td>
-								</tr>
 								</tbody>
 								</table>
 						
@@ -223,20 +236,20 @@ include "sidebar.php";
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">Start Time</label>
-                                            <input class="form-control" type="time" name="starttime">
+                                            <input class="form-control" type="time" name="start_time">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">Job Site <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" name="jobsite">
+                                            <input class="form-control" type="text" name="job_site">
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                     <div class="form-group">
                                     <label class="control-label">Select Equipment</label>
-                    <select class="select_pro form-control" id="equipment" name="equipment" >
+                    <select class="select_pro form-control" id="equipment" name="equipment_id" >
 										<option value="">Select Equipment</option>				
 										<?php
 					$selectemp = mysqli_query($con, "SELECT machine_id,machine_name from machine");
@@ -251,14 +264,14 @@ include "sidebar.php";
                                     <div class="col-sm-6">  
                                         <div class="form-group">
                                             <label class="control-label">Scope Of Work<span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" name="scope">
+                                            <input class="form-control" type="text" name="scope_work">
                                             <!-- <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="scope"></div> -->
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">Special Requirements </label>
-                                            <input class="form-control" type="text" name="spec_req">
+                                            <input class="form-control" type="text" name="special_req">
                                         </div>
                                     </div>
                                    
@@ -272,7 +285,7 @@ include "sidebar.php";
                                     <div class="col-sm-6">
                                     <div class="form-group">
                                     <label class="control-label">Select Material</label>
-                    <select class="select_pro form-control" id="emp_id" name="emp_id" >
+                    <select class="select_pro form-control" id="emp_id" name="material_id" >
 										<option value="">Select Material</option>				
 										<?php
 					$selectemp = mysqli_query($con, "SELECT id,materials_name from material");
@@ -288,16 +301,16 @@ include "sidebar.php";
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">Quantity </label>
-                                            <input class="form-control" type="text" name="quantity">
+                                            <input class="form-control" type="number" name="quantity">
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label class="control-label">Status </label>
-                                            <select class="select_pro form-control">
-                                            <option>New</option>
-                                            <option>Complete</option>
+                                            <select class="select_pro form-control" name="status">
+                                            <option value="new">New</option>
+                                            <option value="complete">Complete</option>
                                             </select>
                                         </div>
                                     </div>
@@ -305,14 +318,14 @@ include "sidebar.php";
                                
                                
                                 <div class="m-t-20 text-center">
-                                    <button id="emply_id" type="submit" name="create_employe" class="btn btn-primary">Create Report</button>
+                                    <button id="emply_id" type="submit" name="create_report" class="btn btn-primary">Create Report</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-
+            
 <?php
 include "footer.php";
 ?>
