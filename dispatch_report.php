@@ -48,12 +48,53 @@ if(isset($_POST['update_report'])){
     $quantity = $_POST['quantity'];
     $status = 'New';//$_POST['status'];
     
-    $dispatch_qury_update = "UPDATE dispatch_log set emp_id=$emp_id, start_time='$starttime',job_site='$jobsite',equipment_id=$equipment_id,scope_work='$scope_work',special_req='$special_req',trucks='$trucks',material_id=$material_id,quantity=$quantity,status='$status' where id=$dispatch_id";
+    $status_update = "UPDATE dispatch_log set emp_id=$emp_id, start_time='$starttime',job_site='$jobsite',equipment_id=$equipment_id,scope_work='$scope_work',special_req='$special_req',trucks='$trucks',material_id=$material_id,quantity=$quantity,status='$status' where id=$dispatch_id";
+    
+  $status_update = mysqli_query($con,$status_update);
+  if($status_update >0){
+                
+    header("Refresh:0");
+    
+}else{
+    echo "<script>alert('somthing is wrong')</script>";
+    
+}
+  
+}
+if(isset($_POST['changstatus'])){
+    $dispatch_id =$_POST['dispatch_id'];
+    $status = 'New';//$_POST['status'];
+    
+    $dispatch_qury_update = "UPDATE dispatch_log set status='Dispatched' where id=$dispatch_id";
     
   $res_data_update = mysqli_query($con,$dispatch_qury_update);
   if($res_data_update >0){
                 
     header("Refresh:0");
+    ?>
+     
+    <?php
+    
+}else{
+    echo "<script>alert('somthing is wrong')</script>";
+    
+}
+  
+}
+
+if(isset($_POST['changstatusall'])){
+    // $dispatch_id =$_POST['dispatch_id'];
+    $status = 'New';//$_POST['status'];
+    
+    $dispatch_qury_updateall = "UPDATE dispatch_log set status='Dispatched'";
+    
+  $res_data_updateall = mysqli_query($con,$dispatch_qury_updateall);
+  if($res_data_updateall >0){
+                
+    header("Refresh:0");
+    ?>
+     
+    <?php
     
 }else{
     echo "<script>alert('somthing is wrong')</script>";
@@ -161,7 +202,12 @@ if(isset($_POST['delete_employee'])){
 								<tr>
 							<th colspan="4"><p style="margin-top:10px;"><?php echo date('Y-m-d');?>	</p></th>
 								<th colspan="4"><h4 style="margin-top:10px;">Daily Dispatch Report </h4></th>
-								<th colspan="4"><button type="buttton" class="btn btn-sm btn-info pull-right">Dispatch All</button></th>
+								<th colspan="4"> <form class="emplyoee_info" method="post" action="" >
+                                <!-- <input type="hidden" name="dispatch_id" value="<?php echo $rowemp['id']; ?>"> -->
+
+                                <button  type="submit" id="submitbtn" name="changstatusall" class="btn btn-sm btn-info pull-right">Dispatch </button>
+                                
+                                </form></th>
 								
 							<tr>
 								</thead>
@@ -209,9 +255,23 @@ if(isset($_POST['delete_employee'])){
 								<td><?php echo $rowemp['quantity']; ?></td>
 								<td><?php echo $rowemp['status']; ?></td>
 								<td>
-                                <form class="emplyoee_info" method="post" action="" enctype="multipart/form-data">
-                                <button type="submit" name="changstatus" class="btn btn-sm btn-info pull-right">Dispatch </button>
+                                
+                                <?php if($rowemp['status'] == 'New') {
+
+                                ?>
+
+                                <form class="emplyoee_info" method="post" action="" >
+                                <input type="hidden" name="dispatch_id" value="<?php echo $rowemp['id']; ?>">
+
+                                <button  type="submit" id="submitbtn<?php echo $rowemp['id']; ?>" name="changstatus" class="btn btn-sm btn-info pull-right">Dispatch </button>
+                                
                                 </form>
+                                <?php } else { ?>
+
+                                    <button disabled style="opacity:0.5;background-color:#999;border:1px solid #999"  type="submit" id="submitbtn<?php echo $rowemp['id']; ?>" name="changstatus" class="btn btn-sm btn-info pull-right">Dispatched </button>
+                               
+                                <?php  } ?>
+
                                 </td>
 								<td>
                                 <div class="pull-right">
