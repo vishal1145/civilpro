@@ -157,7 +157,7 @@ if(isset($_POST['delete_employee'])){
 										<div class="row filter-row" style="margin-bottom:20px;">
                     <form action="" method="post" name="employee_search" class="ng-pristine ng-valid">
                            <div class="col-sm-3 col-xs-6">  
-                           <input type="button" onclick="exporttoexcle()" name="empl_search" class="btn btn-info btn-block" value="Download Xls">
+                           <input type="button" onclick="exporttoexcle()" name="empl_search" class="btn btn-info btn-block" value="Download Data">
                            </div>
 													 <div class="col-sm-3 col-xs-6"> 
 
