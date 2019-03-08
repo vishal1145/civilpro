@@ -157,15 +157,16 @@ if(isset($_POST['delete_employee'])){
 										<div class="row filter-row" style="margin-bottom:20px;">
                     <form action="" method="post" name="employee_search" class="ng-pristine ng-valid">
                            <div class="col-sm-3 col-xs-6">  
-                                <div class="form-group form-focus">
-                                    <!-- <label class="control-label">Select Date</label> -->
-                                    <input name="findbydate" value="<?php echo date('Y-m-d');?>" type="date" class="form-control floating" id="empl_find_id">
-                                </div>
+                           <input type="button" onclick="exporttoexcle()" name="empl_search" class="btn btn-info btn-block" value="Download Xls">
                            </div>
 													 <div class="col-sm-3 col-xs-6"> 
 
 													 </div>
-													 <div class="col-sm-3 col-xs-6">  
+													 <div class="col-sm-3 col-xs-6"> 
+                                                     <div class="form-group form-focus">
+                                    <!-- <label class="control-label">Select Date</label> -->
+                                    <input name="findbydate" value="<?php echo date('Y-m-d');?>" type="date" class="form-control floating" id="empl_find_id">
+                                </div> 
 													 </div>
                            <!-- <div class="col-sm-3 col-xs-6">  
                                 <div class="form-group form-focus">
@@ -650,3 +651,72 @@ while($rowData = mysqli_fetch_assoc($res_data)){
 <?php
 include "footer.php";
 ?>
+
+<script>
+
+function exporttoexcle(){
+
+    var fileData=[{
+        id:1
+    }];
+
+// downloadCSV(fileData,{filename:'Dispatch_Report.csv'});
+
+ callapi({ Data : { }, PRCID: 'DOWNLOADDATA' }).then((res) =>{
+     downloadCSV(res,{filename:'Dispatch_Report.csv'});
+ });
+
+}
+
+function downloadCSV(stockData,args) {
+var data, filename, link;
+var csv = convertArrayOfObjectsToCSV({
+data: stockData
+});
+if (csv == null) return;
+
+filename = args.filename || 'export.csv';
+
+if (!csv.match(/^data:text\/csv/i)) {
+csv = 'data:text/csv;charset=utf-8,' + csv;
+}
+data = encodeURI(csv);
+
+link = document.createElement('a');
+link.setAttribute('href', data);
+link.setAttribute('download', filename);
+link.click();
+}
+
+
+function convertArrayOfObjectsToCSV(args) {
+var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+data = args.data || null;
+if (data == null || !data.length) {
+return null;
+}
+
+columnDelimiter = args.columnDelimiter || ',';
+lineDelimiter = args.lineDelimiter || '\n';
+
+keys = Object.keys(data[0]);
+
+result = '';
+result += keys.join(columnDelimiter);
+result += lineDelimiter;
+
+data.forEach(function (item) {
+ctr = 0;
+keys.forEach(function (key) {
+if (ctr > 0) result += columnDelimiter;
+
+result += item[key];
+ctr++;
+});
+result += lineDelimiter;
+});
+
+return result;
+}
+</script>
