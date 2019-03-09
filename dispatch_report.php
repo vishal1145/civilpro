@@ -163,9 +163,15 @@ if(isset($_POST['delete_employee'])){
 
 													 </div>
 													 <div class="col-sm-3 col-xs-6"> 
+                                                     <?php
+                                                     $olddate= date('Y-m-d');
+                                                 
+                                                     if(isset($_POST['findbydate']) && !empty($_POST['findbydate'])) {
+                                                     $olddate = $_POST['findbydate'];
+                                                 } ?>
                                                      <div class="form-group form-focus">
                                     <!-- <label class="control-label">Select Date</label> -->
-                                    <input name="findbydate" value="<?php echo date('Y-m-d');?>" type="date" class="form-control floating" id="empl_find_id">
+                                    <input name="findbydate" value="<?php echo $olddate ;?>" type="date" class="form-control floating" id="empl_find_id">
                                 </div> 
 													 </div>
                            <!-- <div class="col-sm-3 col-xs-6">  
@@ -203,7 +209,7 @@ if(isset($_POST['delete_employee'])){
 								<table class="table table-striped custom-table datatable">
 								<thead>
 								<tr>
-							<th colspan="4"><p style="margin-top:10px;"><?php echo date('Y-m-d');?>	</p></th>
+							<th colspan="4"><p style="margin-top:10px;"><?php echo $olddate ;?>	</p></th>
 								<th colspan="4"><h4 style="margin-top:10px;">Daily Dispatch Report </h4></th>
 								<th colspan="4"> <form class="emplyoee_info" method="post" action="" >
                                 <!-- <input type="hidden" name="dispatch_id" value="<?php echo $rowemp['id']; ?>"> -->
