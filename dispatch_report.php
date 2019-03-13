@@ -260,7 +260,7 @@ if(isset($_POST['empl_search'])){
                                 inner join employee e on dl.emp_id = e.empl_id  
                                 left join machine m on dl.equipment_id = m.machine_id
                                 left join material i on dl.material_id = i.id
-                                left join project p on dl.Project_id = p.Project_id
+                                left join Project p on dl.Project_id = p.Project_id
                                 where ".$where_condition." order by dl.Project_id desc";
 
                                 $res_data = mysqli_query($con, $log_user_qury);
@@ -388,7 +388,7 @@ if(isset($_POST['empl_search'])){
                     <select class="select_pro form-control" id="equipment" name="project_id" >
 										<option value="">Select Project</option>				
 										<?php
-					$selectpro = mysqli_query($con, "SELECT Project_id,Project_name from project");
+					$selectpro = mysqli_query($con, "SELECT Project_id,Project_name from Project");
 					if(mysqli_num_rows($selectpro) > 0){
 					while($res_selectemppro = $selectpro->fetch_assoc()) {					
 					?>
@@ -492,7 +492,7 @@ if(isset($_POST['empl_search'])){
                              inner join employee e on dl.emp_id = e.empl_id  
                              left join machine m on dl.equipment_id = m.machine_id
                              left join material i on dl.material_id = i.id
-                             left join project p on dl.Project_id = p.Project_id";
+                             left join Project p on dl.Project_id = p.Project_id";
 
 $res_data = mysqli_query($con,$sel_query);	
 while($rowData = mysqli_fetch_assoc($res_data)){ 
@@ -554,7 +554,7 @@ while($rowData = mysqli_fetch_assoc($res_data)){
                     <select class="select_pro form-control" id="equipment" name="project_id" >
                     <option value="<?php echo $rowData['Project_id']; ?>"><?php echo $rowData['Project_name'] ; ?></option>				
 										<?php
-					$selectpro = mysqli_query($con, "SELECT Project_id,Project_name from project");
+					$selectpro = mysqli_query($con, "SELECT Project_id,Project_name from Project");
 					if(mysqli_num_rows($selectpro) > 0){
 					while($res_selectemppro = $selectpro->fetch_assoc()) {					
 					?>
