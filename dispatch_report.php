@@ -19,10 +19,14 @@ if(isset($_POST['create_report'])){
     $trucks   = $_POST['trucks'];
     $material_id = $_POST['material_id'];
     $quantity = $_POST['quantity'];
+    $project_id = $_POST['project_id'];
     $status = 'New';//$_POST['status'];
     
-    $dispatch_qury = "INSERT INTO dispatch_log (emp_id, start_time,job_site,equipment_id,scope_work,special_req,trucks,material_id,quantity,status,dispatch_date)
-    VALUES ('$emp_id', '$starttime','$jobsite','$equipment_id','$scope_work ','$special_req','$trucks','$material_id','$quantity','$status',CURDATE())";
+    $dispatch_qury_delete = "delete from dispatch_log where emp_id =".$emp_id." and dispatch_date = CURDATE()";
+    $res_data_delete = mysqli_query($con,$dispatch_qury_delete);
+
+    $dispatch_qury = "INSERT INTO dispatch_log (emp_id, start_time,job_site,equipment_id,scope_work,special_req,trucks,material_id,quantity,status,dispatch_date,Project_id)
+    VALUES ('$emp_id', '$starttime','$jobsite','$equipment_id','$scope_work ','$special_req','$trucks','$material_id','$quantity','$status',CURDATE(),$project_id)";
   $res_data = mysqli_query($con,$dispatch_qury);
   if($res_data >0){
                 
@@ -46,9 +50,10 @@ if(isset($_POST['update_report'])){
     $trucks   = $_POST['trucks'];
     $material_id = $_POST['material_id'];
     $quantity = $_POST['quantity'];
+    $project_id = $_POST['project_id'];
     $status = 'New';//$_POST['status'];
     
-    $status_update = "UPDATE dispatch_log set emp_id=$emp_id, start_time='$starttime',job_site='$jobsite',equipment_id=$equipment_id,scope_work='$scope_work',special_req='$special_req',trucks='$trucks',material_id=$material_id,quantity=$quantity,status='$status' where id=$dispatch_id";
+    $status_update = "UPDATE dispatch_log set emp_id=$emp_id, start_time='$starttime',job_site='$jobsite',equipment_id=$equipment_id,scope_work='$scope_work',special_req='$special_req',trucks='$trucks',material_id=$material_id,quantity=$quantity,status='$status',project_id=$project_id where id=$dispatch_id";
     
   $status_update = mysqli_query($con,$status_update);
   if($status_update >0){
@@ -171,7 +176,7 @@ if(isset($_POST['delete_employee'])){
                                                  } ?>
                                                      <div class="form-group form-focus">
                                     <!-- <label class="control-label">Select Date</label> -->
-                                    <input name="findbydate" value="<?php echo $olddate ;?>" type="date" class="form-control floating" id="empl_find_id">
+                                    <input name="findbydate" value="<?php echo $olddate ;?>" type="date" class="form-control floating" id="finddate">
                                 </div> 
 													 </div>
                            <!-- <div class="col-sm-3 col-xs-6">  
@@ -211,6 +216,8 @@ if(isset($_POST['delete_employee'])){
 								<tr>
 							<th colspan="4"><p style="margin-top:10px;"><?php echo $olddate ;?>	</p></th>
 								<th colspan="4"><h4 style="margin-top:10px;">Daily Dispatch Report </h4></th>
+                                <th colspan="3">
+                                <button  type="submit" id="submitbtn" onclick="addBlankDispatch()" name="changstatusall" class="btn btn-sm btn-info pull-right">Prefatch Employees</button>
 								<th colspan="4"> <form class="emplyoee_info" method="post" action="" >
                                 <!-- <input type="hidden" name="dispatch_id" value="<?php echo $rowemp['id']; ?>"> -->
 
@@ -249,11 +256,12 @@ if(isset($_POST['empl_search'])){
     $where_condition = "dispatch_date = '$get_date'";     
 }
 
-                                $log_user_qury = "select dl.*, e.first_name, m.machine_name,i.materials_name from dispatch_log dl
+                                $log_user_qury = "select dl.*, e.first_name, p.Project_name, m.machine_name,i.materials_name,p.Project_name from dispatch_log dl
                                 inner join employee e on dl.emp_id = e.empl_id  
-                                inner join machine m on dl.equipment_id = m.machine_id
-                                inner join material i on dl.material_id = i.id
-                                where ".$where_condition;
+                                left join machine m on dl.equipment_id = m.machine_id
+                                left join material i on dl.material_id = i.id
+                                left join project p on dl.Project_id = p.Project_id
+                                where ".$where_condition." order by dl.Project_id desc";
 
                                 $res_data = mysqli_query($con, $log_user_qury);
                                 ?>						
@@ -264,7 +272,7 @@ if(isset($_POST['empl_search'])){
                                 <tr>
 								<td><?php echo $rowemp['first_name']; ?></td>
 								<td><?php echo $rowemp['start_time']; ?></td>
-								<td><?php echo $rowemp['job_site']; ?></td>
+								<td><?php echo $rowemp['Project_name']; ?></td>
 								<td><?php echo $rowemp['machine_name']; ?></td>
 								<td><?php echo $rowemp['scope_work']; ?></td>
 								<td><?php echo $rowemp['special_req']; ?></td>
@@ -375,10 +383,19 @@ if(isset($_POST['empl_search'])){
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Job Site <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" name="job_site">
-                                        </div>
+                                    <div class="form-group">
+                                    <label class="control-label">Select Project</label>
+                    <select class="select_pro form-control" id="equipment" name="project_id" >
+										<option value="">Select Project</option>				
+										<?php
+					$selectpro = mysqli_query($con, "SELECT Project_id,Project_name from project");
+					if(mysqli_num_rows($selectpro) > 0){
+					while($res_selectemppro = $selectpro->fetch_assoc()) {					
+					?>
+												<option value="<?php echo $res_selectemppro['Project_id']; ?>"><?php echo $res_selectemppro['Project_name']; ?></option>
+										<?php } }?>
+									</select>
+                                    </div>
                                     </div>
 
                                     <div class="col-sm-6">
@@ -469,16 +486,18 @@ if(isset($_POST['empl_search'])){
 
 <!--Edit Dispatch Report Modal-->
 <?php
-// $sel_query = "Select * from dispatch_log";
-$sel_query = "select dl.*, e.first_name, m.machine_name,i.materials_name from dispatch_log dl
-inner join employee e on dl.emp_id = e.empl_id  
-inner join machine m on dl.equipment_id = m.machine_id
-inner join material i on dl.material_id = i.id";
+    // $sel_query = "Select * from dispatch_log";
+ $sel_query = "select dl.*, e.first_name, p.Project_name, m.machine_name,i.materials_name,p.Project_name 
+ from dispatch_log dl
+                             inner join employee e on dl.emp_id = e.empl_id  
+                             left join machine m on dl.equipment_id = m.machine_id
+                             left join material i on dl.material_id = i.id
+                             left join project p on dl.Project_id = p.Project_id";
 
 $res_data = mysqli_query($con,$sel_query);	
 while($rowData = mysqli_fetch_assoc($res_data)){ 
 ?>
-<div id="edit_employee<?php echo $rowData['id']  ?>" class="modal custom-modal fade" role="dialog">
+<div id="edit_employee<?php echo $rowData['id']; ?>" class="modal custom-modal fade" role="dialog">
                 <div class="modal-dialog">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <div class="modal-content modal-lg">
@@ -530,10 +549,19 @@ while($rowData = mysqli_fetch_assoc($res_data)){
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Job Site <span class="text-danger">*</span></label>
-                                            <input class="form-control" value="<?php echo $rowData['job_site']  ?>" type="text" name="job_site">
-                                        </div>
+                                    <div class="form-group">
+                                    <label class="control-label">Select Project</label>
+                    <select class="select_pro form-control" id="equipment" name="project_id" >
+                    <option value="<?php echo $rowData['Project_id']; ?>"><?php echo $rowData['Project_name'] ; ?></option>				
+										<?php
+					$selectpro = mysqli_query($con, "SELECT Project_id,Project_name from project");
+					if(mysqli_num_rows($selectpro) > 0){
+					while($res_selectemppro = $selectpro->fetch_assoc()) {					
+					?>
+												<option value="<?php echo $res_selectemppro['Project_id']; ?>"><?php echo $res_selectemppro['Project_name']; ?></option>
+										<?php } }?>
+									</select>
+                                    </div>
                                     </div>
 
                                     <div class="col-sm-6">
@@ -724,5 +752,15 @@ result += lineDelimiter;
 });
 
 return result;
+}
+
+function addBlankDispatch(){
+  var finddate=  document.getElementById("finddate").value;
+    
+    callapi({ Data : { dispatch_date : finddate }, PRCID: 'ADDBLANKDISPATCHLOG' }).then((res) =>{
+							console.log(res);
+                            window.location.reload();
+
+    });
 }
 </script>
