@@ -757,7 +757,7 @@ return result;
 function addBlankDispatch(){
   var finddate=  document.getElementById("finddate").value;
     
-    callapi({ Data : { dispatch_date : finddate }, PRCID: 'ADDBLANKDISPATCHLOG' }).then((res) =>{
+    callapi({ Data : { dispatch_date : finddate , dispatch_date1 : finddate }, PRCID: 'ADDBLANKDISPATCHLOG' }).then((res) =>{
 							console.log(res);
                             window.location.reload();
 
