@@ -89,12 +89,23 @@ class DispatchReport extends CI_Controller {
 		$arr =  $query->result_array();
 		if( sizeof($arr) > 0)
 		{
+			$result = array(
+
+				'status'	 => '1',
+				'record'     => $arr[0]
+			);
+
 			header('Content-Type: application/json');
-			echo json_encode( $arr[0]);
+			echo json_encode( $result);
 
 		}else{
+			$result1 = array(
+
+				'status'	 => '0',
+				'record'     => 'Sorry No Record Found !'
+			);
 			header('Content-Type: application/json');
-			echo json_encode("Sorry No Record Found !");
+			echo json_encode( $result1  );
 		}
 		
 		
@@ -113,15 +124,9 @@ class DispatchReport extends CI_Controller {
         $query = $this->db->query("select id, text ,created_date,isread from notification where empl_id=$emp_id");
 
 		$arr =  $query->result_array();
-		if( sizeof($arr) > 0)
-		{
 			header('Content-Type: application/json');
-			echo json_encode( $arr[0]);
+			echo json_encode( $arr );
 
-		}else{
-			header('Content-Type: application/json');
-			echo json_encode("Sorry No Record Found !");
-		}
 		
 		
 	}
