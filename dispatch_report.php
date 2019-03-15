@@ -75,6 +75,11 @@ if(isset($_POST['changstatus'])){
   $res_data_update = mysqli_query($con,$dispatch_qury_update);
   if($res_data_update >0){
                 
+    $insert_noti_update = "insert into notification(empl_id,text) 
+    select dl.emp_id , 'Report has been dispatch for date ' from dispatch_log dl where id= $dispatch_id";
+    
+    $res_noti = mysqli_query($con,$insert_noti_update);
+
     header("Refresh:0");
     ?>
      
