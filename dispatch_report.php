@@ -93,51 +93,47 @@ if(isset($_POST['changstatus'])){
 }
 
 
-$url = 'http://157.230.57.197:9100/api/manager';
+// $url = 'http://157.230.57.197:9100/api/manager';
 
-// $empl_id =$_POST['empl_id'];
-// $text =$_POST['text'];
 
-$select_query_for= "select * from notification dl
-inner join dispatch_log e on dl.id = e.id where e.id = $dispatch_id";
-$res_data = mysqli_query($con, $select_query_for);
- if ($res_data->num_rows > 0) {
-     while ($rowemp = $res_data->fetch_assoc()) {
-$params = json_encode( array(
-    'Method' => 'SAVENEWNOTIFICATION',
-    'PRCID' => 'Notification',
-    'Data'  => array (
-        'targetId' => $rowemp['empl_id'],
-        "title" => "new notification",
-        "text" => $rowemp['text'],
-        "image" => "http://157.230.57.197/civilpro/assets/img/logo2.png",
-        "type" => "CHATMESSAGE",
-        "refData" => array(
-        "GroupId" => $rowemp['id'],
-        )
-    ) 
-    )
-);
-     }}
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
-curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
+// $select_query_for= "select * from notification dl
+// inner join dispatch_log e on dl.id = e.id where e.id = $dispatch_id";
+// $res_data = mysqli_query($con, $select_query_for);
+//  if ($res_data->num_rows > 0) {
+//      while ($rowemp = $res_data->fetch_assoc()) {
+// $params = json_encode( array(
+//     'Method' => 'SAVENEWNOTIFICATION',
+//     'PRCID' => 'Notification',
+//     'Data'  => array (
+//         'targetId' => $rowemp['empl_id'],
+//         "title" => "new notification",
+//         "text" => $rowemp['text'],
+//         "image" => "http://157.230.57.197/civilpro/assets/img/logo2.png",
+//         "type" => "CHATMESSAGE",
+//         "refData" => array(
+//         "GroupId" => $rowemp['id'],
+//         )
+//     ) 
+//     )
+// );
+//      }}
+// $ch = curl_init();
+// curl_setopt($ch, CURLOPT_URL, $url);
+// curl_setopt($ch, CURLOPT_POST, 1);
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+// curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
+// curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+// curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
 
-// This should be the default Content-type for POST requests
-//curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-type: application/x-www-form-urlencoded"));
 
-$result = curl_exec($ch);
-if(curl_errno($ch) !== 0) { 
-    error_log('cURL error when connecting to ' . $url . ': ' . curl_error($ch));
-}
+// $result = curl_exec($ch);
+// if(curl_errno($ch) !== 0) { 
+//     error_log('cURL error when connecting to ' . $url . ': ' . curl_error($ch));
+// }
 
-curl_close($ch);
-// print_r($result);
+// curl_close($ch);
+// // print_r($result);
 
 }
 
@@ -340,10 +336,10 @@ if(isset($_POST['empl_search'])){
 
                                 ?>
 
-                                <form class="emplyoee_info" method="post" action="" >
+                                <form  class="emplyoee_info" method="post" action="" >
                                 <input type="hidden" name="dispatch_id" value="<?php echo $rowemp['id']; ?>">
 
-                                <button  type="submit" id="submitbtn<?php echo $rowemp['id']; ?>" name="changstatus" class="btn btn-sm btn-info pull-right">Dispatch </button>
+                                <button onclick="sendnotification(<?php echo $rowemp['emp_id']; ?> , <?php echo $rowemp['dispatch_date']; ?>)"  type="submit" id="submitbtn<?php echo $rowemp['id']; ?>" name="changstatus" class="btn btn-sm btn-info pull-right">Dispatch </button>
                                 
                                 </form>
                                 <?php } else { ?>
@@ -817,4 +813,29 @@ function addBlankDispatch(){
 
     });
 }
+
+function sendnotification(empid , disdate){
+
+    var apidata = {
+	"Data":{
+		"targetId" : empid,
+	    "title" : "new notification",
+	    "text" : "hi",
+	    "image" : "http://157.230.57.197/civilpro/assets/img/logo2.png",
+	    "type" : "CHATMESSAGE",
+	    "refData" : {
+	    "GroupId" : disdate
+    }
+	},
+"Method": "SAVENEWNOTIFICATION",
+"PRCID": "Notification"
+};
+
+    callsharedapi(apidata).then((res) =>{
+							console.log(res);
+                            window.location.reload();
+
+    });
+}
+
 </script>
