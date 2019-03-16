@@ -66,6 +66,7 @@ if(isset($_POST['update_report'])){
 }
   
 }
+
 if(isset($_POST['changstatus'])){
     $dispatch_id =$_POST['dispatch_id'];
     $status = 'New';//$_POST['status'];
@@ -74,7 +75,8 @@ if(isset($_POST['changstatus'])){
     
   $res_data_update = mysqli_query($con,$dispatch_qury_update);
   if($res_data_update >0){
-                
+               
+    
     $insert_noti_update = "insert into notification(empl_id,text) 
     select dl.emp_id , 'Report has been dispatch for date ' from dispatch_log dl where id= $dispatch_id";
     
@@ -89,7 +91,54 @@ if(isset($_POST['changstatus'])){
     echo "<script>alert('somthing is wrong')</script>";
     
 }
-  
+
+
+$url = 'http://157.230.57.197:9100/api/manager';
+
+// $empl_id =$_POST['empl_id'];
+// $text =$_POST['text'];
+
+$select_query_for= "select * from notification dl
+inner join dispatch_log e on dl.id = e.id where e.id = $dispatch_id";
+$res_data = mysqli_query($con, $select_query_for);
+ if ($res_data->num_rows > 0) {
+     while ($rowemp = $res_data->fetch_assoc()) {
+$params = json_encode( array(
+    'Method' => 'SAVENEWNOTIFICATION',
+    'PRCID' => 'Notification',
+    'Data'  => array (
+        'targetId' => $rowemp['empl_id'],
+        "title" => "new notification",
+        "text" => $rowemp['text'],
+        "image" => "http://157.230.57.197/civilpro/assets/img/logo2.png",
+        "type" => "CHATMESSAGE",
+        "refData" => array(
+        "GroupId" => $rowemp['id'],
+        )
+    ) 
+    )
+);
+     }}
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
+curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
+
+// This should be the default Content-type for POST requests
+//curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-type: application/x-www-form-urlencoded"));
+
+$result = curl_exec($ch);
+if(curl_errno($ch) !== 0) { 
+    error_log('cURL error when connecting to ' . $url . ': ' . curl_error($ch));
+}
+
+curl_close($ch);
+// print_r($result);
+
 }
 
 if(isset($_POST['changstatusall'])){
