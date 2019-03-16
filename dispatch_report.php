@@ -820,7 +820,7 @@ function sendnotification(empid , disdate){
 	"Data":{
 		"targetId" : empid,
 	    "title" : "new notification",
-	    "text" : "hi",
+	    "text" : "Report has been dispatch for date ",
 	    "image" : "http://157.230.57.197/civilpro/assets/img/logo2.png",
 	    "type" : "CHATMESSAGE",
 	    "refData" : {
