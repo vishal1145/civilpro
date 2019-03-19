@@ -24,7 +24,8 @@ Class Time_card extends CI_Controller{
 		$this->form_validation->set_rules('timecard_issue_date','timecard_issue_date','trim|required');
 		$this->form_validation->set_rules('timecard_workhours','timecard_workhours','trim|required|numeric');
 		$this->form_validation->set_rules('description','description','trim|required');
-		
+		$this->form_validation->set_rules('task_id','task_id','trim|required');
+
 		if(empty($_POST['timecard_machinelist_id'])){
 		$this->form_validation->set_rules('timecard_machinelist_id','timecard_machinelist_id','trim|required');
 		}
@@ -83,6 +84,8 @@ $this->form_validation->set_rules('both_same','timecard machinelist and hour are
 			$issue_date    = $this->input->post('timecard_issue_date');
 			$workhours 	   = $this->input->post('timecard_workhours');
 			$description   = $this->input->post('description');
+			$task_id       = $this->input->post('task_id');
+			
 			$machinelist   = $total_machin;
 			$machine_hour  = $total_machinhour;
 
@@ -101,6 +104,8 @@ $this->form_validation->set_rules('both_same','timecard machinelist and hour are
 				'machine' 		=> $machinelist,
 				'machine_hours'	=> $machine_hour,
 				'created_date'	=> $currnt_date,
+				'taskid'	    => $task_id,
+				
 
 				);
 
