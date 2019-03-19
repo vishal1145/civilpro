@@ -59,13 +59,9 @@ class DispatchReport extends CI_Controller {
     
     public function get_all_task()
 	{
-		//$emp_id = $this->input->get_post('emp_id', TRUE);
-		//$task_id= $this->input->get_post('id', TRUE);
-		$task_name= $this->input->get_post('task_name', TRUE);
-		$task_dec= $this->input->get_post('task_discription', TRUE);
-		
+	
 
-        $query = $this->db->query("INSERT INTO project_tasks (task_name,task_discription) value ('$task_name','$task_dec');");
+        $query = $this->db->query("select * from project_tasks");
         $arr =  $query->result_array();
 		header('Content-Type: application/json');
 		echo json_encode( $arr );
@@ -130,6 +126,7 @@ class DispatchReport extends CI_Controller {
 		
 		
 	}
+
 	public function delete_task()
 	{
 		$task_name= $this->input->get_post('task_name', TRUE);
