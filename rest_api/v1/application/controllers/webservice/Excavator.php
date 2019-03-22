@@ -46,15 +46,15 @@ Class Excavator extends CI_Controller{
 		$this->form_validation->set_rules('tracks_chains_shoes','tracks_chains_shoes','trim|required');
 		$this->form_validation->set_rules('windows_wipers','windows_wipers','trim|required');
 		$this->form_validation->set_rules('additional_notes','additional_notes','trim|required');
-		if(empty($_FILES['image']['name']))
-		{
+		//if(empty($_FILES['image']['name']))
+		//{
 		$this->form_validation->set_rules('image','image','trim|required');
-		}
+		//}
 
-		if(empty($_FILES['image']['type']))
-		{
-		$this->form_validation->set_rules('image2','file is not image','trim|required');
-		}
+		// if(empty($_FILES['image']['type']))
+		// {
+		// $this->form_validation->set_rules('image2','file is not image','trim|required');
+		// }
 
 		if($this->form_validation->run() == FALSE){
 			$error = strip_tags(validation_errors());
