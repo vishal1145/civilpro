@@ -412,14 +412,14 @@ function emplcall()
 							<label class="control-label">Start Date</label>
 								<div class="form-group form-focus">
 									<div class="cal-icon form-group form-focus">
-										<input class="form-control datetimepicker floating" value="02/1/2019" autocomplete="off"  type="text" id="datetimepickerExportStart2" name="start_date">
+										<input class="form-control datetimepicker floating" value="03/01/2019" autocomplete="off"  type="text" id="datetimepickerExportStart2" name="start_date">
 									</div>
 								</div>
 							  
 								<label class="control-label">End Date</label>
 								<div class="form-group form-focus">
 									<div class="cal-icon form-group form-focus">
-										<input class="form-control datetimepicker floating" value="02/28/2019" autocomplete="off"  type="text" id="datetimepickerExportEnd2" name="end_date">
+										<input class="form-control datetimepicker floating" value="03/31/2019" autocomplete="off"  type="text" id="datetimepickerExportEnd2" name="end_date">
 									</div>
 								</div>
 
@@ -1804,7 +1804,7 @@ else
 var settings = {
 	"async": true,
 	"crossDomain": true,
-	"url": "http://157.230.57.197:9100/api/xlsx-download/" + type,
+	"url": window.chatAPIAddress +  "/api/xlsx-download/" + type,
 	"method": "POST",
 	"headers": {
 		"Content-Type": "application/json",
@@ -1927,7 +1927,7 @@ function getXlX2() {
             var settings = {
 							"async": true,
   "crossDomain": true,
-  "url": "http://157.230.57.197:9100/api/xlsx-download/" + type,
+  "url": window.chatAPIAddress + "/api/xlsx-download/" + type,
   "method": "POST",
   "headers": {
     "Content-Type": "application/json",
@@ -2039,7 +2039,7 @@ function getXlX2() {
             var settings = {
 							"async": true,
   "crossDomain": true,
-  "url": "https://rentalant.com/api/pdf-download/" + type,
+  "url": window.pdfAPIAddress + "/api/pdf-download/" + type,
   "method": "POST",
   "headers": {
     "Content-Type": "application/json",

@@ -93,48 +93,6 @@ if(isset($_POST['changstatus'])){
 }
 
 
-// $url = 'http://157.230.57.197:9100/api/manager';
-
-
-// $select_query_for= "select * from notification dl
-// inner join dispatch_log e on dl.id = e.id where e.id = $dispatch_id";
-// $res_data = mysqli_query($con, $select_query_for);
-//  if ($res_data->num_rows > 0) {
-//      while ($rowemp = $res_data->fetch_assoc()) {
-// $params = json_encode( array(
-//     'Method' => 'SAVENEWNOTIFICATION',
-//     'PRCID' => 'Notification',
-//     'Data'  => array (
-//         'targetId' => $rowemp['empl_id'],
-//         "title" => "new notification",
-//         "text" => $rowemp['text'],
-//         "image" => "http://157.230.57.197/civilpro/assets/img/logo2.png",
-//         "type" => "CHATMESSAGE",
-//         "refData" => array(
-//         "GroupId" => $rowemp['id'],
-//         )
-//     ) 
-//     )
-// );
-//      }}
-// $ch = curl_init();
-// curl_setopt($ch, CURLOPT_URL, $url);
-// curl_setopt($ch, CURLOPT_POST, 1);
-// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-// curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
-// curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-// curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
-
-
-// $result = curl_exec($ch);
-// if(curl_errno($ch) !== 0) { 
-//     error_log('cURL error when connecting to ' . $url . ': ' . curl_error($ch));
-// }
-
-// curl_close($ch);
-// // print_r($result);
-
 }
 
 if(isset($_POST['changstatusall'])){
