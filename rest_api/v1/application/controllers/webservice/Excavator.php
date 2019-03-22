@@ -99,34 +99,34 @@ Class Excavator extends CI_Controller{
 			$windows_wipers 	= $this->input->post('windows_wipers');
 			$additional_notes   = $this->input->post('additional_notes');
 			$cleaning_products  = $this->input->post('cleaning_products');
-			//$image   			= $this->input->post('image');
+			$image   			= 			$this->input->post('image');
 			
-			$image = $_FILES['image']['name'];
-		//	print_r($image);die;
-			 if(!empty($_FILES["image"]["name"]))
-						{
-				//generate unique file name
-						  $fileName = $_FILES["image"]["name"];
-						    //file upload path
+		// 	$image = $_FILES['image']['name'];
+		// //	print_r($image);die;
+		// 	 if(!empty($_FILES["image"]["name"]))
+		// 				{
+		// 		//generate unique file name
+		// 				  $fileName = $_FILES["image"]["name"];
+		// 				    //file upload path
 
-						    $targetDir = "uploads/uploads/";
-						     $targetFilePath = $targetDir . $fileName;
+		// 				    $targetDir = "uploads/uploads/";
+		// 				     $targetFilePath = $targetDir . $fileName;
 						   
-						    //allow certain file formats
-						     $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+		// 				    //allow certain file formats
+		// 				     $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
 						 
-						    $allowTypes = array('jpg','png','jpeg','gif');
-						    if(in_array($fileType, $allowTypes)){
-						        //upload file to server
-						        if(move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)){
+		// 				    $allowTypes = array('jpg','png','jpeg','gif');
+		// 				    if(in_array($fileType, $allowTypes)){
+		// 				        //upload file to server
+		// 				        if(move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)){
 									
-									//return true;
+		// 							//return true;
 						  
-				       		 }else{
-								 echo "error";
-							 }
-							}
-						}
+		// 		       		 }else{
+		// 						 echo "error";
+		// 					 }
+		// 					}
+		// 				}
 
 			$currnt_date = date("Y-m-d");
 			$timecard = array(
@@ -172,8 +172,9 @@ Class Excavator extends CI_Controller{
 				$data_value =  array('excavator_id' => $query);
 				$get_result = $this->Excavator_model->get_field($data_value);
 
-				$sign = 'http://'.$_SERVER['HTTP_HOST'].'/civilpro/rest_api/v1/uploads/uploads/'.$get_result[0]['image'];
+				//$sign = 'http://'.$_SERVER['HTTP_HOST'].'/civilpro/rest_api/v1/uploads/uploads/'.$get_result[0]['image'];
 				
+				//$sign = $get_result[0]['image'];
 
 				$result = array(
 
@@ -214,7 +215,7 @@ Class Excavator extends CI_Controller{
 							'windows_wipers' 	=> $get_result[0]['windows_wipers'],
 							'cleaning_products' => $get_result[0]['cleaning_products'],
 							'additional_notes' 	=> $get_result[0]['additional_notes'],
-							'signature_image' 	=> $sign,
+							'signature_image' 	=> $get_result[0]['image'],
 						);
 				print_r(json_encode($result));
 			}else{
