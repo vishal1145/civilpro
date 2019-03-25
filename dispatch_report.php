@@ -408,13 +408,7 @@ if(isset($_POST['empl_search'])){
                                     </div>
 
                                     
-                                    <div class="col-sm-6">  
-                                        <div class="form-group">
-                                            <label class="control-label">Scope Of Work<span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" name="scope_work">
-                                            <!-- <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="scope"></div> -->
-                                        </div>
-                                    </div>
+                                  
 
                                     <div class="col-sm-6" >
                                     <div class="form-group">
@@ -430,6 +424,13 @@ if(isset($_POST['empl_search'])){
 										<?php } }?>
 									</select>
                                     </div>
+                                    </div>
+                                    <div class="col-sm-6">  
+                                        <div class="form-group">
+                                            <label class="control-label">Scope Of Work<span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" name="scope_work">
+                                            <!-- <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="scope"></div> -->
+                                        </div>
                                     </div>
                                     <div class="col-sm-6" >
                                         <div class="form-group">
