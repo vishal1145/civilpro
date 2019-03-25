@@ -358,7 +358,7 @@ if(isset($_POST['empl_search'])){
 												</a></h4> -->
                         </div>
                         <div class="modal-body">
-                        <form name="add-employee" class="emplyoee_info" method="post" action="" enctype="multipart/form-data">
+                        <form id="addclientform" name="add-employee" class="emplyoee_info" method="post" action="" enctype="multipart/form-data">
                             <form class="m-b-30">
                                 <div class="row">
                                 <!-- <div class="col-sm-12">
@@ -367,8 +367,9 @@ if(isset($_POST['empl_search'])){
                                          <input accept="image/jpg,image/svg,image/jpeg, image/png" type="file" value="Upload Image" id="empic">
                                         <input type="hidden" value="https://cdn4.vectorstock.com/i/1000x1000/12/13/construction-worker-icon-person-profile-avatar-vector-15541213.jpg" name="empfile" id="empfile">
                                   </div> -->
-                                    <div class="col-sm-6">
-                                    <label class="control-label">Select Employee</label>
+                                    <div class="col-sm-6" >
+                                    <label class="control-label">Select Employee  <span class="text-danger">*</span></label>
+                                   
                     <select class="select_pro form-control" id="emp_id" name="emp_id" >
                     
 										<option value="">Select Employee</option>				
@@ -384,15 +385,15 @@ if(isset($_POST['empl_search'])){
                                     
                    
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6" >
                                         <div class="form-group">
-                                            <label class="control-label">Start Time</label>
+                                            <label class="control-label">Start Time  <span class="text-danger">*</span></label>
                                             <input class="form-control" type="time" name="start_time">
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6" >
                                     <div class="form-group">
-                                    <label class="control-label">Select Project</label>
+                                    <label class="control-label">Select Project  <span class="text-danger">*</span></label>
                     <select class="select_pro form-control" id="equipment" name="project_id" >
 										<option value="">Select Project</option>				
 										<?php
@@ -406,7 +407,16 @@ if(isset($_POST['empl_search'])){
                                     </div>
                                     </div>
 
-                                    <div class="col-sm-6">
+                                    
+                                    <div class="col-sm-6">  
+                                        <div class="form-group">
+                                            <label class="control-label">Scope Of Work<span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" name="scope_work">
+                                            <!-- <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="scope"></div> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6" >
                                     <div class="form-group">
                                     <label class="control-label">Select Equipment</label>
                     <select class="select_pro form-control" id="equipment" name="equipment_id" >
@@ -421,28 +431,21 @@ if(isset($_POST['empl_search'])){
 									</select>
                                     </div>
                                     </div>
-                                    <div class="col-sm-6">  
-                                        <div class="form-group">
-                                            <label class="control-label">Scope Of Work<span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" name="scope_work">
-                                            <!-- <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="scope"></div> -->
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6" >
                                         <div class="form-group">
                                             <label class="control-label">Special Requirements </label>
                                             <input class="form-control" type="text" name="special_req">
                                         </div>
                                     </div>
                                    
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6" >
                                         <div class="form-group">
                                             <label class="control-label">Trucks</label>
                                             <input class="form-control" type="text" name="trucks">
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6" >
                                     <div class="form-group">
                                     <label class="control-label">Select Material</label>
                     <select class="select_pro form-control" id="emp_id" name="material_id" >
@@ -458,7 +461,7 @@ if(isset($_POST['empl_search'])){
                                     </div>
                                     </div>
 
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6" >
                                         <div class="form-group">
                                             <label class="control-label">Quantity </label>
                                             <input class="form-control" type="number" name="quantity">
@@ -525,7 +528,7 @@ while($rowData = mysqli_fetch_assoc($res_data)){
 												</a></h4> -->
                         </div>
                         <div class="modal-body">
-                        <form name="add-employee" class="emplyoee_info" method="post" action="" enctype="multipart/form-data">
+                        <form id="editclientform" name="edit-employee" class="emplyoee_info" method="post" action="" enctype="multipart/form-data">
                             <form class="m-b-30">
                                 <div class="row">
                                 <!-- <div class="col-sm-12">
@@ -795,5 +798,62 @@ function sendnotification(empid , disdate){
 
     });
 }
+
+
+
+$(document).ready(function() {
+    jQuery("#addclientform").validate({
+        rules: {
+            emp_id: "required",
+            start_time: "required",
+            project_id: "required",
+            scope_work: "required",
+            // phone: {
+            //     required: true,
+            //     minlength: 10,
+            //     maxlength: 11,
+            // },
+            // companyname: "required",
+            // password: {
+            //     required: true,
+            //     minlength: 6,
+            // },
+            // confirmpass: {
+            //     equalTo: "#pswrd",
+            //     minlength: 6,
+            // }
+        },
+        messages: {
+            emp_id: "Please choose the Employee",
+            start_time: "Please Select Start Time",
+            project_id: "Please choose the project",
+            scope_work: "Please Enter Your scope of work",
+            // phone: {
+            //     required: "Please Enter Your Contact Number",
+            //     minlength: "Please enter at least 10 characters.",
+            //     maxlength: "Please enter no more than 11 characters.",
+            // },
+            // companyname: "Please Enter Your Company Name",
+            // password: {
+            //     required: "The Password is Required"
+
+            // }
+        }
+    });
+
+    jQuery("#editclientform").validate({
+        rules: {
+           
+            scope_work: "required"
+            
+        },
+        messages: {
+           
+            scope_work: "Please Enter Your scope of work",
+           
+        }
+    });
+});
+
 
 </script>
