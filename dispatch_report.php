@@ -8,6 +8,18 @@ $con = $obj->connect();
 
 $user_id = $_SESSION['user_id'];
 
+if($_POST['equipment_id']==null)
+{
+    $_POST['equipment_id'] ="-1";
+}
+if($_POST['material_id']==null)
+{
+    $_POST['material_id'] ="-1";
+}
+if($_POST['quantity']==null)
+{
+    $_POST['quantity'] ="0";
+}
 
 if(isset($_POST['create_report'])){
     $emp_id = $_POST['emp_id'];
