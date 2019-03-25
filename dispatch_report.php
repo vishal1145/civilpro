@@ -39,6 +39,7 @@ if(isset($_POST['create_report'])){
   
 }
 
+
 if(isset($_POST['update_report'])){
     $dispatch_id =$_POST['dispatch_id'];
     $emp_id = $_POST['emp_id'];
