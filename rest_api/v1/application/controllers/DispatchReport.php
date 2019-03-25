@@ -76,7 +76,8 @@ class DispatchReport extends CI_Controller {
 		// $task_name= $this->input->get_post('task_name', TRUE);
 		// $task_dec= $this->input->get_post('task_discription', TRUE);
 
-        $query = $this->db->query("select dl.*, e.first_name, p.Project_name, m.machine_name,i.materials_name,p.Project_name from dispatch_log dl
+        $query = $this->db->query("select dl.id, dl.emp_id, dl.start_time , dl.scope_work, dl.special_req , dl.trucks, dl.quantity, 
+		dl.status , dl.dispatch_date, e.first_name, p.Project_name, m.machine_name,i.materials_name,p.Project_name from dispatch_log dl
 		inner join employee e on dl.emp_id = e.empl_id  
 		left join machine m on dl.equipment_id = m.machine_id
 		left join material i on dl.material_id = i.id
