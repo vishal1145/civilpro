@@ -194,7 +194,14 @@ if(isset($_POST['delete_employee'])){
                                                  
                                                      if(isset($_POST['findbydate']) && !empty($_POST['findbydate'])) {
                                                      $olddate = $_POST['findbydate'];
-                                                 } ?>
+
+                                                     }
+                                                     if(isset($_POST['dispatch_date_edit']) && !empty($_POST['dispatch_date_edit'])) {
+                                                        $olddate = $_POST['dispatch_date_edit'];
+
+                                                     }
+
+                                                 ?>
                                                      <div class="form-group form-focus">
                                     <!-- <label class="control-label">Select Date</label> -->
                                     <input name="findbydate" value="<?php echo $olddate ;?>" type="date" class="form-control floating" id="finddate">
@@ -235,7 +242,7 @@ if(isset($_POST['delete_employee'])){
 								<table class="table table-striped custom-table datatable">
 								<thead>
 								<tr>
-							<th colspan="4"><p style="margin-top:10px;"><?php echo $olddate ;?>	</p></th>
+							     <th colspan="4"><p style="margin-top:10px;"><?php echo $olddate ;?>	</p></th>
 								<th colspan="4"><h4 style="margin-top:10px;">Daily Dispatch Report </h4></th>
                                 <th colspan="3">
                                 <button  type="submit" id="submitbtn" onclick="addBlankDispatch()" name="changstatusall" class="btn btn-sm btn-info pull-right">Prefatch Employees</button>
@@ -274,6 +281,11 @@ $where_condition = "dispatch_date = CURDATE()";
 
 if(isset($_POST['empl_search'])){
     $get_date= $_POST['findbydate'];
+    $where_condition = "dispatch_date = '$get_date'";     
+}
+
+if(isset($_POST['dispatch_date_edit'])){
+    $get_date= $_POST['dispatch_date_edit'];
     $where_condition = "dispatch_date = '$get_date'";     
 }
 
@@ -511,6 +523,12 @@ if(isset($_POST['empl_search'])){
 
 <!--Edit Dispatch Report Modal-->
 <?php
+$where_conditions = "dispatch_date = CURDATE()";
+
+if(isset($_POST['update_report'])){
+    $get_date= $_POST['findbydate'];
+    $where_conditions = "dispatch_date = '$get_datee'";     
+}
     // $sel_query = "Select * from dispatch_log";
  $sel_query = "select dl.*, e.first_name, p.Project_name, m.machine_name,i.materials_name,p.Project_name 
  from dispatch_log dl
@@ -518,6 +536,7 @@ if(isset($_POST['empl_search'])){
                              left join machine m on dl.equipment_id = m.machine_id
                              left join material i on dl.material_id = i.id
                              left join Project p on dl.Project_id = p.Project_id";
+                             
 
 $res_data = mysqli_query($con,$sel_query);	
 while($rowData = mysqli_fetch_assoc($res_data)){ 
@@ -661,6 +680,7 @@ while($rowData = mysqli_fetch_assoc($res_data)){
                                
                                
                                 <div class="m-t-20 text-center">
+                                <input type="hidden" name="dispatch_date_edit" value="<?php echo $olddate ;?>">
                                 <input type="hidden" name="dispatch_id" value="<?php echo $rowData['id']; ?>">
                                     <button id="emply_id" type="submit" name="update_report" class="btn btn-primary">Update Report</button>
                                 </div>
