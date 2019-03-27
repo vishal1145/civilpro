@@ -137,24 +137,30 @@ $db=mysqli_query($con,$fetch);
 						if (isset($_POST['update_button'])) {
 						$id= $_POST['machine_id'];
 						$machine_name=$_POST['machine_name'];
-						$machine_image=$_FILES['machine_image']['name'];
-						$target = "Upload/Machines/".basename($machine_image);
-						move_uploaded_file($_FILES['machine_image']['tmp_name'], $target);
-						if($_FILES['machine_image']['name']) {
-						$allowed =  array('gif','png' ,'jpg','jpeg');
-						$filename = $_FILES['machine_image']['name'];
-						$ext = pathinfo($filename, PATHINFO_EXTENSION);
-						if(!in_array($ext,$allowed) ) {
-						    echo "Invalid file ";
-						}else{
- $update="UPDATE `machine` SET `machine_name`='".$machine_name."', `machine_image`='".$machine_image."' WHERE machine_id='".$id."' ";
+						$machine_image=$_POST['myphoto1'];
+						$update="UPDATE `machine` SET `machine_name`='".$machine_name."', `machine_image`='".$machine_image."' WHERE machine_id='".$id."' ";
  
-	 $update_dataa = mysqli_query($con,$update);
-	 //echo "update data";
-	header("Refresh:0");
+ 	 $update_dataa = mysqli_query($con,$update);
+ 	 echo "update data";
+ 	header("Refresh:0");
+						// $machine_image=$_FILES['machine_image']['name'];
+						// $target = "Upload/Machines/".basename($machine_image);
+						// move_uploaded_file($_FILES['machine_image']['tmp_name'], $target);
+// 						if($_FILES['machine_image']['name']) {
+// 						$allowed =  array('gif','png' ,'jpg','jpeg');
+// 						$filename = $_FILES['machine_image']['name'];
+// 						$ext = pathinfo($filename, PATHINFO_EXTENSION);
+// 						if(!in_array($ext,$allowed) ) {
+// 						    echo "Invalid file ";
+// 						}else{
+//  $update="UPDATE `machine` SET `machine_name`='".$machine_name."', `machine_image`='".$machine_image."' WHERE machine_id='".$id."' ";
+ 
+// 	 $update_dataa = mysqli_query($con,$update);
+// 	 //echo "update data";
+// 	header("Refresh:0");
 
-} 
-} 
+// } 
+// } 
 }										
 ?>
 
@@ -176,11 +182,18 @@ $db=mysqli_query($con,$fetch);
 											<input class="form-control" type="text" name="machine_name" value="<?php echo $row['machine_name']; ?>" required>
 										</div>									
 										<div class="michine_img" style="text-align: center">
-											<img src="Upload/Machines/<?php echo $row['machine_image'];?> " width="50%" >
+											<img type="hidden"  src="<?php echo $row['machine_image'];?> " width="50%" id="empfile2<?php echo $row['machine_id']; ?>">
+											<input type="hidden" value="JCB.png"  name="myphoto1" id="empfile3<?php echo $row['machine_id']; ?>">
 										</div>
 										<div class="form-group">
 											<label>Upload Files</label>
-											<input class="form-control" type="file" name="machine_image" value="<?php echo $row['machine_image']; ?>" >
+											<!-- <input class="form-control" type="file" name="machine_image" value="<?php echo $row['machine_image']; ?>" > -->
+											<img id="loader_img<?php echo $row['machine_id']; ?>" style="display:none"  src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif" width="50"> 
+
+								<!-- <input accept="image/jpg,image/svg,image/jpeg, image/png" type="file" value="Upload Image" onChange="readempic1File(this,<?php echo $row['empl_id']; ?>);" id="empic1"> -->
+
+										 <input accept="image/jpg,image/svg,image/jpeg, image/png" type="file" value="Upload Image" onChange="readempic1File(this,<?php echo $row['machine_id']; ?>);" name="machine_image" id="empic1" >
+
 										</div>								
 										<div class="m-t-20 text-center">
 											<button type="submit" name="update_button" class="btn btn-primary">Update Michine</button>
@@ -303,16 +316,14 @@ function generateUUID() {
     return uuid;
 };
 
-$(document).ready(function() {
+
+function readempic1File(input,machineid){
+		document.getElementById("loader_img"+ machineid).style.display = "block";
+    uploadTOAWS(input,machineid);
+}
 
 
-            callapi({
-                PRCID: 'MAXEMP'
-            }).then(function(res) {
-                $("#eidcontrol").val(res.id)
-            });
-
-			function uploadTOAWS(that){
+			function uploadTOAWS(that ,machineid){
 				var send_file = that.files[0];
                 const fileName = send_file.name;
                 const fileName1 = generateUUID() + fileName.substring(fileName.indexOf("."), fileName.length);
@@ -343,18 +354,40 @@ $(document).ready(function() {
                         return alert("There was an error uploading your Image: ");
                     } else {
 
-											
-                        $("#empfile").val(data.Location);
+												$("#empfile").val(data.Location);
 												document.getElementById("loader_img2").style.display = "none";
 												$("#empfile").attr('src',data.Location);
 												$("#empfile1").val(data.Location);
+
+												$("#empfile2"+ machineid).val(data.Location);
+												$("#empfile3"+ machineid).val(data.Location);
+												document.getElementById("loader_img" + machineid).style.display = "none";
+												$("#empfile2"+ machineid).attr('src',data.Location);
                         console.log(data);
+
+											
                     }
                 });
 			}
 
+$(document).ready(function() {
+
+
+            callapi({
+                PRCID: 'MAXEMP'
+            }).then(function(res) {
+                $("#eidcontrol").val(res.id)
+            });
+
+					
+
             $("#empic").change(function() {
 				document.getElementById("loader_img2").style.display = "block";
+                uploadTOAWS(this);
+            });
+
+						$("#empic1").change(function() {
+				document.getElementById("loader_img").style.display = "block";
                 uploadTOAWS(this);
             });
 		
