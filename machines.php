@@ -33,6 +33,8 @@ include "sidebar.php";
 
 
 
+
+
 						if (isset($_POST['submit_data'])) {
 							$machine_name=$_POST['machine_name'];
 							$photo=$_POST['myphoto1'];
@@ -42,6 +44,46 @@ include "sidebar.php";
 								echo "successfully Add Machine";
 	
 							}
+
+
+
+
+?>
+
+
+
+<!-- Update Query -->
+<?php 
+						$abc = new connection();
+						$con = $abc->connect();
+						if (isset($_POST['update_button'])) {
+						$id= $_POST['machine_id'];
+						$machine_name=$_POST['machine_name'];
+						$machine_image=$_POST['myphoto1'];
+						$update="UPDATE `machine` SET `machine_name`='".$machine_name."', `machine_image`='".$machine_image."' WHERE machine_id='".$id."' ";
+ 
+ 	 $update_dataa = mysqli_query($con,$update);
+ 	 echo "update data";
+ 	header("Refresh:0");
+						// $machine_image=$_FILES['machine_image']['name'];
+						// $target = "Upload/Machines/".basename($machine_image);
+						// move_uploaded_file($_FILES['machine_image']['tmp_name'], $target);
+// 						if($_FILES['machine_image']['name']) {
+// 						$allowed =  array('gif','png' ,'jpg','jpeg');
+// 						$filename = $_FILES['machine_image']['name'];
+// 						$ext = pathinfo($filename, PATHINFO_EXTENSION);
+// 						if(!in_array($ext,$allowed) ) {
+// 						    echo "Invalid file ";
+// 						}else{
+//  $update="UPDATE `machine` SET `machine_name`='".$machine_name."', `machine_image`='".$machine_image."' WHERE machine_id='".$id."' ";
+ 
+// 	 $update_dataa = mysqli_query($con,$update);
+// 	 //echo "update data";
+// 	header("Refresh:0");
+
+// } 
+// } 
+}										
 ?>
 <style>.error{color: red;}</style>
 
@@ -130,39 +172,6 @@ $db=mysqli_query($con,$fetch);
 				</div>
 			</div>
 
-<!-- Update Query -->
-			 <?php 
-						$abc = new connection();
-						$con = $abc->connect();
-						if (isset($_POST['update_button'])) {
-						$id= $_POST['machine_id'];
-						$machine_name=$_POST['machine_name'];
-						$machine_image=$_POST['myphoto1'];
-						$update="UPDATE `machine` SET `machine_name`='".$machine_name."', `machine_image`='".$machine_image."' WHERE machine_id='".$id."' ";
- 
- 	 $update_dataa = mysqli_query($con,$update);
- 	 echo "update data";
- 	header("Refresh:0");
-						// $machine_image=$_FILES['machine_image']['name'];
-						// $target = "Upload/Machines/".basename($machine_image);
-						// move_uploaded_file($_FILES['machine_image']['tmp_name'], $target);
-// 						if($_FILES['machine_image']['name']) {
-// 						$allowed =  array('gif','png' ,'jpg','jpeg');
-// 						$filename = $_FILES['machine_image']['name'];
-// 						$ext = pathinfo($filename, PATHINFO_EXTENSION);
-// 						if(!in_array($ext,$allowed) ) {
-// 						    echo "Invalid file ";
-// 						}else{
-//  $update="UPDATE `machine` SET `machine_name`='".$machine_name."', `machine_image`='".$machine_image."' WHERE machine_id='".$id."' ";
- 
-// 	 $update_dataa = mysqli_query($con,$update);
-// 	 //echo "update data";
-// 	header("Refresh:0");
-
-// } 
-// } 
-}										
-?>
 
 			<div id="machine-list_edit<?php echo $row['machine_id']; ?>" class="modal custom-modal fade" role="dialog">
 				<div class="modal-dialog">
