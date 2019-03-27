@@ -5,9 +5,10 @@ include "sidebar.php";
 //Indert query in Add Machines
 						$abc = new connection();
 						$con = $abc->connect();
-						if (isset($_POST['submit_data'])) {
-						$machine_name=$_POST['machine_name'];
-						$photo=$_FILES['myphoto']['name'];
+						if (isset($_POST['submit_data1'])) {
+					
+							$machine_name=$_POST['machine_name'];
+						$photo= $_FILES['myphoto']['name'];
 						if($_FILES['myphoto']['name']) {
 						$allowed =  array('gif','png' ,'jpg','jpeg');
 						$filename = $_FILES['myphoto']['name'];
@@ -27,6 +28,20 @@ include "sidebar.php";
 						}
 
 						}
+
+
+
+
+
+						if (isset($_POST['submit_data'])) {
+							$machine_name=$_POST['machine_name'];
+							$photo=$_POST['myphoto1'];
+							$sql="INSERT INTO machine (machine_name,machine_image) VALUES ('".$machine_name."', '".$photo."')";
+							echo $sql;
+								$db=mysqli_query($con,$sql);
+								echo "successfully Add Machine";
+	
+							}
 ?>
 <style>.error{color: red;}</style>
 
@@ -80,7 +95,7 @@ $db=mysqli_query($con,$fetch);
 
 							<div class="profile-widget">
 								<div class="profile-img">
-									<a href="#"><img class="avatar" src="Upload/Machines/<?php echo $row['machine_image'];?> " alt=""></a>
+									<a href="#"><img class="avatar" src="<?php echo $row['machine_image'];?> " alt=""></a>
 								</div>
 								<div class="dropdown profile-action">
 									<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
@@ -196,12 +211,15 @@ $db=mysqli_query($con,$fetch);
 											<input class="form-control" type="text" name="machine_name" >
 										</div>									
 										<div class="michine_img" style="text-align: center">
-											<img src="JCB.png" id="blah" width="40%" >
+										 
+											<img type="hidden" src="JCB.png"  name="myphoto" width="40%" id="empfile">
+											<input type="hidden" value="JCB.png"  name="myphoto1" id="empfile1">
 										</div>	
 
 										<div class="form-group">
 											<label>Upload Files</label>
-											<input class="form-control" type="file" name="myphoto" id="imgInp">
+											<img id="loader_img2" style="display:none"  src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif" width="50"> 
+											<input class="form-control" type="file" id="empic" >
 										</div>	
 
 
@@ -225,7 +243,7 @@ $db=mysqli_query($con,$fetch);
 		<script type="text/javascript" src="assets/js/app.js"></script>
 		 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
 
-
+			<script src = "https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"  type="text/javascript"> </script> 
 
 <script>
 
@@ -271,6 +289,79 @@ function readURL(input) {
 $("#imgInp").change(function() {
   readURL(this);
 });
+
+
+
+
+function generateUUID() {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxxxxxxxxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+};
+
+$(document).ready(function() {
+
+
+            callapi({
+                PRCID: 'MAXEMP'
+            }).then(function(res) {
+                $("#eidcontrol").val(res.id)
+            });
+
+			function uploadTOAWS(that){
+				var send_file = that.files[0];
+                const fileName = send_file.name;
+                const fileName1 = generateUUID() + fileName.substring(fileName.indexOf("."), fileName.length);
+                let photoKey = fileName1;
+                photoKey = "Quacck/" + "123" + "/" + photoKey;
+                var albumBucketName = 'dolphino';
+                var bucketRegion = 'us-west-2';
+                var IdentityPoolId = 'us-west-2:ff182092-2a76-489c-9d58-45ba742d9e7d'
+                AWS.config.update({
+                    region: 'us-west-2', //'us-west-2',
+                    credentials: new AWS.CognitoIdentityCredentials({
+                        IdentityPoolId: IdentityPoolId
+                    })
+                });
+                var aws = new AWS.S3({
+                    apiVersion: '2012-10-17', //'2006-03-01',
+                    params: {
+                        Bucket: albumBucketName
+                    }
+                });
+                aws.upload({
+                    Key: photoKey,
+                    Body: send_file,
+                    ACL: "public-read"
+                }, function(err, data) {
+                    if (err) {
+						
+                        return alert("There was an error uploading your Image: ");
+                    } else {
+
+											
+                        $("#empfile").val(data.Location);
+												document.getElementById("loader_img2").style.display = "none";
+												$("#empfile").attr('src',data.Location);
+												$("#empfile1").val(data.Location);
+                        console.log(data);
+                    }
+                });
+			}
+
+            $("#empic").change(function() {
+				document.getElementById("loader_img2").style.display = "block";
+                uploadTOAWS(this);
+            });
+		
+						$('#loader_img2').hide();
+});
+
+
 </script>
 
 
