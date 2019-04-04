@@ -18,8 +18,7 @@ class UpdateProfile extends CI_Controller {
 		echo "Ping";
 	}
 
-
-	public function updateprofile()
+	public function setupdateprofile()
 	{
 		$emp_id = $this->input->get_post('emp_id', TRUE);
 		$firstname= $this->input->get_post('firstname', TRUE);
