@@ -49,7 +49,7 @@ class UpdateProfile extends CI_Controller {
 		else {
         $this->db->query("UPDATE employee set first_name='$firstname', last_name='$lastname' ,img='$image' , hourly_rate=$hourlyrate WHERE empl_id=$emp_id");
 		
-		$query = $this->db->query("select first_name , last_name ,img , hourly_rate from employee WHERE empl_id=$emp_id");
+		$query = $this->db->query("select * from employee WHERE empl_id=$emp_id");
 	
 
 		$arr =  $query->result_array();
