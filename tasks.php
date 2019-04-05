@@ -77,7 +77,7 @@ $user_id = $_SESSION['user_id'];
                     
                     </li>
                     <?php
-                $log_user_qury = "select IFNULL(pt.counts,0) as counts, p.Project_id, p.Project_name from project p left join (select count(1) as counts, Project_id from project_tasks group by Project_id ) pt  on p.Project_id = pt.project_id group by p.Project_id order by p.Project_id";
+                $log_user_qury = "select IFNULL(pt.counts,0) as counts, p.Project_id, p.Project_name from Project p left join (select count(1) as counts, Project_id from project_tasks group by Project_id ) pt  on p.Project_id = pt.project_id group by p.Project_id order by p.Project_id";
                 $res_data = mysqli_query($con, $log_user_qury);
                 ?>
 <?php	if ($res_data->num_rows > 0) {
