@@ -77,14 +77,15 @@ $user_id = $_SESSION['user_id'];
                     
                     </li>
                     <?php
-                $log_user_qury = "select count(1) as counts, p.Project_id, max(p.Project_name) as Project_name from project_tasks pt inner join Project p on p.Project_id = pt.project_id group by p.Project_id order by p.Project_id";
+                $log_user_qury = "select IFNULL(pt.counts,0) as counts, p.Project_id, p.Project_name from project p left join (select count(1) as counts, Project_id from project_tasks group by Project_id ) pt  on p.Project_id = pt.project_id group by p.Project_id order by p.Project_id";
                 $res_data = mysqli_query($con, $log_user_qury);
                 ?>
 <?php	if ($res_data->num_rows > 0) {
     $counter =0;
+    $querystring = "-1";
                                 while ($row = $res_data->fetch_assoc()) {
 
-                                    $querystring = "-1";
+                                    
 
                                     if($counter == 0){
                                     $querystring  = $row['Project_id'];
@@ -106,12 +107,17 @@ $user_id = $_SESSION['user_id'];
                                    
                     <li class="<?php if($row['Project_id'] === $querystring) { echo 'nameactive'; } ?>"
                     > 
+                    
+
 					 <a href="?id=<?php echo $row['Project_id'] ?>" class = "active" >
 					 <span style="cursor: pointer;text-transform: capitalize;"><?php echo $row['Project_name']; ?></span>
-							<span class="badge bg-danger pull-right"> 
+                     <?php if($row['counts'] > 0 ) {?>       
+                     <span class="badge bg-danger pull-right"> 
 							<?php echo $row['counts']; ?>
 							</span>
-							<!-- {{group.GroupInfo.GroupName}} -->
+                            <!-- {{group.GroupInfo.GroupName}} -->
+                            
+                            <?php } ?>
 					 </a>
 					</li>
 
@@ -120,9 +126,7 @@ $user_id = $_SESSION['user_id'];
                     } ?>
 
 				
-					 <li ng-repeat="group in []"> 
-						<a href="chat.html"><span class="status offline"></span> Richard Miles <span class="badge bg-danger pull-right">18</span></a>
-					</li>
+<input type="hidden" id="projectidhidden" value="<?php echo $querystring; ?>" /> 
 					
 
 				</ul>
@@ -182,7 +186,7 @@ $user_id = $_SESSION['user_id'];
 $queries = array();
 parse_str($_SERVER['QUERY_STRING'], $queries);
 
-$base_query = "select distinct p.Project_id, p.Project_name from project_tasks pt inner join Project p on p.Project_id = pt.project_id";
+$base_query = "select distinct p.Project_id, p.Project_name from project_tasks pt right join Project p on p.Project_id = pt.project_id";
 
 if(sizeof($queries) > 0){
     $base_query = $base_query." where p.Project_id = ".$queries['id'];
@@ -195,7 +199,7 @@ if ($res_data->num_rows > 0) {
     while ($row = $res_data->fetch_assoc()) {
 
         
-                                            $task_qury = "select * from project_tasks pt where pt.project_id = " . $row['Project_id'];
+                                            $task_qury = "select * from project_tasks pt where pt.Project_id = ". $row['Project_id'];
                                             $task_data = mysqli_query($con, $task_qury);
 
                                             if ($task_data->num_rows > 0) {
@@ -206,7 +210,7 @@ if ($res_data->num_rows > 0) {
 
 										<tr>
                                         
-                                        <input type="hidden" id="projectidhidden" value="<?php echo $row['Project_id']; ?>" />
+                                      
 
 											<td>
                                             <?php echo $row_counter ?>
@@ -218,12 +222,12 @@ if ($res_data->num_rows > 0) {
 												<ul class="team-members">
 
                                                 <?php
-                                                                            $log_user_qury = "select distinct img, first_name from task_employee te inner join employee e on e.empl_id = te.empl_id where te.task_id =".$task_row['id'];
-                                                                            $res_data = mysqli_query($con, $log_user_qury);
-                                                                            ?>						
-                                                                            <?php	if ($res_data->num_rows > 0) {
-                                                                            while ($rowemp = $res_data->fetch_assoc()) {
-                                                                            ?>
+                                                    $log_user_qury = "select distinct img, first_name from task_employee te inner join employee e on e.empl_id = te.empl_id where te.task_id =".$task_row['id'];
+                                                    $res_data = mysqli_query($con, $log_user_qury);
+                                                    ?>						
+                                                    <?php	if ($res_data->num_rows > 0) {
+                                                    while ($rowemp = $res_data->fetch_assoc()) {
+                                                    ?>
 
 													<li>
 														<a href="#" title="<?php echo $rowemp['first_name']; ?>" data-toggle="tooltip"><img src="<?php echo $rowemp['img']; ?>" alt="John Doe"></a>
