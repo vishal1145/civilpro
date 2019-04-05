@@ -267,7 +267,7 @@ $removeClass = "";
 				callapi({ PRCID: 'GETTIMECARDCOUNT' }).then((res) =>{
 
 //$('#taskidddl2').children().remove();
-document.getElementById("timecardcount").innerHTML = res.counts;
+      document.getElementById("timecardcount").innerHTML = res.cnts;
 	// for(var i=0;i<res.length;i++){
 	 	// $('#timecardcount').append(res.counts)	
 		//  count = res.counts
