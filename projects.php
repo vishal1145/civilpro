@@ -15,7 +15,7 @@ if(isset($_POST['delete_project'])){
 
 $project_id = $_POST['project_id'];
 
-$sql = "DELETE FROM project where Project_id=$project_id";
+$sql = "DELETE FROM Project where Project_id=$project_id";
 $res_data = mysqli_query($con,$sql);
 
 }
@@ -158,7 +158,7 @@ for($i=0;$i < count($consumption);$i++){
 	
 
     	if($res_data){ echo "Records updated successfully";
-			header('Location: '. $base_url .'projects.php');
+			 header('Location: '. $base_url .'projects.php');
 		}
     }
 	if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
@@ -559,7 +559,7 @@ $res_data = mysqli_query($con,$sel_query);
 							<h4 class="modal-title">Create Project</h4>
 						</div>
 						<div class="modal-body">
-							   <form action="" method="post" enctype="multipart/form-data" name="projectsform">
+							   <form action="" method="post" name="projectsform">
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
@@ -842,7 +842,9 @@ $(div_id).on('keyup',function(){
 						<input class="form-control" type="file" name="image">
 					</div>
 					<div class="m-t-20 text-center">
-						<button  class="btn btn-primary" name="create_project" value="create" id="butsasaton">Create Project</button>
+
+						<button  class="btn btn-primary" onclick="updateNotificationStatus(1)" name="create_project" value="create" id="butsasaton">Create Project</button>
+					
 					</div>
 					</form>
 				</div>
@@ -1518,58 +1520,27 @@ $('#add_machine').typeahead({
    }
   });
 
+
+
+
+	function updateNotificationStatus(empid, value)
+{
+	var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": 'http://157.230.57.197:9100/updateUserDevice?userid='+empid+'&notification='+value,
+  "method": "GET",
+  "headers": {
+    "cache-control": "no-cache"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response, $base_url);
+});
+}
 </script>
 	<style>	.error{	color:red;	}</style>	
-
-
-
-
-<!-- 
-<script>
-$(document).ready(function(){
-
-  
-// $('.consumption').on('click',function(){
-//      var consumation_qty = $(this).prev().text();
-//       var cons_val = $(this).val();
-//       var sum = consumation_qty - cons_val;
-   
-//       var consumation_qty = $(this).next().text();
-// $(this).parents().find('.remain_amount').val(sum);
-
-// 		alert(sum);
-// });
-
-
-
-$('.consumption').on('click',function(){
-     var consumation_qty = $(this).prev().text();
-      var cons_val = $(this).val();
-      alert(consumation_qty);
-      alert(cons_val);
-      var sum = consumation_qty - cons_val;
-   
-      var consumation_qty = $(this).next().text();
-//$(this).parents().find('.remain_amount').val(sum);
-//$(this).next('input').val(sum);
-$(this).nextAll('input').first().val(sum);
- $("input.remain_amount").next().css({"color": "red", "border": "2px solid red"});
-
-		//alert(sum);
-});
-
-
-
-
-
-
-});
-</script> -->
-
-
-
-
-
 
     </body>
 </html>
