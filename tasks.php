@@ -86,7 +86,6 @@ $user_id = $_SESSION['user_id'];
                                 while ($row = $res_data->fetch_assoc()) {
 
                                     
-
                                     if($counter == 0){
                                     $querystring  = $row['Project_id'];
                                     }
