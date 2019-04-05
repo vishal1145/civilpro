@@ -78,8 +78,11 @@ $removeClass = "";
 								<a href="tasks.html">Tasks</a>
 								<a href="#">Tasks</a>
 							</li>-->
+						
 							<li <?php echo ($current_url == "worksheet.php") ? 'class="Cards '.$activeClass.'"' : 'class="Cards '.$removeClass.'"' ?>> 
-								<a href="worksheet.php">Time Cards</a>
+								<a href="worksheet.php">Time Cards
+								<span class="badge bg-primary pull-right " id="timecardcount" >
+								</a>
 							</li>
 							<li class="Field">
 								<!--<a href="expense-reports.html">Field Report</a>-->
@@ -259,5 +262,16 @@ $removeClass = "";
 						}	*/				
 
 
-            	});
+				});
+				
+				callapi({ PRCID: 'GETTIMECARDCOUNT' }).then((res) =>{
+
+//$('#taskidddl2').children().remove();
+//window.count= document.getElementById("taskvalue").innerHTML = res.counts;
+	// for(var i=0;i<res.length;i++){
+	 	$('#timecardcount').append(res.counts)	
+		 count = res.counts
+		});
+	// }
+
             </script>
