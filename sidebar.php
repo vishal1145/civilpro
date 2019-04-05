@@ -195,7 +195,7 @@ $removeClass = "";
             
       <script type="text/javascript">
          $(document).ready(function(){
-
+			
 	     /*	$('.allEmployeeUl li a').click(function(e) {
 		        e.preventDefault();
 		        $('a').removeClass('active');
@@ -263,15 +263,15 @@ $removeClass = "";
 
 
 				});
-				
+				// document.getElementById("timecardcount").innerHTML = 10;
 				callapi({ PRCID: 'GETTIMECARDCOUNT' }).then((res) =>{
 
 //$('#taskidddl2').children().remove();
-//window.count= document.getElementById("taskvalue").innerHTML = res.counts;
+document.getElementById("timecardcount").innerHTML = res.counts;
 	// for(var i=0;i<res.length;i++){
-	 	$('#timecardcount').append(res.counts)	
-		 count = res.counts
-		});
+	 	// $('#timecardcount').append(res.counts)	
+		//  count = res.counts
+		// 
 	// }
-
+});
             </script>
