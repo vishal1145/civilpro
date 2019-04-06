@@ -1506,7 +1506,7 @@ $(document).on('click','.Approve',function(){
 $(document).on('click','.Decline',function(){
 	var id = $(this).attr('data-id');
 	var Approve = '0';
-	var readstatus = '0';
+	var readstatus = '1';
 	var time_card = 'approve_data_time_card';
 	$.ajax({
 		   url: "approve_ajax.php",
