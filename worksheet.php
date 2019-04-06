@@ -1492,7 +1492,7 @@ $(document).on('click','.Approve',function(){
 	   	//alert('123');
 	  
 				if(data == '1'){
-					//location.reload();
+					location.reload();
 					$('span.approve-text-'+id).html('Approve');
 					//$('i.approve-textmessage-'+id).toggleClass('text-danger text-success');
 					$('i.approve-textmessage-'+id).removeClass('text-danger text-success');
