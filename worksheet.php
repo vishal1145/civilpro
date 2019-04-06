@@ -1480,12 +1480,12 @@ $('.ApproveOld').click(function(event){
 $(document).on('click','.Approve',function(){
 	var id = $(this).attr('data-id');
 	var Approve = '1';
-	var readstatus = '1';
+	//var readstatus = '1';
 	var time_card = 'approve_data_time_card';
 
 	$.ajax({
 	   url: "approve_ajax.php",
-	   data: {Approve: Approve, time_card: time_card, id: id,readstatus:readstatus},
+	   data: {Approve: Approve, time_card: time_card, id: id},
 	   //dataType: "json",
 	   type: "POST",
 	   success: function (data) {
@@ -1506,17 +1506,17 @@ $(document).on('click','.Approve',function(){
 $(document).on('click','.Decline',function(){
 	var id = $(this).attr('data-id');
 	var Approve = '0';
-	var readstatus = '1';
+	//var readstatus = '1';
 	var time_card = 'approve_data_time_card';
 	$.ajax({
 		   url: "approve_ajax.php",
-		   data: {Approve: Approve, time_card: time_card, id: id,readstatus:readstatus},
+		   data: {Approve: Approve, time_card: time_card, id: id},
 		   //dataType: "json",
 		   type: "POST",
 		   success: function (data) {
 		   	//alert('123');
 			   if(data == '1'){
-		    //   location.reload();
+		      location.reload();
 				 $('span.approve-text-'+id).html('Decline');	
 				 $('i.approve-textmessage-'+id).removeClass('text-danger text-success');
 				 //$('i.approve-textmessage-'+id).removeClass('text-success');
