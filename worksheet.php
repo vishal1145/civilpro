@@ -533,8 +533,24 @@ function emplcall()
 
 				<td style="display: none;"><?php  $time_records; ?></td>
 				<td class="col-md-3">
-				<a href="<?php  echo $base_url .'worksheet.php'; ?>" class="avatar"><?php  echo  $emp_name['first_name'][0];   ?></a>
-				<h2><a href="<?php  echo $base_url .'worksheet.php'; ?>"><?php echo  $emp_name['first_name']; ?> <span><?php echo  $emp_name['designation']; ?></span></a></h2>
+				<a href="<?php  echo $base_url .'worksheet.php'; ?>" class="avatar">
+			
+				<?php  echo  $emp_name['first_name'][0];   ?>
+			
+			</a>
+				<h2>
+					<?php 
+					if($card_data['readstatus']==0)
+					{ ?>
+						<a style="color:red" href="<?php  echo $base_url .'worksheet.php'; ?>"><?php echo  $emp_name['first_name']; ?> <span><?php echo  $emp_name['designation']; ?></span></a></h2>
+
+						<?php }else{ ?>
+
+							<a href="<?php  echo $base_url .'worksheet.php'; ?>"><?php echo  $emp_name['first_name']; ?> <span><?php echo  $emp_name['designation']; ?></span></a></h2>
+					
+						
+						<?php }	?>
+					
 				</td>
 											<td><?php echo $card_data['card_date']; ?></td>
 											<td>
@@ -600,7 +616,7 @@ function emplcall()
 													<a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> 
 													
 									<?php
-									if($card_data['status'] == 1){
+									if($card_data['status'] == 0){
 									echo '<i class="fa fa-dot-circle-o text-success approve-textmessage-'.$card_data['id'].'"></i><span class="change_heading approve-text-'.$card_data['id'].'"> Approve </span><i class="caret"></i></a>';
 									}else{
 									echo '<i class="fa fa-dot-circle-o text-danger approve-textmessage-'.$card_data['id'].'"></i><span class="change_heading approve-text-'.$card_data['id'].'"> Decline </span><i class="caret"></i></a>';
@@ -1464,11 +1480,12 @@ $('.ApproveOld').click(function(event){
 $(document).on('click','.Approve',function(){
 	var id = $(this).attr('data-id');
 	var Approve = '1';
+	var readstatus = '1';
 	var time_card = 'approve_data_time_card';
 
 	$.ajax({
 	   url: "approve_ajax.php",
-	   data: {Approve: Approve, time_card: time_card, id: id},
+	   data: {Approve: Approve, time_card: time_card, id: id,readstatus:readstatus},
 	   //dataType: "json",
 	   type: "POST",
 	   success: function (data) {
@@ -1489,10 +1506,11 @@ $(document).on('click','.Approve',function(){
 $(document).on('click','.Decline',function(){
 	var id = $(this).attr('data-id');
 	var Approve = '0';
+	var readstatus = '0';
 	var time_card = 'approve_data_time_card';
 	$.ajax({
 		   url: "approve_ajax.php",
-		   data: {Approve: Approve, time_card: time_card, id: id},
+		   data: {Approve: Approve, time_card: time_card, id: id,readstatus:readstatus},
 		   //dataType: "json",
 		   type: "POST",
 		   success: function (data) {
