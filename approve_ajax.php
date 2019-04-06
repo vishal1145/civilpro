@@ -4,15 +4,16 @@ require "config/config.php";
 $obj = new connection();
 $con = $obj->connect();
 
-if($_POST['time_card'] == "approve_data_time_card"){
-	$status = $_POST['Approve'];
-	$id = $_POST[id];
- $Time_Card = "UPDATE time_card SET status = '$status' WHERE id = '$id'";
-echo $Time_Cardd = mysqli_query($con,$Time_Card);
-}
+// if($_POST['time_card'] == "approve_data_time_card"){
+// 	$status = $_POST['Approve'];
+// 	$id = $_POST[id];
+//  $Time_Card = "UPDATE time_card SET status = '$status' WHERE id = '$id'";
+// echo $Time_Cardd = mysqli_query($con,$Time_Card);
+// }
 
 if($_POST['time_card'] == "approve_data_time_card"){
 	$readstatus = $_POST['readstatus'];
+	$status = $_POST['Approve'];
 	$id = $_POST[id];
  $Time_Card = "UPDATE time_card SET status = '$status', readstatus='$readstatus' WHERE id = '$id'";
 echo $Time_Cardd = mysqli_query($con,$Time_Card);
