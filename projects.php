@@ -59,6 +59,15 @@ if(isset($_POST['create_project'])){
 			}
      $team_id = implode(",",$NewTeamName);
 
+		 for($i=0; $i<sizeof($NewTeamName);$i++)
+		 {
+			$insert_noti_update = "insert into notification(empl_id,text,type) select ".$NewTeamName[$i]." , 'Project Update successfully','Project_Update' ";
+			$res_noti = mysqli_query($con,$insert_noti_update);
+		 }
+		 
+// 		$insert_noti_update=	"insert into notification(empl_id,text,type) 
+// VALUES (value1, value2, value3, ...)";
+    
 /* ========================================================================================= */
 /* =============================== machine save id ===================================== */
 
@@ -843,7 +852,7 @@ $(div_id).on('keyup',function(){
 					</div>
 					<div class="m-t-20 text-center">
 
-						<button  class="btn btn-primary" onclick="updateNotificationStatus(1)" name="create_project" value="create" id="butsasaton">Create Project</button>
+						<button class="btn btn-primary" onclick="updateNotificationStatus(1)" name="create_project" value="create" id="butsasaton">Create Project</button>
 					
 					</div>
 					</form>
