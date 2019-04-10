@@ -81,7 +81,7 @@ $removeClass = "";
 						
 							<li <?php echo ($current_url == "worksheet.php") ? 'class="Cards '.$activeClass.'"' : 'class="Cards '.$removeClass.'"' ?>> 
 								<a href="worksheet.php">Time Cards
-								<span class="badge bg-primary pull-right " id="timecardcount" >
+								<span class="badge bg-danger pull-right " id="timecardcount" >
 								</a>
 							</li>
 							<li class="Field">
@@ -195,79 +195,18 @@ $removeClass = "";
             
       <script type="text/javascript">
          $(document).ready(function(){
-			
-	     /*	$('.allEmployeeUl li a').click(function(e) {
-		        e.preventDefault();
-		        $('a').removeClass('active');
-		        $(this).addClass('active');
-	    	});
-*/
-         	/*$('li.submenu.employees.php').removeClass('active');
-
-         	
-	var pgurl = window.location.href.substr(window.location.href.lastIndexOf("/") + 1);
-	
-	if(pgurl == 'clients.php'){
-	$('.sidebar-menu > ul > li.Clients').addClass('active');
-						}
-	if(pgurl == 'machines.php'){
-	$('.sidebar-menu > ul > li.Machines').addClass('active');
-						}					
-	if(pgurl == 'materials.php'){
-	$('.sidebar-menu > ul > li.materials').addClass('active');
-						}
-	if(pgurl == 'projects.php'){
-	$('.sidebar-menu > ul > li.Projects').addClass('active');
-						}
-						
-	if(pgurl == 'users.php'){
-	$('.sidebar-menu > ul > li.Users').addClass('active');
-						}
-						//kjhfdkjfhj
-	if(pgurl == 'settings.php'){
-	$('.sidebar-menu > ul > li.Settings').addClass('active');
-						}
-	if(pgurl == 'employees.php'){
-	$('li.employee_all').addClass('active');
-	$('#sidebar-menu ul ul').css('display','block');
-		}else{
-			$('#sidebar-menu ul ul').css('display','none');
-			//$('li.submenu.employeesphp').removeClass('active');
-		}
-	if(pgurl == 'worksheet.php'){
-	$('.sidebar-menu > ul > li.Cards').addClass('active');
-						}
-	if(pgurl == 'dashbord.php'){
-	$('li.submenu.employeesphp').removeClass('active');
-					}*/
-						
-						/*
-	if(pgurl == 'change-password.php'){
-	$('.sidebar-menu > ul > li.materials').addClass('active');
-						}					
-	if(pgurl == 'materials.php'){
-	$('.sidebar-menu > ul > li.materials').addClass('active');
-						}
-	if(pgurl == 'materials.php'){
-	$('.sidebar-menu > ul > li.materials').addClass('active');
-						}
-	if(pgurl == 'materials.php'){
-	$('.sidebar-menu > ul > li.materials').addClass('active');
-						}
-	if(pgurl == 'materials.php'){
-	$('.sidebar-menu > ul > li.materials').addClass('active');
-						}
-	if(pgurl == 'materials.php'){
-	$('.sidebar-menu > ul > li.materials').addClass('active');
-						}	*/				
-
 
 				});
-				// document.getElementById("timecardcount").innerHTML = 10;
 				callapi({ PRCID: 'GETTIMECARDCOUNT' }).then((res) =>{
+    var a = document.getElementById("timecardcount").innerHTML = res.cnts;
 
-//$('#taskidddl2').children().remove();
-      document.getElementById("timecardcount").innerHTML = res.cnts;
+	if( res.cnts <= 0)
+	{
+		document.getElementById("timecardcount").style.display='none';
+	}else
+	{
+		document.getElementById("timecardcount").style.display='block';
+	}
 	// for(var i=0;i<res.length;i++){
 	 	// $('#timecardcount').append(res.counts)	
 		//  count = res.counts
