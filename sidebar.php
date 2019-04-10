@@ -81,7 +81,7 @@ $removeClass = "";
 						
 							<li <?php echo ($current_url == "worksheet.php") ? 'class="Cards '.$activeClass.'"' : 'class="Cards '.$removeClass.'"' ?>> 
 								<a href="worksheet.php">Time Cards
-								<span class="badge bg-danger pull-right " id="timecardcount" >
+								<span class="badge bg-danger pull-right" style="background-color: #f62d51;" id="timecardcount" >
 								</a>
 							</li>
 							<li class="Field">
