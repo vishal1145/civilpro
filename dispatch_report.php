@@ -90,8 +90,8 @@ if(isset($_POST['changstatus'])){
   if($res_data_update >0){
                
     
-    $insert_noti_update = "insert into notification(empl_id,text) 
-    select dl.emp_id , 'Report has been dispatch for date ' from dispatch_log dl where id= $dispatch_id";
+    $insert_noti_update = "insert into notification(empl_id,text,type) 
+    select dl.emp_id , 'Report has been dispatch for date ','Dispatch_Report' from dispatch_log dl where id= $dispatch_id";
     
     $res_noti = mysqli_query($con,$insert_noti_update);
 
