@@ -19,6 +19,8 @@ class Employe_login extends CI_Controller {
 	}
 
 	public function login_employe(){
+ 
+		
 
 		$this->form_validation->set_rules('email','email','trim|required|valid_email');
 		$this->form_validation->set_rules('password','password','trim|required');
@@ -85,6 +87,7 @@ class Employe_login extends CI_Controller {
 						'password'	=> $query[0]['password'],
 						'company'	=> $query[0]['company'],
 						'designation'=> $query[0]['designation'],
+						'noti_status'=> $query[0]['noti_status'],
 						'image'		=> $img,
 						
 						
