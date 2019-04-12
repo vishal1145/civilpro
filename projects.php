@@ -63,7 +63,13 @@ if(isset($_POST['create_project'])){
 		 {
 			$insert_noti_update = "insert into notification(empl_id,text,type) select ".$NewTeamName[$i]." , 'Project Update successfully','Project_Update' ";
 			$res_noti = mysqli_query($con,$insert_noti_update);
+
+			$response = file_get_contents("http://157.230.57.197:9100/add-project-notificaion?userid=".$NewTeamName[$i]."&projectid=".$NewTeamName[$i]);
+			$response = json_decode($response);
+
 		 }
+
+		
 		 
 // 		$insert_noti_update=	"insert into notification(empl_id,text,type) 
 // VALUES (value1, value2, value3, ...)";
@@ -218,7 +224,9 @@ if(isset($_POST['update_project'])){
 			while($rowData = mysqli_fetch_assoc($res_data)){
 			$NewTeamName[] = $rowData['empl_id'];
 			}
-     $edit_team = implode(",",$NewTeamName);
+		 $edit_team = implode(",",$NewTeamName);
+
+		
 
 // ========================================================================================= 
 // =============================== machine save id ===================================== 

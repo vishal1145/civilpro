@@ -16,7 +16,34 @@ class UpdateProfile extends CI_Controller {
 	public function ping()
 	{
 		echo "Ping";
-	}
+    }
+    
+
+   public function test()
+   {
+    // $emp_id = $this->input->get_post('emp_id', TRUE);
+    // $data = '{  "PRCID":"ChatGroup" }';
+    // $options = array(
+    //    'http' => array(
+    //     "async" => true,
+    //     "crossDomain" => true,
+    //     "url" => 'http://157.230.57.197:9100/updateUserDevice?userid='+empid+'&notification='+value,
+    //     "method" => "GET",
+    //      )
+    //  );
+     
+    // // $url = "http://157.230.57.197:9100/api/project/".$emp_id;
+    //  $context  = stream_context_create( $options );
+    //  $result = file_get_contents(false, $context );
+    //  $response = json_decode( $result );
+		//  $response2= $response;
+		
+
+		$response = file_get_contents('http://example.com/path/to/api/call?param1=5');
+		$response = json_decode($response);
+
+   }
+
 
 	public function setupdateprofile()
 	{
@@ -102,6 +129,10 @@ class UpdateProfile extends CI_Controller {
 				'status'	 => '1',
 				'record'     => $arr[0]
 			);
+
+
+			$response = file_get_contents('http://157.230.57.197:9100/updateUserDevice?userid='.$emp_id.'&notification='.$notification_status);
+		$response = json_decode($response);
 
 			header('Content-Type: application/json');
 			echo json_encode( $result);

@@ -158,7 +158,17 @@ if(isset($_POST['update_project'])){
 			$NewTeamName[] = $rowData['empl_id'];
 			}
      $edit_team = implode(",",$NewTeamName);
-
+		 for($i=0; $i<sizeof($NewTeamName);$i++)
+		 {
+			 
+			$insert_noti_update = "insert into notification(empl_id,text,type) select ".$NewTeamName[$i]." , 'Project Update successfully','Project_Update' ";
+			//$insert_noti_update =	"update notification set text='Project Re-Update successfully',type='Project_Updated' where empl_id =$NewTeamName[$i]";
+			
+			$res_noti = mysqli_query($con,$insert_noti_update);
+			
+			$response = file_get_contents("http://157.230.57.197:9100/add-project-notificaion?userid=".$NewTeamName[$i]."&projectid=".$NewTeamName[$i]);
+			$response = json_decode($response);
+		}
 /* ========================================================================================= */
 /* =============================== machine update id ===================================== */
 
