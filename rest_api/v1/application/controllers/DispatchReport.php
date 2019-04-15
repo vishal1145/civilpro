@@ -128,6 +128,61 @@ class DispatchReport extends CI_Controller {
 		
 	}
 
+	// public function update_notification()
+	// {
+	// 	$id = $this->input->get_post('id', TRUE);
+	// 	$this->form_validation->set_rules('id','id','trim|required');
+		
+
+    //     $query = $this->db->query("UPDATE notification SET isread = 1 WHERE id = $id;");
+
+	// 	$arr =  $query->result_array();
+	// 		header('Content-Type: application/json');
+	// 		echo json_encode( $arr );
+		
+	// }
+
+
+	public function update_notification()
+	{
+		$id = $this->input->get_post('id', TRUE);
+		$this->form_validation->set_rules('id','id','trim|required');
+
+		if($this->form_validation->run() == FALSE)
+		{
+			$error = strip_tags(validation_errors());
+			$result = array(
+
+					'status'	 => '0',
+					'statuscode' => '403',
+					'msg'		 => $error
+
+			);
+			header('Content-Type: application/json');
+			echo (json_encode($result));
+		}
+		else {
+        $this->db->query("UPDATE notification SET isread = 1 WHERE id = $id;");
+		
+		$query = $this->db->query("select * from notification WHERE id=$id");
+	
+
+		$arr =  $query->result_array();
+			
+			$result = array(
+
+				'status'	 => '1',
+				'record'     => $arr[0]
+			);
+
+			header('Content-Type: application/json');
+			echo json_encode( $result);
+		}
+	}
+
+
+
+
 	public function delete_task()
 	{
 		$task_name= $this->input->get_post('task_name', TRUE);
