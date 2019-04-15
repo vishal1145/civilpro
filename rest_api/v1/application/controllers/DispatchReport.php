@@ -118,7 +118,7 @@ class DispatchReport extends CI_Controller {
 		// $task_name= $this->input->get_post('task_name', TRUE);
 		// $task_dec= $this->input->get_post('task_discription', TRUE);
 
-        $query = $this->db->query("select id, text ,created_date,isread ,type from notification where empl_id=$emp_id");
+        $query = $this->db->query("select id, text ,created_date,isread ,type, project_id from notification where empl_id=$emp_id");
 
 		$arr =  $query->result_array();
 			header('Content-Type: application/json');

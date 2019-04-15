@@ -155,6 +155,9 @@ for($i=0;$i < count($consumption);$i++){
              $emp_id = $emp_id_obj->Project_id;
 
 
+						 $insert_noti_update_1 = "update notification set project_id = ".$emp_id_obj->Project_id." where project_id  = -1";
+			$res_noti_1 = mysqli_query($con,$insert_noti_update);
+
     $data = '{  "PRCID":"ChatGroup" }';
      $options = array(
         'http' => array(
