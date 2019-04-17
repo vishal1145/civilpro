@@ -110,8 +110,7 @@ class Employe_login extends CI_Controller {
 		/**** Forget password *****/
 
 	public function forget_pass(){
-		//$email 		= $this->input->post('email');
-
+	
 	$this->form_validation->set_rules('email','email','trim|required|valid_email');
 		
 		
@@ -174,13 +173,22 @@ class Employe_login extends CI_Controller {
 						$headers .= 'Cc: myboss@example.com' . "\r\n";
 
 						custom_mail($to,$subject,$message,$from);
+							
+							
+
+
+
+
+
 
 					//$query2 = $this->Register_model->otp_manage($data);
 						
-					$table_name = 'users';
-					$this->db->where('user_id',$query[0]['user_id']);
+					$table_name = 'employee';
+					$this->db->where('empl_id',$query[0]['empl_id']);
 
-					$query2 = $this->db->update($table_name,$data);
+					//$query2 = $this->db->update($table_name,$data);
+
+					
 					//print_r($query2);die('Enter');
 					$result = array(
 									'status'=>'1',
