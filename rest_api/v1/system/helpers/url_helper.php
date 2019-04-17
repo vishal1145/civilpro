@@ -634,8 +634,12 @@ $mail = new PHPMailer;
 $mail->isSMTP();
 $mail->Host = 'smtp.gmail.com';
 $mail->SMTPAuth = true;
-$mail->Username = 'ewebteam1@gmail.com';
-$mail->Password = 'plokijuh12345';
+// $mail->Username = 'ewebteam1@gmail.com';
+// $mail->Password = 'plokijuh12345';
+
+$mail->Username = 'vishal.test123456@gmail.com';
+$mail->Password = 'vishal987654';
+
 $mail->SMTPSecure = 'tls';
 $mail->Port = 587;
 $mail->SMTPDebug = 2;
