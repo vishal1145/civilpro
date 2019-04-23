@@ -205,7 +205,7 @@ $db=mysqli_query($con,$fetch);
 
 										</div>								
 										<div class="m-t-20 text-center">
-											<button type="submit" name="update_button" class="btn btn-primary">Update Michine</button>
+											<button type="submit" name="update_button" class="btn btn-primary">Update Machine</button>
 										</div>
 									</div>
 								</div>
