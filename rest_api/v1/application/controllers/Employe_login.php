@@ -136,6 +136,7 @@ class Employe_login extends CI_Controller {
 			header('Content-Type: application/json');
 			echo (json_encode($result));
 		}
+		
 		else {
 			$query = $this->db->query("INSERT INTO employee (img, first_name, last_name, email, password)
 			VALUES ('$image', '$firstname','$lastname','$email','$password')");
