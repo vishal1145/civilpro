@@ -249,7 +249,7 @@ if(isset($_POST['delete_employee'])){
 								<th colspan="4"> <form class="emplyoee_info" method="post" action="" >
                                 <!-- <input type="hidden" name="dispatch_id" value="<?php echo $rowemp['id']; ?>"> -->
 
-                                <button  type="submit" id="submitbtn" name="changstatusall" class="btn btn-sm btn-info pull-right">Dispatch All</button>
+                                <button  type="submit" id="submitbtn" name="changstatusall" class="btn btn-sm btn-info pull-right">Show All</button>
                                 
                                 </form></th>
 								
