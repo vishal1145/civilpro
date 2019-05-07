@@ -107,6 +107,46 @@ class Employe_login extends CI_Controller {
 	}
 
 
+
+	public function register_employee()
+	{
+		$image = $this->input->get_post('img', TRUE);
+		$firstname= $this->input->get_post('first_name', TRUE);
+		$lastname= $this->input->get_post('last_name', TRUE);
+		$email= $this->input->get_post('email', TRUE);
+		$password = $this->input->get_post('password', TRUE);
+		
+		$this->form_validation->set_rules('img','img','trim|required');
+		$this->form_validation->set_rules('first_name','first_name','trim|required');
+		$this->form_validation->set_rules('last_name','last_name','trim|required');
+		$this->form_validation->set_rules('email','email','trim|required');
+		$this->form_validation->set_rules('password','password','trim|required');
+
+
+		if($this->form_validation->run() == FALSE)
+		{
+			$error = strip_tags(validation_errors());
+			$result = array(
+
+					'status'	 => '0',
+					'statuscode' => '403',
+					'msg'		 => $error
+
+			);
+			header('Content-Type: application/json');
+			echo (json_encode($result));
+		}
+		else {
+			$query = $this->db->query("INSERT INTO employee (img, first_name, last_name, email, password)
+			VALUES ('$image', '$firstname','$lastname','$email','$password')");
+
+			$arr =  $query->result_array();
+				header('Content-Type: application/json');
+				echo json_encode( $arr );
+		}
+	}
+
+
 		/**** Forget password *****/
 
 	public function forget_pass(){
