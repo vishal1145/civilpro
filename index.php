@@ -20,12 +20,13 @@ if(isset($_POST['save_btn'])){
 	$num_rows = mysqli_num_rows($res_data);	
 	if($num_rows > 0 ){	
 		$user_row = mysqli_fetch_object($res_data);
-		echo $user_row;
-		// $_SESSION['user_id'] = $user_row->user_id;		
-		// if(isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0 ){
-		// 	 $user_id  = $_SESSION['user_id'] ;
-		// 	header('Location: '. $actual_link .'/civilpro/dashbord.php' ); 						
-		// }		
+		
+		//echo $user_row;
+		$_SESSION['user_id'] = $user_row->user_id;		
+		if(isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0 ){
+			 $user_id  = $_SESSION['user_id'] ;
+			header('Location: '. $actual_link .'/civilpro/dashbord.php' ); 						
+		}		
 	}	
 }
 
