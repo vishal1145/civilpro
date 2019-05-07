@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '157.230.57.197',
+	'hostname' => 'localhost',
 	'username' => 'root',
-	'password' => 'Ithours_123',
+	'password' => '',
 	'database' => 'attodayi_civilpro',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

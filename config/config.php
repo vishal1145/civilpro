@@ -9,9 +9,9 @@ class connection {
 	
 	function connect(){		
 	
-		$this->servername = "157.230.57.197";
+		$this->servername = "localhost";
 		$this->username = "root";
-		$this->password = "Ithours_123";
+		$this->password = "";
 		$this->dbname = "attodayi_civilpro";
 
 		$con = mysqli_connect($this->servername,$this->username,$this->password,$this->dbname);	
