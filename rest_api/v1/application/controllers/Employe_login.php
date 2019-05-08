@@ -138,6 +138,24 @@ class Employe_login extends CI_Controller {
 		}
 		
 		else {
+			$query3 = $this->db->query("SELECT * FROM employee WHERE email='$email'");
+			$arr2 =  $query3->result_array();
+			if($arr2[0]['email']==$email)
+			{
+				$result = array(
+
+					'status'	 => '0',
+					'statuscode' => '403',
+					'msg'		 => 'email already Taken'
+
+			);
+				header('Content-Type: application/json');
+				echo json_encode( $result );
+				return false;
+			}
+				
+  
+
 			$query = $this->db->query("INSERT INTO employee (img, first_name, last_name, email, password)
 			VALUES ('$image', '$firstname','$lastname','$email','$password')");
            $query1 = $this->db->query("select first_name, last_name ,email,password,img from employee where email='$email'");
