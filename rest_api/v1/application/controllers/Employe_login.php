@@ -140,8 +140,8 @@ class Employe_login extends CI_Controller {
 		else {
 			$query = $this->db->query("INSERT INTO employee (img, first_name, last_name, email, password)
 			VALUES ('$image', '$firstname','$lastname','$email','$password')");
-
-			$arr =  $query->result_array();
+           $query1 = $this->db->query("select first_name, last_name ,email,password,img from employee where email='$email'");
+			$arr =  $query1->result_array();
 				header('Content-Type: application/json');
 				echo json_encode( $arr );
 		}
