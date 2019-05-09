@@ -156,12 +156,32 @@ class Employe_login extends CI_Controller {
 				
   
 
-			$query = $this->db->query("INSERT INTO employee (img, first_name, last_name, email, password)
+			$query_insert = $this->db->query("INSERT INTO employee (img, first_name, last_name, email, password)
 			VALUES ('$image', '$firstname','$lastname','$email','$password')");
-           $query1 = $this->db->query("select first_name, last_name ,email,password,img from employee where email='$email'");
-			$arr =  $query1->result_array();
-				header('Content-Type: application/json');
-				echo json_encode( $arr );
+           $query_select = $this->db->query("select * from employee where email='$email'");
+			$query =  $query_select->result_array();
+				// header('Content-Type: application/json');
+				// echo json_encode( $arr );
+				
+				$result = array(
+					'status'	=> '1',
+					'msg'	    => 'Login successfully',
+					'statuscode'=> '200',
+					'id'		=> $query[0]['empl_id'],
+					'user_name'	=> $query[0]['username'],
+					'first_name'=> $query[0]['first_name'],
+					'last_name'	=> $query[0]['last_name'],
+					'phone'		=> $query[0]['phone'],
+					'email'		=> $query[0]['email'],
+					'password'	=> $query[0]['password'],
+					'company'	=> $query[0]['company'],
+					'designation'=> $query[0]['designation'],
+					'noti_status'=> $query[0]['noti_status'],
+					'image'		=> $query[0]['img'],
+					
+					
+				);
+				print_r(json_encode($result));
 		}
 	}
 
