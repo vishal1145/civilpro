@@ -22,7 +22,7 @@ if(!isset($_SESSION['user_id'])){
     <head>
 <script>
 window.pdfAPIAddress = "http://18.220.238.10:9000";
-window.chatAPIAddress="http://157.230.57.197:9100";
+window.chatAPIAddress="http://104.248.30.138:9100";
 </script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
@@ -36,7 +36,7 @@ window.chatAPIAddress="http://157.230.57.197:9100";
 		<link rel="stylesheet" type="text/css" href="assets/css/dataTables.bootstrap.min.css">	
 		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-datetimepicker.min.css">
 		<link rel="stylesheet" type="text/css" href="assets/plugins/summernote/dist/summernote.css">	
-		<script src="http://157.230.57.197:9200/socket.io/socket.io.js"></script>
+		<script src="http://104.248.30.138:9200/socket.io/socket.io.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js">
 

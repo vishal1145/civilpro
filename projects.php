@@ -64,7 +64,7 @@ if(isset($_POST['create_project'])){
 			$insert_noti_update = "insert into notification(empl_id,text,type) select ".$NewTeamName[$i]." , 'Project Update successfully','Project_Update' ";
 			$res_noti = mysqli_query($con,$insert_noti_update);
 
-			$response = file_get_contents("http://157.230.57.197:9100/add-project-notificaion?userid=".$NewTeamName[$i]."&projectid=".$NewTeamName[$i]);
+			$response = file_get_contents("http://104.248.30.138:9100/add-project-notificaion?userid=".$NewTeamName[$i]."&projectid=".$NewTeamName[$i]);
 			$response = json_decode($response);
 
 		 }
@@ -168,7 +168,7 @@ for($i=0;$i < count($consumption);$i++){
           )
       );
       
-      $url = "http://157.230.57.197:9100/api/project/".$emp_id;
+      $url = "http://104.248.30.138:9100/api/project/".$emp_id;
       $context  = stream_context_create( $options );
       $result = file_get_contents( $url, false, $context );
       $response = json_decode( $result );
@@ -1548,7 +1548,7 @@ $('#add_machine').typeahead({
 	var settings = {
   "async": true,
   "crossDomain": true,
-  "url": 'http://157.230.57.197:9100/updateUserDevice?userid='+empid+'&notification='+value,
+  "url": 'http://104.248.30.138:9100/updateUserDevice?userid='+empid+'&notification='+value,
   "method": "GET",
   "headers": {
     "cache-control": "no-cache"

@@ -166,7 +166,7 @@ if(isset($_POST['update_project'])){
 			
 			$res_noti = mysqli_query($con,$insert_noti_update);
 			
-			$response = file_get_contents("http://157.230.57.197:9100/add-project-notificaion?userid=".$NewTeamName[$i]."&projectid=".$NewTeamName[$i]);
+			$response = file_get_contents("http://104.248.30.138:9100/add-project-notificaion?userid=".$NewTeamName[$i]."&projectid=".$NewTeamName[$i]);
 			$response = json_decode($response);
 		}
 /* ========================================================================================= */

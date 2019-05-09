@@ -816,7 +816,7 @@ function sendnotification(empid , disdate){
 		"targetId" : empid,
 	    "title" : "new notification",
 	    "text" : "Report has been dispatch for date ",
-	    "image" : "http://157.230.57.197/civilpro/assets/img/logo2.png",
+	    "image" : "http://104.248.30.138/civilpro/assets/img/logo2.png",
 	    "type" : "DISPATCHMESSAGE",
 	    "refData" : {
 	    "GroupId" : disdate
