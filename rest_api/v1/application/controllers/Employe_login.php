@@ -138,9 +138,9 @@ class Employe_login extends CI_Controller {
 		}
 		
 		else {
-			$query3 = $this->db->query("SELECT * FROM employee WHERE email='$email'");
+			$query3 = $this->db->query("SELECT count(1) as cnts FROM employee WHERE email='$email'");
 			$arr2 =  $query3->result_array();
-			if($arr2[0]['email']==$email)
+			if($arr2[0]['cnts']==1)
 			{
 				$result = array(
 
@@ -152,7 +152,7 @@ class Employe_login extends CI_Controller {
 				header('Content-Type: application/json');
 				echo json_encode( $result );
 				return false;
-			}
+			}else{
 				
   
 
@@ -183,6 +183,7 @@ class Employe_login extends CI_Controller {
 				);
 				print_r(json_encode($result));
 		}
+	}
 	}
 
 
