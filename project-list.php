@@ -409,7 +409,7 @@ $res_data = mysqli_query($con,$sel_query);
 											<td>
 												<h2><a href="<?php echo $base_url;?>projects.php"><?php echo $rowData['Project_name'];?></a></h2>
 											</td>
-											<td>PRO-<?php echo $rowData['Project_id'];?></td>
+											<td><?php echo $rowData['manual_project_id'];?></td>
 											<td>
 												<ul class="team-members">
 										<?php 

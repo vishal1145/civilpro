@@ -30,7 +30,8 @@ if(isset($_POST['create_project'])){
     $billing_type = $_POST['billing_type'];
     $priority = $_POST['priority'];
     $consumption = $_POST['consumption'];
-    $proTotalHour = $_POST['pro_total_hour'];
+		$proTotalHour = $_POST['pro_total_hour'];
+		$manual_project_id = $_POST['manual_project_id'];
 /* =========================== project leader save id ===================================== */
 
  	$project_leader = implode(",",$_POST['project_leader']);
@@ -141,8 +142,8 @@ for($i=0;$i < count($consumption);$i++){
 
 	}
 	echo $consmp_name;*/
-	 $log_user_qury = "INSERT INTO Project (Project_name, Client_id,Start_date,end_date,Rate,billing_type,Total_hours,Priority,Project_leader,Team_member,Project_Address,machine,material,consumption,decription,images)
-     VALUES ('$project_name', '$client_id', '$start_date','$end_date','$rate','$billing_type','$proTotalHour','$priority','$employee_id','$team_id','$project_address','$machine','$materials','$consmp_name','$description','$image')";
+	 $log_user_qury = "INSERT INTO Project (Project_name, Client_id,Start_date,end_date,Rate,billing_type,Total_hours,Priority,Project_leader,Team_member,Project_Address,machine,material,consumption,decription,images,manual_project_id)
+     VALUES ('$project_name', '$client_id', '$start_date','$end_date','$rate','$billing_type','$proTotalHour','$priority','$employee_id','$team_id','$project_address','$machine','$materials','$consmp_name','$description','$image','$manual_project_id')";
 	
 	/*  echo $log_user_qury; */
 	 
@@ -485,10 +486,10 @@ $res_data = mysqli_query($con,$sel_query);
 
 
 								<h4 class="project-title"><a href="<?php echo $base_url;?>projects.php"><?php echo $rowData['Project_name'];?></a></h4>
-								<!-- <small class="block text-ellipsis m-b-15">
-									<span class="text-xs">1</span> <span class="text-muted">open tasks, </span>
-									<span class="text-xs">9</span> <span class="text-muted">tasks completed</span>
-								</small> -->
+								 <small class="block text-ellipsis m-b-15">
+									<span class="text-xs"><?php echo $rowData['manual_project_id'];?></span> <span class="text-muted"></span>
+									<!-- <span class="text-xs">9</span> <span class="text-muted">tasks completed</span> -->
+								</small> 
 								<!--
 								<p class="text-muted"><?php echo substr(strip_tags($rowData['decription']),0,200); ?>
 								</p>
@@ -580,6 +581,14 @@ $res_data = mysqli_query($con,$sel_query);
 						</div>
 						<div class="modal-body">
 							   <form action="" method="post" name="projectsform">
+								 <div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Project Id</label>
+											<input class="form-control" type="text" name="manual_project_id">
+										</div>
+									</div>
+								 </div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
@@ -1341,7 +1350,7 @@ $(function() {
       // of an input field. Validation rules are defined
       // on the right side
       project_name: "required",
-	  
+	  manual_project_id:"required",
 	  start_date: "required",
 	  end_date : "required",
 	  rate : "required",

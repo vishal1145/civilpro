@@ -127,7 +127,8 @@ if(isset($_POST['update_project'])){
     $billing_type= $_POST['billing_type'];
     $proTotalHour = $_POST['pro_total_hour'];
     $material = $_POST['edit_materials'];
-    $consumption = $_POST['consumption'];
+		$consumption = $_POST['consumption'];
+		$manual_project_id = $_POST['edit_manual_project_id'];
    // echo "hi";
    // echo $material;
     /* =========================== project leader update id ===================================== */
@@ -265,7 +266,7 @@ if(isset($_POST['update_project'])){
 			 exit;
 	}
 	
-    $sql = "UPDATE Project SET Project_name='$project_name', Client_id='$client_id',Start_date='$start_date',end_date='$end_date',Rate='$rate',billing_type='$billing_type',Total_hours='$proTotalHour',Priority='$Priority', Project_leader='$edit_project_leader',Team_member='$edit_team',material='$material_value',machine='$edit_machines',consumption='$consmp_name',Project_Address='$edit_project_address',decription='$description',images='$image' WHERE Project_id=$products_id";
+    $sql = "UPDATE Project SET Project_name='$project_name', Client_id='$client_id',Start_date='$start_date',end_date='$end_date',Rate='$rate',billing_type='$billing_type',Total_hours='$proTotalHour',Priority='$Priority', Project_leader='$edit_project_leader',Team_member='$edit_team',material='$material_value',machine='$edit_machines',consumption='$consmp_name',Project_Address='$edit_project_address',decription='$description',images='$image',manual_project_id='$manual_project_id' WHERE Project_id=$products_id";
    
 	$res_data = mysqli_query($con, $sql);	
 	 
@@ -446,7 +447,18 @@ $("#empic1").change(function() {
 			<div class="modal-body">
 				<form action="" method="post" name="editform" enctype="multipart/form-data">
 				<input type="hidden" name="products_id" id="products_id">
-					<div class="row">
+				
+				<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Project Id</label>
+								<input class="form-control" name="edit_manual_project_id" id="edit_manual_project_id" type="text" value="<?php echo $row['manual_project_id']; ?>">
+								
+							</div>
+						</div>
+				</div>
+				
+				<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Project Name</label>
